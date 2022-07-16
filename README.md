@@ -28,7 +28,7 @@
 - [ ] Instrumentation for accurately getting coverage on RegExps
 - [ ] Hybrid/partially-compiled RegExps for better dynamic support
 
-## Usage
+## Setup
 
 Install package:
 
@@ -52,9 +52,51 @@ console.log(regExp)
 // /(?<=bar\/)foo\/test\.js/
 ```
 
-In order to statically transform magic-regexps at build time, you can use the included unplugin.
+## Usage
 
-**Nuxt**:
+Every regular expression you create with the library should be wrapped in `createRegExp`.
+
+> **Note**
+> By default, all helpers from `magic-regexp` assume that input that is passed should be escaped - so no special RegExp characters apply. So `createRegExp('foo?\d')` will not match `food3` but only `foo?\d` exactly.
+
+There are a range of helpers that can be used to activate pattern matching, and they can be chained.
+
+They are:
+
+- `charIn`, `charNotIn` - this matches or doesn't match any character in the string provided.
+- `anyOf` - this takes an array of inputs and matches any of them.
+- `char`, `word`, `digit`, `whitespace`, `letter`, `tab`, `linefeed` and `carriageReturn` - these are helpers for specific RegExp characters.
+- `not` - this can prefix `word`, `digit`, `whitespace`, `letter`, `tab`, `linefeed` or `carriageReturn`. For example `createRegExp(not.letter)`.
+- `maybe` - equivalent to `?` - this marks the input as optional.
+- `exactly` - this escapes a string input to match it exactly.
+
+All of these helpers return an object of type `Input` that can be chained with the following helpers:
+
+- `and` - this adds a new pattern to the current input.
+- `or` - this provides an alternative to the current input.
+- `after`, `before`, `notAfter` and `notBefore` - these activate positive/negative lookahead/lookbehinds. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari).
+- `times` - this is a function you can call directly to repeat the previous pattern an exact number of times, or you can use `times.between(min, max)` to specify a range.
+- `as` - this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()`.
+- `at` - this allows you to match beginning/ends of lines with `at.lineStart()` and `at.lineEnd()`.
+
+## Compilation at build
+
+The best way to use `magic-regexp` is by making use of the included transform.
+
+```js
+const regExp = createRegExp(exactly('foo/test.js').after('bar/'))
+// => gets _compiled_ to
+const regExp = /(?<=bar\/)foo\/test\.js/
+```
+
+Of course, this only works with non-dynamic regexps. Within the `createRegExp` block you have to include all the helpers you are using from `magic-regexp` - and not rely on any external variables. This, for example, will not statically compile into a RegExp, although it will still continue to work with a minimal runtime:
+
+```js
+const someString = 'test'
+const regExp = createRegExp(exactly(someString))
+```
+
+### Nuxt
 
 ```js
 import { defineNuxtConfig } from 'nuxt'
@@ -66,7 +108,7 @@ export default defineNuxtConfig({
 })
 ```
 
-**Vite**:
+### Vite
 
 ```js
 import { defineConfig } from 'vite'
@@ -77,7 +119,7 @@ export default defineConfig({
 })
 ```
 
-**unbuild**:
+### unbuild
 
 ```js
 import { defineBuildConfig } from 'unbuild'
