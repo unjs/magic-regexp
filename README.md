@@ -54,7 +54,14 @@ console.log(regExp)
 
 ## Usage
 
-Every regular expression you create with the library should be wrapped in `createRegExp`.
+Every pattern you create with the library should be wrapped in `createRegExp`. It also takes a second argument, which is an array of flags.
+
+```js
+import { createRegExp, global, multiline } from 'magic-regexp'
+createRegExp('string-to-match', [global, multiline])
+// you can also pass flags directly as strings
+createRegExp('string-to-match', ['g', 'm'])
+```
 
 > **Note**
 > By default, all helpers from `magic-regexp` assume that input that is passed should be escaped - so no special RegExp characters apply. So `createRegExp('foo?\d')` will not match `food3` but only `foo?\d` exactly.
