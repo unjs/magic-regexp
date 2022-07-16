@@ -29,7 +29,7 @@
     "prepublishOnly": "pnpm lint && pnpm test && pinst --disable",
     "release": "release-it",
     "test": "vitest run",
-    "_postinstall": "husky install",
+    "postinstall": "husky install",
     "postpublish": "pinst --enable"
   },
   "dependencies": {
