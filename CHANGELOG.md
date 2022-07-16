@@ -1,5 +1,12 @@
 
 
+## [0.0.3](https://github.com/danielroe/magic-regexp/compare/0.0.2...0.0.3) (2022-07-16)
+
+
+### Bug Fixes
+
+* **transform:** don't parse vue template blocks ([095ed0a](https://github.com/danielroe/magic-regexp/commit/095ed0ab5dfaad2ebbd4386dc3165a75b7b5b4e9))
+
 ## [0.0.2](https://github.com/danielroe/magic-regexp/compare/0.0.1...0.0.2) (2022-07-16)
 
 
