@@ -1,4 +1,4 @@
-import { createContext, runInContext } from 'node:vm'
+import { Context, createContext, runInContext } from 'node:vm'
 import { pathToFileURL } from 'node:url'
 
 import { walk } from 'estree-walker'
@@ -7,14 +7,14 @@ import type { SimpleCallExpression } from 'estree'
 import { createUnplugin } from 'unplugin'
 import MagicString from 'magic-string'
 import { parseURL, parseQuery } from 'ufo'
+import { findStaticImports, parseStaticImport } from 'mlly'
 
 import * as magicRegExp from 'magic-regexp'
 
 export const MagicRegExpTransformPlugin = createUnplugin(() => {
-  const context = createContext(magicRegExp)
-
   return {
     name: 'MagicRegExpTransformPlugin',
+    enforce: 'post',
     transformInclude(id) {
       const { pathname, search } = parseURL(decodeURIComponent(pathToFileURL(id).href))
       const { type } = parseQuery(search)
@@ -30,14 +30,49 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
       }
     },
     transform(code, id) {
-      if (!code.includes('createRegExp')) return
+      if (!code.includes('magic-regexp')) return
+
+      const statements = findStaticImports(code).filter(i => i.specifier === 'magic-regexp')
+      if (!statements.length) return
+
+      const contextMap: Context = { ...magicRegExp }
+      const wrapperNames = []
+      let namespace: string
+
+      for (const i of statements.flatMap(i => parseStaticImport(i))) {
+        if (i.namespacedImport) {
+          namespace = i.namespacedImport
+          contextMap[i.namespacedImport] = magicRegExp
+        }
+        if (i.namedImports) {
+          for (const key in i.namedImports) {
+            contextMap[i.namedImports[key]] = magicRegExp[key]
+          }
+          if (i.namedImports.createRegExp) {
+            wrapperNames.push(i.namedImports.createRegExp)
+          }
+        }
+      }
+
+      const context = createContext(contextMap)
 
       const s = new MagicString(code)
 
       walk(this.parse(code), {
         enter(node: SimpleCallExpression) {
           if (node.type !== 'CallExpression') return
-          if ((node.callee as any).name !== 'createRegExp') return
+          if (
+            // Normal call
+            !wrapperNames.includes((node.callee as any).name) &&
+            // Namespaced call
+            (node.callee.type !== 'MemberExpression' ||
+              node.callee.object.type !== 'Identifier' ||
+              node.callee.object.name !== namespace ||
+              node.callee.property.type !== 'Identifier' ||
+              node.callee.property.name !== 'createRegExp')
+          ) {
+            return
+          }
 
           const { start, end } = node as any as { start: number; end: number }
 

@@ -22,6 +22,7 @@ importers:
       husky: latest
       lint-staged: latest
       magic-string: ^0.26.2
+      mlly: ^0.5.4
       pinst: latest
       prettier: latest
       release-it: latest
@@ -34,6 +35,7 @@ importers:
     dependencies:
       estree-walker: 3.0.1
       magic-string: 0.26.2
+      mlly: 0.5.4
       ufo: 0.8.5
       unplugin: 0.7.2_vite@3.0.0
     devDependencies:
@@ -3735,7 +3737,6 @@ packages:
 
   /jsonc-parser/3.0.0:
     resolution: {integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==}
-    dev: true
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
@@ -4091,12 +4092,11 @@ packages:
     resolution: {integrity: sha512-zMq5n3cOf4fOzA4WoeulxagbAgMChdev3MgP6K51k7M0u2whTXxupfIY4VVzws4vxkiWhwH1rVQcsw7zDGfRhA==}
     dev: true
 
-  /mlly/0.5.2:
-    resolution: {integrity: sha512-4GTELSSErv6ZZJYU98fZNuIBJcXSz+ktHdRrCYEqU1m6ZlebOCG0jwZ+IEd9vOrbpYsVBBMC5OTrEyLnKRcauQ==}
+  /mlly/0.5.4:
+    resolution: {integrity: sha512-gFlsLWCjVwu/LM/ZfYUkmnbBoz7eyBIMUwVQYDqhd8IvtNFDeZ95uwAyxHE2Xx7tQwePQaCo4fECZ9MWFEUTgQ==}
     dependencies:
-      pathe: 0.2.0
-      pkg-types: 0.3.2
-    dev: true
+      pathe: 0.3.2
+      pkg-types: 0.3.3
 
   /modify-values/1.0.1:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
@@ -4523,6 +4523,9 @@ packages:
     resolution: {integrity: sha512-sTitTPYnn23esFR3RlqYBWn4c45WGeLcsKzQiUpXJAyfcWkolvlYpV8FLo7JishK946oQwMFUCHXQ9AjGPKExw==}
     dev: true
 
+  /pathe/0.3.2:
+    resolution: {integrity: sha512-qhnmX0TOqlCvdWWTkoM83wh5J8fZ2yhbDEc9MlsnAEtEc+JCwxUKEwmd6pkY9hRe6JR1Uecbc14VcAKX2yFSTA==}
+
   /pathval/1.1.1:
     resolution: {integrity: sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==}
     dev: true
@@ -4563,6 +4566,13 @@ packages:
       mlly: 0.3.19
       pathe: 0.2.0
     dev: true
+
+  /pkg-types/0.3.3:
+    resolution: {integrity: sha512-6AJcCMnjUQPQv/Wk960w0TOmjhdjbeaQJoSKWRQv9N3rgkessCu6J0Ydsog/nw1MbpnxHuPzYbfOn2KmlZO1FA==}
+    dependencies:
+      jsonc-parser: 3.0.0
+      mlly: 0.5.4
+      pathe: 0.3.2
 
   /pluralize/8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
@@ -5551,7 +5561,7 @@ packages:
       magic-string: 0.26.2
       mkdirp: 1.0.4
       mkdist: 0.3.10_typescript@4.7.4
-      mlly: 0.5.2
+      mlly: 0.5.4
       mri: 1.2.0
       pathe: 0.2.0
       pkg-types: 0.3.2
