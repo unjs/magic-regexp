@@ -4,6 +4,26 @@ import { parse } from 'acorn'
 import { MagicRegExpTransformPlugin } from '../src/transform'
 
 describe('transformer', () => {
+  const couldTransform = [
+    "import { createRegExp, exactly, anyOf } from 'magic-regexp'",
+    "const re1 = createRegExp(exactly('bar').notBefore('foo'))",
+  ]
+
+  it('ignores non-JS files', () => {
+    expect(transform(couldTransform, 'test.css')).toBeUndefined()
+  })
+
+  it('transforms vue script blocks', () => {
+    expect(transform(couldTransform, 'test.vue?type=script')).toBeDefined()
+    expect(transform(couldTransform, 'test.vue')).toBeDefined()
+    expect(transform(couldTransform, 'test.vue?type=template')).toBeUndefined()
+  })
+
+  it('ignores code without imports from magic-regexp', () => {
+    expect(transform(couldTransform[1])).toBeUndefined()
+    expect(transform(['// magic-regexp', couldTransform[1]])).toBeUndefined()
+  })
+
   it('preserves context for dynamic regexps', () => {
     expect(
       transform([
@@ -15,6 +35,7 @@ describe('transformer', () => {
 
   it('statically replaces regexps where possible', () => {
     const code = transform([
+      "import { something } from 'other-module'",
       "import { createRegExp, exactly, anyOf } from 'magic-regexp'",
       '//', // this lets us tree-shake the import for use in our test-suite
       "const re1 = createRegExp(exactly('bar').notBefore('foo'))",
@@ -24,7 +45,8 @@ describe('transformer', () => {
       "re3.test('/foo/bar')",
     ])
     expect(code).toMatchInlineSnapshot(`
-      "import { createRegExp, exactly, anyOf } from 'magic-regexp'
+      "import { something } from 'other-module'
+      import { createRegExp, exactly, anyOf } from 'magic-regexp'
       //
       const re1 = /bar(?!foo)/
       const re2 = /(bar|foo)/
@@ -55,11 +77,11 @@ describe('transformer', () => {
   })
 })
 
-const transform = (code: string | string[]) => {
+const transform = (code: string | string[], id = 'some-id.js') => {
   const plugin = MagicRegExpTransformPlugin.vite()
   return plugin.transform.call(
     { parse: (code: string) => parse(code, { ecmaVersion: 2022, sourceType: 'module' }) },
     Array.isArray(code) ? code.join('\n') : code,
-    'some-id.js'
+    id
   )?.code
 }

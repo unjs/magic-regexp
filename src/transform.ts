@@ -20,7 +20,7 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
       const { type } = parseQuery(search)
 
       // vue files
-      if (pathname.endsWith('.vue') && (type === 'template' || type === 'script' || !search)) {
+      if (pathname.endsWith('.vue') && (type === 'script' || !search)) {
         return true
       }
 
