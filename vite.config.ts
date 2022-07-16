@@ -7,4 +7,10 @@ export default defineConfig({
       'magic-regexp': fileURLToPath(new URL('./src/index.ts', import.meta.url).href),
     },
   },
+  test: {
+    coverage: {
+      include: ['src'],
+      reporter: ['text', 'json', 'html'],
+    },
+  },
 })
