@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "paths": {
+      "magic-regexp/transform": ["./src/transform"],
+      "magic-regexp": ["./src/index"]
+    }
+  }
+}

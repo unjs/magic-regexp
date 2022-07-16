@@ -1,0 +1,29 @@
+name: "\U0001F41B Bug report"
+description: Something's not working
+title: "fix: "
+labels: ["bug"]
+assignees: danielroe
+body:
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: 🐛 The bug
+      description: What isn't working? Describe what the bug is.
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: 🛠️ To reproduce
+      description: A reproduction of the bug via https://stackblitz.com/github/danielroe/magic-regexp/tree/main/playground
+      placeholder: https://stackblitz.com/[...]
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: 🌈 Expected behaviour
+      description: What did you expect to happen? Is there a section in the docs about this?
+  - type: textarea
+    attributes:
+      label: ℹ️ Additional context
+      description: Add any other context about the problem here.

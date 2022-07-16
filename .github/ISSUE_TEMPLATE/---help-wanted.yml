@@ -1,0 +1,21 @@
+name: "\U0001F198 Help"
+description: I need help with ...
+title: "help: "
+labels: ["help"]
+assignees: danielroe
+body:
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: 📚 What are you trying to do?
+      description: A clear and concise description of your objective.
+      placeholder: I'm not sure how to [...].
+  - type: textarea
+    attributes:
+      label: 🔍 What have you tried?
+      description: Have you looked through the docs? Tried different approaches? The more detail the better.
+  - type: textarea
+    attributes:
+      label: ℹ️ Additional context
+      description: Add any other context or information.

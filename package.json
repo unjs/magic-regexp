@@ -1,0 +1,70 @@
+{
+  "name": "magic-regexp",
+  "version": "0.0.0",
+  "description": "",
+  "repository": "danielroe/magic-regexp",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./transform": "./dist/transform.mjs",
+    "./nuxt": "./nuxt.mjs"
+  },
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "nuxt.mjs"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "vitest dev",
+    "lint": "pnpm lint:all:eslint && pnpm lint:all:prettier",
+    "lint:all:eslint": "pnpm lint:eslint --ext .ts,.js,.mjs,.cjs .",
+    "lint:all:prettier": "pnpm lint:prettier \"{src,test}/**/*.{js,json,ts}\"",
+    "lint:eslint": "eslint --fix",
+    "lint:prettier": "prettier --write --loglevel warn",
+    "prepare": "husky install && pnpm build",
+    "prepublishOnly": "pnpm lint && pnpm test && pinst --disable",
+    "release": "release-it",
+    "test": "vitest run",
+    "_postinstall": "husky install",
+    "postpublish": "pinst --enable"
+  },
+  "dependencies": {
+    "estree-walker": "^3.0.1",
+    "magic-string": "^0.26.2",
+    "ufo": "^0.8.5",
+    "unplugin": "^0.7.2"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config-typescript": "latest",
+    "@release-it/conventional-changelog": "latest",
+    "@types/estree": "^1.0.0",
+    "@types/node": "latest",
+    "acorn": "^8.7.1",
+    "c8": "latest",
+    "conventional-changelog-conventionalcommits": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "expect-type": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
+    "pinst": "latest",
+    "prettier": "latest",
+    "release-it": "latest",
+    "typescript": "latest",
+    "unbuild": "latest",
+    "vite": "^3.0.0",
+    "vitest": "latest"
+  },
+  "resolutions": {
+    "magic-regexp": "link:."
+  },
+  "packageManager": "pnpm@7.5.0",
+  "volta": {
+    "node": "16.15.1"
+  }
+}

@@ -1,0 +1,27 @@
+name: "\U0001F195 Feature suggestion"
+description: Suggest an idea
+title: "feat: "
+labels: ["enhancement"]
+assignees: danielroe
+body:
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: 🆒 Your use case
+      description: Add a description of your use case, and how this feature would help you.
+      placeholder: When I do [...] I would expect to be able to do [...]
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: 🆕 The solution you'd like
+      description: Describe what you want to happen.
+  - type: textarea
+    attributes:
+      label: 🔍 Alternatives you've considered
+      description: Have you considered any alternative solutions or features?
+  - type: textarea
+    attributes:
+      label: ℹ️ Additional info
+      description: Is there any other context you think would be helpful to know?
