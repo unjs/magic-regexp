@@ -4,6 +4,7 @@
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![Github Actions][github-actions-src]][github-actions-href]
 [![Codecov][codecov-src]][codecov-href]
+[![LGTM][lgtm-src]][lgtm-href]
 
 > A compiled-away, type-safe, readable RegExp alternative
 
@@ -110,7 +111,9 @@ Published under [MIT License](./LICENCE).
 [npm-version-href]: https://npmjs.com/package/magic-regexp
 [npm-downloads-src]: https://img.shields.io/npm/dm/magic-regexp?style=flat-square
 [npm-downloads-href]: https://npmjs.com/package/magic-regexp
-[github-actions-src]: https://img.shields.io/github/workflow/status/unjs/magic-regexp/ci/main?style=flat-square
-[github-actions-href]: https://github.com/unjs/magic-regexp/actions?query=workflow%3Aci
-[codecov-src]: https://img.shields.io/codecov/c/gh/unjs/magic-regexp/main?style=flat-square
-[codecov-href]: https://codecov.io/gh/unjs/magic-regexp
+[github-actions-src]: https://img.shields.io/github/workflow/status/danielroe/magic-regexp/ci/main?style=flat-square
+[github-actions-href]: https://github.com/danielroe/magic-regexp/actions?query=workflow%3Aci
+[codecov-src]: https://img.shields.io/codecov/c/gh/danielroe/magic-regexp/main?style=flat-square
+[codecov-href]: https://codecov.io/gh/danielroe/magic-regexp
+[lgtm-src]: https://img.shields.io/lgtm/grade/javascript/github/danielroe/vue-bind-once?style=flat-square
+[lgtm-href]: https://lgtm.com/projects/g/danielroe/magic-regexp
