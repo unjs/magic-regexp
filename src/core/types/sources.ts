@@ -1,18 +1,13 @@
 import { Input } from '../internal'
 
-export type InputSource = string | Input<string>
-
-export type TypedInputSource<S extends string = never, T extends string = never> = S | Input<S, T>
-export type MapToValues<T extends TypedInputSource<any, any>[]> = T extends [
-  infer First,
-  ...infer Rest
-]
-  ? First extends TypedInputSource<infer K>
+export type InputSource<S extends string = never, T extends string = never> = S | Input<S, T>
+export type MapToValues<T extends InputSource<any, any>[]> = T extends [infer First, ...infer Rest]
+  ? First extends InputSource<infer K>
     ? [K, ...MapToValues<Rest>]
     : []
   : []
 
-export type MapToGroups<T extends TypedInputSource<any, string>[]> = T extends [
+export type MapToGroups<T extends InputSource<any, string>[]> = T extends [
   infer First,
   ...infer Rest
 ]

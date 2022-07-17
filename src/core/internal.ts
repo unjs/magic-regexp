@@ -1,22 +1,24 @@
 import { exactly } from './inputs'
+import type { GetValue } from './types/escape'
+import type { InputSource } from './types/sources'
 
 export interface Input<V extends string, G extends string = never> {
   /** this adds a new pattern to the current input */
-  and: <I extends string, Groups extends string = never>(
-    input: I | Input<I, Groups>
-  ) => Input<`${V}${I}`, G | Groups>
+  and: <I extends InputSource<string, G>, Groups extends string = never>(
+    input: I
+  ) => Input<`${V}${GetValue<I>}`, G | Groups>
   /** this provides an alternative to the current input */
-  or: <I extends string, Groups extends string = never>(
-    input: I | Input<I, Groups>
-  ) => Input<`(${V}|${I})`, G | Groups>
+  or: <I extends InputSource<string, G>, Groups extends string = never>(
+    input: I
+  ) => Input<`(${V}|${GetValue<I>})`, G | Groups>
   /** this is a positive lookbehind. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari) */
-  after: <I extends string = never>(input: I | Input<I>) => Input<`(?<=${I})${V}`, G>
+  after: <I extends InputSource<string>>(input: I) => Input<`(?<=${GetValue<I>})${V}`, G>
   /** this is a positive lookahead */
-  before: <I extends string = never>(input: I | Input<I>) => Input<`${V}(?=${I})`, G>
+  before: <I extends InputSource<string>>(input: I) => Input<`${V}(?=${GetValue<I>})`, G>
   /** these is a negative lookbehind. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari) */
-  notAfter: <I extends string = never>(input: I | Input<I>) => Input<`(?<!${I})${V}`, G>
+  notAfter: <I extends InputSource<string>>(input: I) => Input<`(?<!${GetValue<I>})${V}`, G>
   /** this is a negative lookahead */
-  notBefore: <I extends string = never>(input: I | Input<I>) => Input<`${V}(?!${I})`, G>
+  notBefore: <I extends InputSource<string>>(input: I) => Input<`${V}(?!${GetValue<I>})`, G>
   times: {
     /** repeat the previous pattern an exact number of times */
     <N extends number>(number: N): Input<`(${V}){${N}}`, G>

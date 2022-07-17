@@ -21,7 +21,7 @@ type Escape<
 type CharEscapeCharacter = '\\' | '^' | '-' | ']'
 export type EscapeChar<T extends string> = Escape<T, CharEscapeCharacter>
 
-export type UnwrapOrEscape<T extends InputSource> = T extends string
+export type GetValue<T extends InputSource<string>> = T extends string
   ? Escape<T, ExactEscapeChar>
   : T extends Input<infer R>
   ? R

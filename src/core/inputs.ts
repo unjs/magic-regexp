@@ -1,7 +1,7 @@
 import { createInput, Input } from './internal'
-import type { UnwrapOrEscape, EscapeChar } from './types/escape'
+import type { GetValue, EscapeChar } from './types/escape'
 import type { Join } from './types/join'
-import type { InputSource, MapToGroups, MapToValues, TypedInputSource } from './types/sources'
+import type { MapToGroups, MapToValues, InputSource } from './types/sources'
 
 export type { Input }
 
@@ -14,7 +14,7 @@ export const charNotIn = <T extends string>(chars: T) =>
   createInput(`[^${chars.replace(/[-\\^\]]/g, '\\$&')}]`) as Input<`[^${EscapeChar<T>}]`>
 
 /** This takes an array of inputs and matches any of them. */
-export const anyOf = <New extends TypedInputSource<V, T>[], V extends string, T extends string>(
+export const anyOf = <New extends InputSource<V, T>[], V extends string, T extends string>(
   ...args: New
 ) =>
   createInput(`(${args.map(a => exactly(a)).join('|')})`) as Input<
@@ -42,14 +42,14 @@ export const not = {
 }
 
 /** Equivalent to `?` - this marks the input as optional */
-export const maybe = <New extends InputSource>(str: New) =>
-  createInput(`(${exactly(str)})?`) as Input<`(${UnwrapOrEscape<New>})?`>
+export const maybe = <New extends InputSource<string>>(str: New) =>
+  createInput(`(${exactly(str)})?`) as Input<`(${GetValue<New>})?`>
 
 /** This escapes a string input to match it exactly */
-export const exactly = <New extends InputSource>(input: New): Input<UnwrapOrEscape<New>> =>
+export const exactly = <New extends InputSource<string>>(input: New): Input<GetValue<New>> =>
   typeof input === 'string'
     ? (createInput(input.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')) as any)
     : input
 
-export const oneOrMore = <New extends InputSource>(str: New) =>
-  createInput(`(${exactly(str)})+`) as Input<`(${UnwrapOrEscape<New>})+`>
+export const oneOrMore = <New extends InputSource<string>>(str: New) =>
+  createInput(`(${exactly(str)})+`) as Input<`(${GetValue<New>})+`>
