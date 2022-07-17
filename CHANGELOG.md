@@ -1,5 +1,12 @@
 
 
+## [0.0.4](https://github.com/danielroe/magic-regexp/compare/0.0.3...0.0.4) (2022-07-17)
+
+
+### Bug Fixes
+
+* add type stub for transform plugin ([edfe945](https://github.com/danielroe/magic-regexp/commit/edfe945ee209b13832d4830aaac556f02891e67a))
+
 ## [0.0.3](https://github.com/danielroe/magic-regexp/compare/0.0.2...0.0.3) (2022-07-16)
 
 
