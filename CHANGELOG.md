@@ -1,5 +1,12 @@
 
 
+## [0.2.0](https://github.com/danielroe/magic-regexp/compare/0.1.0...0.2.0) (2022-07-17)
+
+
+### Features
+
+* display built regexp in TS tooltip ([#6](https://github.com/danielroe/magic-regexp/issues/6)) ([051e219](https://github.com/danielroe/magic-regexp/commit/051e2196be8ef9dfac9582b346dafbcfa4aa68f5))
+
 ## [0.1.0](https://github.com/danielroe/magic-regexp/compare/0.0.4...0.1.0) (2022-07-17)
 
 
