@@ -126,6 +126,22 @@ export default defineConfig({
 })
 ```
 
+### Next.js
+
+For Next, you will need to ensure you are using `next.config.mjs` or have set `"type": "module"` in your `package.json.
+
+```js
+import { MagicRegExpTransformPlugin } from 'magic-regexp/transform'
+
+export default {
+  webpack(config) {
+    config.plugins = config.plugins || []
+    config.plugins.push(MagicRegExpTransformPlugin.webpack())
+    return config
+  },
+}
+```
+
 ### unbuild
 
 ```js
