@@ -4,13 +4,16 @@ import type { InputSource } from './types/sources'
 
 export interface Input<V extends string, G extends string = never> {
   /** this adds a new pattern to the current input */
-  and: <I extends InputSource<string, G>, Groups extends string = never>(
+  and: <I extends InputSource<string, any>>(
     input: I
-  ) => Input<`${V}${GetValue<I>}`, G | Groups>
+  ) => Input<`${V}${GetValue<I>}`, G | (I extends Input<any, infer NewGroups> ? NewGroups : never)>
   /** this provides an alternative to the current input */
-  or: <I extends InputSource<string, G>, Groups extends string = never>(
+  or: <I extends InputSource<string, any>>(
     input: I
-  ) => Input<`(${V}|${GetValue<I>})`, G | Groups>
+  ) => Input<
+    `(${V}|${GetValue<I>})`,
+    G | (I extends Input<any, infer NewGroups> ? NewGroups : never)
+  >
   /** this is a positive lookbehind. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari) */
   after: <I extends InputSource<string>>(input: I) => Input<`(?<=${GetValue<I>})${V}`, G>
   /** this is a positive lookahead */

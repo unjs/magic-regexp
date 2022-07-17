@@ -1,7 +1,7 @@
 import { expect, it, describe } from 'vitest'
 import { expectTypeOf } from 'expect-type'
 
-import { anyOf, char, createRegExp, exactly, global } from '../src'
+import { anyOf, char, createRegExp, exactly, global, digit } from '../src'
 import { createInput } from '../src/core/internal'
 
 describe('magic-regexp', () => {
@@ -74,6 +74,7 @@ describe('inputs', () => {
     expectTypeOf('fobazzer'.match(createRegExp(pattern))?.groups).toMatchTypeOf<
       Record<'test' | 'test2', string | undefined> | undefined
     >()
+
     // @ts-expect-error
     'fobazzer'.match(createRegExp(pattern))?.groups.other
 
@@ -86,5 +87,13 @@ describe('inputs', () => {
       `)
       expectTypeOf(match.groups).toMatchTypeOf<Record<'test' | 'test2', string | undefined>>()
     }
+
+    ''.match(
+      createRegExp(
+        anyOf(anyOf('foo', 'bar').as('test'), exactly('baz').as('test2')).and(
+          digit.times(5).as('id').optionally()
+        )
+      )
+    )?.groups?.id
   })
 })
