@@ -28,6 +28,8 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
       if (pathname.match(/\.((c|m)?j|t)sx?$/g)) {
         return true
       }
+
+      return false
     },
     transform(code, id) {
       if (!code.includes('magic-regexp')) return
@@ -36,7 +38,7 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
       if (!statements.length) return
 
       const contextMap: Context = { ...magicRegExp }
-      const wrapperNames = []
+      const wrapperNames: string[] = []
       let namespace: string
 
       for (const i of statements.flatMap(i => parseStaticImport(i))) {
@@ -46,7 +48,7 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
         }
         if (i.namedImports) {
           for (const key in i.namedImports) {
-            contextMap[i.namedImports[key]] = magicRegExp[key]
+            contextMap[i.namedImports[key]] = magicRegExp[key as keyof typeof magicRegExp]
           }
           if (i.namedImports.createRegExp) {
             wrapperNames.push(i.namedImports.createRegExp)
@@ -59,8 +61,9 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
       const s = new MagicString(code)
 
       walk(this.parse(code), {
-        enter(node: SimpleCallExpression) {
-          if (node.type !== 'CallExpression') return
+        enter(_node) {
+          if (_node.type !== 'CallExpression') return
+          const node = _node as SimpleCallExpression
           if (
             // Normal call
             !wrapperNames.includes((node.callee as any).name) &&

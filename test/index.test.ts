@@ -7,7 +7,7 @@ import { createInput } from '../src/core/internal'
 describe('magic-regexp', () => {
   it('works as a normal regexp', () => {
     const regExp = createRegExp('in', [global])
-    expect('thing'.match(regExp)[0]).toMatchInlineSnapshot('"in"')
+    expect('thing'.match(regExp)?.[0]).toMatchInlineSnapshot('"in"')
     expect(regExp.test('thing')).toBeTruthy()
     expect(regExp.lastIndex).toMatchInlineSnapshot('4')
   })
@@ -27,13 +27,13 @@ describe('inputs', () => {
   it('before', () => {
     const regExp = createRegExp(char.before('foo'))
     expect(regExp).toMatchInlineSnapshot('/\\.\\(\\?=foo\\)/')
-    expect('bafoo'.match(regExp)[0]).toMatchInlineSnapshot('"a"')
+    expect('bafoo'.match(regExp)?.[0]).toMatchInlineSnapshot('"a"')
     expect(regExp.test('foo')).toBeFalsy()
   })
   it('after', () => {
     const regExp = createRegExp(char.after('foo'))
     expect(regExp).toMatchInlineSnapshot('/\\(\\?<=foo\\)\\./')
-    expect('fooafoo'.match(regExp)[0]).toMatchInlineSnapshot('"a"')
+    expect('fooafoo'.match(regExp)?.[0]).toMatchInlineSnapshot('"a"')
     expect(regExp.test('foo')).toBeFalsy()
   })
   it('notBefore', () => {
@@ -59,21 +59,21 @@ describe('inputs', () => {
   it('capture groups', () => {
     const pattern = anyOf(anyOf('foo', 'bar').as('test'), exactly('baz').as('test2'))
 
-    expect('football'.match(createRegExp(pattern)).groups).toMatchInlineSnapshot(`
+    expect('football'.match(createRegExp(pattern))?.groups).toMatchInlineSnapshot(`
       {
         "test": "foo",
         "test2": undefined,
       }
     `)
-    expect('fobazzer'.match(createRegExp(pattern)).groups).toMatchInlineSnapshot(`
+    expect('fobazzer'.match(createRegExp(pattern))?.groups).toMatchInlineSnapshot(`
       {
         "test": undefined,
         "test2": "baz",
       }
     `)
-    expectTypeOf<Record<'test' | 'test2', string | undefined> | undefined>(
-      'fobazzer'.match(createRegExp(pattern))?.groups
-    )
+    expectTypeOf('fobazzer'.match(createRegExp(pattern))?.groups).toMatchTypeOf<
+      Record<'test' | 'test2', string | undefined> | undefined
+    >()
     // @ts-expect-error
     'fobazzer'.match(createRegExp(pattern))?.groups.other
 
@@ -84,7 +84,7 @@ describe('inputs', () => {
           "test2": "baz",
         }
       `)
-      expectTypeOf<Record<'test' | 'test2', string | undefined>>(match.groups)
+      expectTypeOf(match.groups).toMatchTypeOf<Record<'test' | 'test2', string | undefined>>()
     }
   })
 })
