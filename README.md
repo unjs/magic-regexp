@@ -18,8 +18,8 @@
 - Runtime is zero-dependency and ultra-minimal
 - Ships with transform for compiling runtime to pure RegExp
 - Supports automatically typed capture groups
-- Packed with useful utilities: `charIn`, `charNotIn`, `anyOf`, `char`, `word`, `digit`, `whitespace`, `letter`, `tab`, `linefeed`, `carriageReturn`, `not`, `maybe`, `exactly`
-- All chainable with `and`, `or`, `after`, `before`, `notAfter`, `notBefore`, `times`, `as`, `at`
+- Packed with useful utilities: `charIn`, `charNotIn`, `anyOf`, `char`, `word`, `digit`, `whitespace`, `letter`, `tab`, `linefeed`, `carriageReturn`, `not`, `maybe`, `exactly`, `oneOrMore`
+- All chainable with `and`, `or`, `after`, `before`, `notAfter`, `notBefore`, `times`, `as`, `at`, `optionally`
 
 **Future ideas**
 
@@ -75,6 +75,7 @@ They are:
 - `char`, `word`, `digit`, `whitespace`, `letter`, `tab`, `linefeed` and `carriageReturn` - these are helpers for specific RegExp characters.
 - `not` - this can prefix `word`, `digit`, `whitespace`, `letter`, `tab`, `linefeed` or `carriageReturn`. For example `createRegExp(not.letter)`.
 - `maybe` - equivalent to `?` - this marks the input as optional.
+- `oneOrMore` - equivalent to `+` - this marks the input as repeatable, any number of times but at least once.
 - `exactly` - this escapes a string input to match it exactly.
 
 All of these helpers return an object of type `Input` that can be chained with the following helpers:
@@ -82,7 +83,8 @@ All of these helpers return an object of type `Input` that can be chained with t
 - `and` - this adds a new pattern to the current input.
 - `or` - this provides an alternative to the current input.
 - `after`, `before`, `notAfter` and `notBefore` - these activate positive/negative lookahead/lookbehinds. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari).
-- `times` - this is a function you can call directly to repeat the previous pattern an exact number of times, or you can use `times.between(min, max)` to specify a range.
+- `times` - this is a function you can call directly to repeat the previous pattern an exact number of times, or you can use `times.between(min, max)` to specify a range, `times.atLeast(num)` to indicate it must repeat x times or `times.any()` to indicate it can repeat any number of times, _including none_.
+- `optionally` - this is a function you can call to mark the current input as optional.
 - `as` - this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()`.
 - `at` - this allows you to match beginning/ends of lines with `at.lineStart()` and `at.lineEnd()`.
 
@@ -155,6 +157,22 @@ export default defineBuildConfig({
     },
   },
 })
+```
+
+## Examples
+
+```js
+import { createRegExp, exactly, oneOrMore, digit } from 'magic-regexp'
+
+// Quick-and-dirty semver
+createRegExp(
+  oneOrMore(digit)
+    .as('major')
+    .and('.')
+    .and(oneOrMore(digit).as('minor'))
+    .and(exactly('.').and(oneOrMore(char).as('patch')).optionally())
+)
+// /(?<major>(\d)+)\.(?<minor>(\d)+)(\.(?<patch>(.)+))?/
 ```
 
 ## 💻 Development

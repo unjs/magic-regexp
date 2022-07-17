@@ -10,8 +10,11 @@ export const createInput = <T extends string = never>(s: string | Input<T>): Inp
     notAfter: input => createInput(`(?<!${exactly(input)})${s}`),
     notBefore: input => createInput(`${s}(?!${exactly(input)})`),
     times: Object.assign((number: number) => createInput(`(${s}){${number}}`), {
+      any: () => createInput(`(${s})*`),
+      atLeast: (min: number) => createInput(`(${s}){${min},}`),
       between: (min: number, max: number) => createInput(`(${s}){${min},${max}}`),
     }),
+    optionally: () => createInput(`(${s})?`),
     as: key => createInput(`(?<${key}>${s})`),
     at: {
       lineStart: () => createInput(`^${s}`),

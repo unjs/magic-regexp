@@ -18,6 +18,10 @@ export interface Input<T extends string = never> {
     (number: number): Input<T>
     /** specify a range of times to repeat the previous pattern */
     between: (min: number, max: number) => Input<T>
+    /** specify that the expression can repeat any number of times, _including none_ */
+    any: () => Input<T>
+    /** specify that the expression must occur at least x times */
+    atLeast: (min: number) => Input<T>
   }
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()` */
   as: <K extends string>(key: K) => Input<T | K>
@@ -26,6 +30,8 @@ export interface Input<T extends string = never> {
     lineStart: () => Input<T>
     lineEnd: () => Input<T>
   }
+  /** this allows you to mark the input so far as optional */
+  optionally: () => Input<T>
   toString: () => string
 }
 
@@ -61,3 +67,5 @@ export const maybe = (str: string | Input) => createInput(`(${exactly(str)})?`)
 /** This escapes a string input to match it exactly */
 export const exactly = (str: string | Input) =>
   typeof str === 'string' ? createInput(str.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')) : str
+export const oneOrMore = (str: string | Input) => createInput(`(${exactly(str)})+`)
+// export const  = (str: string | Input) => createInput(`(${exactly(str)})+`)
