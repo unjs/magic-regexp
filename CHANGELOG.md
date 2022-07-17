@@ -1,5 +1,13 @@
 
 
+## [0.1.0](https://github.com/danielroe/magic-regexp/compare/0.0.4...0.1.0) (2022-07-17)
+
+
+### Features
+
+* add `optionally`, `oneOrMore` and `times.any` and `times.atLeast` ([0484b31](https://github.com/danielroe/magic-regexp/commit/0484b313293ffb3df051c772487bb7f605e54e93))
+* add strong typing for `String.matchAll` ([5a652b8](https://github.com/danielroe/magic-regexp/commit/5a652b8c50dc4476bf78b598c6290a2a2f5193f2))
+
 ## [0.0.4](https://github.com/danielroe/magic-regexp/compare/0.0.3...0.0.4) (2022-07-17)
 
 
