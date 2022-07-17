@@ -3,14 +3,14 @@ import { Input, exactly } from './core/inputs'
 
 const MagicRegExpSymbol = Symbol('MagicRegExp')
 
-export type MagicRegExp<T = never> = RegExp & {
-  [MagicRegExpSymbol]: T
+export type MagicRegExp<Value extends string, T = never> = RegExp & {
+  [MagicRegExpSymbol]: T & Value
 }
 
-export const createRegExp = <T extends string = never>(
-  raw: Input<T> | string,
-  flags: Flag[] = []
-): MagicRegExp<T> => new RegExp(exactly(raw).toString(), flags.join('')) as MagicRegExp<T>
+export const createRegExp = <Value extends string, NamedGroups extends string = never>(
+  raw: Input<Value, NamedGroups> | Value,
+  flags?: Flag[]
+) => new RegExp(exactly(raw).toString(), flags?.join('')) as MagicRegExp<`/${Value}/`, NamedGroups>
 
 export * from './core/flags'
 export * from './core/inputs'
@@ -19,10 +19,10 @@ export * from './core/inputs'
 declare global {
   interface String {
     match<T extends string>(
-      regexp: MagicRegExp<T>
+      regexp: MagicRegExp<any, T>
     ): (Omit<RegExpMatchArray, 'groups'> & { groups: Record<T, string | undefined> }) | null
     matchAll<T extends string>(
-      regexp: MagicRegExp<T>
+      regexp: MagicRegExp<any, T>
     ): IterableIterator<
       Omit<RegExpMatchArray, 'groups'> & { groups: Record<T, string | undefined> }
     >

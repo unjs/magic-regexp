@@ -1,14 +1,26 @@
 import { createInput, Input } from './internal'
+import type { UnwrapOrEscape, EscapeChar } from './types/escape'
+import type { Join } from './types/join'
+import type { InputSource, MapToGroups, MapToValues, TypedInputSource } from './types/sources'
 
 export type { Input }
 
 /** This matches any character in the string provided */
-export const charIn = (chars: string) => createInput(`[${chars.replace(/[-\\^\]]/g, '\\$&')}]`)
+export const charIn = <T extends string>(chars: T) =>
+  createInput(`[${chars.replace(/[-\\^\]]/g, '\\$&')}]`) as Input<`[${EscapeChar<T>}]`>
+
 /** This matches any character that is not in the string provided */
-export const charNotIn = (chars: string) => createInput(`[^${chars.replace(/[-\\^\]]/g, '\\$&')}]`)
+export const charNotIn = <T extends string>(chars: T) =>
+  createInput(`[^${chars.replace(/[-\\^\]]/g, '\\$&')}]`) as Input<`[^${EscapeChar<T>}]`>
+
 /** This takes an array of inputs and matches any of them. */
-export const anyOf = <T extends string = never>(...args: Array<string | Input<T>>) =>
-  createInput<T>(`(${args.map(a => exactly(a)).join('|')})`)
+export const anyOf = <New extends TypedInputSource<V, T>[], V extends string, T extends string>(
+  ...args: New
+) =>
+  createInput(`(${args.map(a => exactly(a)).join('|')})`) as Input<
+    `(${Join<MapToValues<New>>})`,
+    MapToGroups<New>
+  >
 
 export const char = createInput('.')
 export const word = createInput('\\w')
@@ -30,9 +42,14 @@ export const not = {
 }
 
 /** Equivalent to `?` - this marks the input as optional */
-export const maybe = (str: string | Input) => createInput(`(${exactly(str)})?`)
+export const maybe = <New extends InputSource>(str: New) =>
+  createInput(`(${exactly(str)})?`) as Input<`(${UnwrapOrEscape<New>})?`>
+
 /** This escapes a string input to match it exactly */
-export const exactly = (str: string | Input) =>
-  typeof str === 'string' ? createInput(str.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')) : str
-export const oneOrMore = (str: string | Input) => createInput(`(${exactly(str)})+`)
-// export const  = (str: string | Input) => createInput(`(${exactly(str)})+`)
+export const exactly = <New extends InputSource>(input: New): Input<UnwrapOrEscape<New>> =>
+  typeof input === 'string'
+    ? (createInput(input.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')) as any)
+    : input
+
+export const oneOrMore = <New extends InputSource>(str: New) =>
+  createInput(`(${exactly(str)})+`) as Input<`(${UnwrapOrEscape<New>})+`>
