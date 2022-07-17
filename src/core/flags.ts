@@ -3,22 +3,22 @@
 export type Flag = 'd' | 'g' | 'i' | 'm' | 's' | 'u' | 'y'
 
 /** Generate indices for substring matches */
-export const withIndices: Flag = 'd'
+export const withIndices = 'd'
 
 /** Case-insensitive search */
-export const caseInsensitive: Flag = 'i'
+export const caseInsensitive = 'i'
 
 /** Global search */
-export const global: Flag = 'g'
+export const global = 'g'
 
 /** Multi-line search */
-export const multiline: Flag = 'm'
+export const multiline = 'm'
 
 /** Allows `.` to match newline characters */
-export const dotAll: Flag = 's'
+export const dotAll = 's'
 
 /** Treat a pattern as a sequence of unicode code points */
-export const unicode: Flag = 'u'
+export const unicode = 'u'
 
 /** Perform a "sticky" search that matches starting at the current position in the target string */
-export const sticky: Flag = 'y'
+export const sticky = 'y'
