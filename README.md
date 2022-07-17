@@ -182,6 +182,11 @@ createRegExp(
 - Install dependencies using `pnpm install`
 - Run interactive tests using `pnpm dev`
 
+## Similar packages
+
+- [verbal-expressions](http://verbalexpressions.github.io/)
+- [typed-regex](https://github.com/phenax/typed-regex/)
+
 ## License
 
 Made with ❤️
