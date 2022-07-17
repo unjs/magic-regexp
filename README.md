@@ -119,7 +119,7 @@ export default defineNuxtConfig({
 
 ```js
 import { defineConfig } from 'vite'
-import { MagicRegExpTransformPlugin } from 'magic-regexp'
+import { MagicRegExpTransformPlugin } from 'magic-regexp/transform'
 
 export default defineConfig({
   plugins: [MagicRegExpTransformPlugin.vite()],
@@ -146,7 +146,7 @@ export default {
 
 ```js
 import { defineBuildConfig } from 'unbuild'
-import { MagicRegExpTransformPlugin } from 'magic-regexp'
+import { MagicRegExpTransformPlugin } from 'magic-regexp/transform'
 
 export default defineBuildConfig({
   hooks: {
