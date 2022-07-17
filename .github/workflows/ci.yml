@@ -24,7 +24,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: 🔠 Lint project
-        run: pnpm run lint
+        run: pnpm lint
 
   test:
     runs-on: ubuntu-latest
@@ -41,10 +41,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: 🛠 Build project
-        run: pnpm run build
+        run: pnpm build
+
+      - name: 💪 Test types
+        run: pnpm test:types
 
       - name: 🧪 Test project
-        run: pnpm run test --coverage
+        run: pnpm test --coverage
 
       - name: 🟩 Coverage
         uses: codecov/codecov-action@v3

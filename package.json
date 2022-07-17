@@ -30,6 +30,7 @@
     "prepublishOnly": "pnpm lint && pnpm test && pinst --disable",
     "release": "release-it",
     "test": "vitest run",
+    "test:types": "tsc --noEmit",
     "postinstall": "husky install",
     "postpublish": "pinst --enable"
   },
