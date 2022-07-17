@@ -1,5 +1,12 @@
 
 
+## [0.2.1](https://github.com/danielroe/magic-regexp/compare/0.2.0...0.2.1) (2022-07-17)
+
+
+### Bug Fixes
+
+* correctly merge group generics for `.and` and `.or` ([b2b7876](https://github.com/danielroe/magic-regexp/commit/b2b787601a29664da1567d9b9fa518186d5428e9))
+
 ## [0.2.0](https://github.com/danielroe/magic-regexp/compare/0.1.0...0.2.0) (2022-07-17)
 
 
