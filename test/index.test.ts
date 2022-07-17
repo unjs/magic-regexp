@@ -1,4 +1,5 @@
 import { expect, it, describe } from 'vitest'
+import { expectTypeOf } from 'expect-type'
 
 import { anyOf, char, createRegExp, exactly, global } from '../src'
 import { createInput } from '../src/core/internal'
@@ -70,5 +71,20 @@ describe('inputs', () => {
         "test2": "baz",
       }
     `)
+    expectTypeOf<Record<'test' | 'test2', string | undefined> | undefined>(
+      'fobazzer'.match(createRegExp(pattern))?.groups
+    )
+    // @ts-expect-error
+    'fobazzer'.match(createRegExp(pattern))?.groups.other
+
+    for (const match of 'fobazzer'.matchAll(createRegExp(pattern, [global]))) {
+      expect(match.groups).toMatchInlineSnapshot(`
+        {
+          "test": undefined,
+          "test2": "baz",
+        }
+      `)
+      expectTypeOf<Record<'test' | 'test2', string | undefined>>(match.groups)
+    }
   })
 })

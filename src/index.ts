@@ -21,5 +21,10 @@ declare global {
     match<T extends string>(
       regexp: MagicRegExp<T>
     ): (Omit<RegExpMatchArray, 'groups'> & { groups: Record<T, string | undefined> }) | null
+    matchAll<T extends string>(
+      regexp: MagicRegExp<T>
+    ): IterableIterator<
+      Omit<RegExpMatchArray, 'groups'> & { groups: Record<T, string | undefined> }
+    >
   }
 }
