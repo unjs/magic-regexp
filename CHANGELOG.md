@@ -1,5 +1,17 @@
 
 
+## [0.2.2](https://github.com/danielroe/magic-regexp/compare/0.2.1...0.2.2) (2022-07-18)
+
+
+### Features
+
+* expose flags as literal types ([0c7bec7](https://github.com/danielroe/magic-regexp/commit/0c7bec7082d98389b117c5fecdf53dede060185e))
+
+
+### Bug Fixes
+
+* **types:** escape generated types for `anyOf` ([0be9fb3](https://github.com/danielroe/magic-regexp/commit/0be9fb3c08b70048c119a092658717baa76f5531))
+
 ## [0.2.1](https://github.com/danielroe/magic-regexp/compare/0.2.0...0.2.1) (2022-07-17)
 
 
