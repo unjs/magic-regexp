@@ -1,11 +1,6 @@
 import type { Flag } from './core/flags'
 import { Input, exactly } from './core/inputs'
-
-const MagicRegExpSymbol = Symbol('MagicRegExp')
-
-export type MagicRegExp<Value extends string, T = never> = RegExp & {
-  [MagicRegExpSymbol]: T & Value
-}
+import type { MagicRegExp, MagicRegExpMatchArray } from './core/types/magic-regexp'
 
 export const createRegExp = <Value extends string, NamedGroups extends string = never>(
   raw: Input<Value, NamedGroups> | Value,
@@ -14,30 +9,17 @@ export const createRegExp = <Value extends string, NamedGroups extends string = 
 
 export * from './core/flags'
 export * from './core/inputs'
-
-type ExtractNamedGroups<T extends MagicRegExp<string, string>> = T extends MagicRegExp<
-  string,
-  infer V
->
-  ? V
-  : never
-
-export type MagicRegExpMatchArray<T extends MagicRegExp<string, string>> = Omit<
-  RegExpMatchArray,
-  'groups'
-> & {
-  groups: Record<ExtractNamedGroups<T>, string | undefined>
-}
+export * from './core/types/magic-regexp'
 
 // Add additional overload to global String object types to allow for typed capturing groups
 declare global {
   interface String {
-    match<T extends string, RegExp extends MagicRegExp<any, T>>(
-      regexp: RegExp
-    ): MagicRegExpMatchArray<RegExp> | null
+    match<T extends string, R extends MagicRegExp<any, T>>(
+      regexp: R
+    ): MagicRegExpMatchArray<R> | null
 
-    matchAll<T extends string, RegExp extends MagicRegExp<any, T>>(
-      regexp: RegExp
-    ): IterableIterator<MagicRegExpMatchArray<RegExp>>
+    matchAll<T extends string, R extends MagicRegExp<any, T>>(
+      regexp: R
+    ): IterableIterator<MagicRegExpMatchArray<R>>
   }
 }
