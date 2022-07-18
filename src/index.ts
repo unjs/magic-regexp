@@ -15,16 +15,29 @@ export const createRegExp = <Value extends string, NamedGroups extends string = 
 export * from './core/flags'
 export * from './core/inputs'
 
+type ExtractNamedGroups<T extends MagicRegExp<string, string>> = T extends MagicRegExp<
+  string,
+  infer V
+>
+  ? V
+  : never
+
+export type MagicRegExpMatchArray<T extends MagicRegExp<string, string>> = Omit<
+  RegExpMatchArray,
+  'groups'
+> & {
+  groups: Record<ExtractNamedGroups<T>, string | undefined>
+}
+
 // Add additional overload to global String object types to allow for typed capturing groups
 declare global {
   interface String {
-    match<T extends string>(
-      regexp: MagicRegExp<any, T>
-    ): (Omit<RegExpMatchArray, 'groups'> & { groups: Record<T, string | undefined> }) | null
-    matchAll<T extends string>(
-      regexp: MagicRegExp<any, T>
-    ): IterableIterator<
-      Omit<RegExpMatchArray, 'groups'> & { groups: Record<T, string | undefined> }
-    >
+    match<T extends string, RegExp extends MagicRegExp<any, T>>(
+      regexp: RegExp
+    ): MagicRegExpMatchArray<RegExp> | null
+
+    matchAll<T extends string, RegExp extends MagicRegExp<any, T>>(
+      regexp: RegExp
+    ): IterableIterator<MagicRegExpMatchArray<RegExp>>
   }
 }
