@@ -1,5 +1,12 @@
 
 
+## [0.2.3](https://github.com/danielroe/magic-regexp/compare/0.2.2...0.2.3) (2022-07-18)
+
+
+### Features
+
+* **types:** add `MagicRegExpMatchArray` utility type ([#12](https://github.com/danielroe/magic-regexp/issues/12)) ([97cb27a](https://github.com/danielroe/magic-regexp/commit/97cb27a1e002816d4f8b8dcbac4e801c0cc2fab1))
+
 ## [0.2.2](https://github.com/danielroe/magic-regexp/compare/0.2.1...0.2.2) (2022-07-18)
 
 
