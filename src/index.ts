@@ -15,11 +15,11 @@ export const createRegExp = <Value extends string, NamedGroups extends string = 
 export * from './core/flags'
 export * from './core/inputs'
 
-export type MagicRegExpMatchArray<T extends string | MagicRegExp<string, any>> = T extends string
+export type MagicRegExpMatchArray<T extends string | MagicRegExp<string, string>> = T extends string
   ? Omit<RegExpMatchArray, 'groups'> & {
       groups: Record<T, string | undefined>
     }
-  : T extends MagicRegExp<never, infer V>
+  : T extends MagicRegExp<string, infer V>
   ? V extends string
     ? Omit<RegExpMatchArray, 'groups'> & {
         groups: Record<V, string | undefined>
