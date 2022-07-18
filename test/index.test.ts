@@ -1,7 +1,7 @@
 import { expect, it, describe } from 'vitest'
 import { expectTypeOf } from 'expect-type'
 
-import { anyOf, char, createRegExp, exactly, global, digit } from '../src'
+import { anyOf, char, createRegExp, exactly, global, digit, MagicRegExpMatchArray } from '../src'
 import { createInput } from '../src/core/internal'
 
 describe('magic-regexp', () => {
@@ -71,6 +71,11 @@ describe('inputs', () => {
         "test2": "baz",
       }
     `)
+
+    const regexp = createRegExp(pattern)
+    expectTypeOf('fobazzer'.match(regexp)).toMatchTypeOf<MagicRegExpMatchArray<
+      typeof regexp
+    > | null>()
     expectTypeOf('fobazzer'.match(createRegExp(pattern))?.groups).toMatchTypeOf<
       Record<'test' | 'test2', string | undefined> | undefined
     >()
