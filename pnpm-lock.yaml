@@ -30,14 +30,14 @@ importers:
       ufo: ^0.8.5
       unbuild: latest
       unplugin: ^0.7.2
-      vite: ^3.0.1
+      vite: ^3.0.2
       vitest: latest
     dependencies:
       estree-walker: 3.0.1
       magic-string: 0.26.2
       mlly: 0.5.4
       ufo: 0.8.5
-      unplugin: 0.7.2_vite@3.0.1
+      unplugin: 0.7.2_vite@3.0.2
     devDependencies:
       '@nuxtjs/eslint-config-typescript': 10.0.0_he2ccbldppg44uulnyq4rwocfa
       '@release-it/conventional-changelog': 5.0.0_release-it@15.1.2
@@ -57,7 +57,7 @@ importers:
       release-it: 15.1.2
       typescript: 4.7.4
       unbuild: 0.7.4
-      vite: 3.0.1
+      vite: 3.0.2
       vitest: 0.18.1_c8@7.11.3
 
   playground:
@@ -5591,7 +5591,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /unplugin/0.7.2_vite@3.0.1:
+  /unplugin/0.7.2_vite@3.0.2:
     resolution: {integrity: sha512-m7thX4jP8l5sETpLdUASoDOGOcHaOVtgNyrYlToyQUvILUtEzEnngRBrHnAX3IKqooJVmXpoa/CwQ/QqzvGaHQ==}
     peerDependencies:
       esbuild: '>=0.13'
@@ -5610,7 +5610,7 @@ packages:
     dependencies:
       acorn: 8.7.1
       chokidar: 3.5.3
-      vite: 3.0.1
+      vite: 3.0.2
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.4.4
     dev: false
@@ -5681,8 +5681,8 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite/3.0.1:
-    resolution: {integrity: sha512-nefKSglkoEsDpYUkBuT2++L04ktcP8fz8dxLtmZdDdMyhubFSOLFw6BTh/46Fc6tIX/cibs/NVYWNrsqn0k6pQ==}
+  /vite/3.0.2:
+    resolution: {integrity: sha512-TAqydxW/w0U5AoL5AsD9DApTvGb2iNbGs3sN4u2VdT1GFkQVUfgUldt+t08TZgi23uIauh1TUOQJALduo9GXqw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -5738,7 +5738,7 @@ packages:
       local-pkg: 0.4.2
       tinypool: 0.2.4
       tinyspy: 1.0.0
-      vite: 3.0.1
+      vite: 3.0.2
     transitivePeerDependencies:
       - less
       - sass
