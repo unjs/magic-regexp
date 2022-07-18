@@ -32,12 +32,12 @@ export type MagicRegExpMatchArray<T extends MagicRegExp<string, string>> = Omit<
 // Add additional overload to global String object types to allow for typed capturing groups
 declare global {
   interface String {
-    match<T extends string, Regexp extends MagicRegExp<any, T>>(
-      regexp: Regexp
-    ): MagicRegExpMatchArray<Regexp> | null
+    match<T extends string, RegExp extends MagicRegExp<any, T>>(
+      regexp: RegExp
+    ): MagicRegExpMatchArray<RegExp> | null
 
-    matchAll<T extends string, Regexp extends MagicRegExp<any, T>>(
-      regexp: Regexp
-    ): IterableIterator<MagicRegExpMatchArray<Regexp>>
+    matchAll<T extends string, RegExp extends MagicRegExp<any, T>>(
+      regexp: RegExp
+    ): IterableIterator<MagicRegExpMatchArray<RegExp>>
   }
 }
