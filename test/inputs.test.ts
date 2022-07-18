@@ -32,12 +32,12 @@ describe('inputs', () => {
     expectTypeOf(extractRegExp(input)).toMatchTypeOf<'[^fo\\^\\-]'>()
   })
   it('anyOf', () => {
-    const values = ['foo', 'bar', 'baz'] as const
+    const values = ['fo/o', 'bar', 'baz', oneOrMore('this')] as const
     const input = anyOf(...values)
     const regexp = new RegExp(input as any)
-    expect(regexp).toMatchInlineSnapshot('/\\(foo\\|bar\\|baz\\)/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'(foo|bar|baz)'>()
-    for (const value of values) {
+    expect(regexp).toMatchInlineSnapshot('/\\(fo\\\\/o\\|bar\\|baz\\|\\(this\\)\\+\\)/')
+    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'(fo\\/o|bar|baz|(this)+)'>()
+    for (const value of values.slice(0, -1) as string[]) {
       expect(regexp.test(value)).toBeTruthy()
     }
     expect(regexp.test('qux')).toBeFalsy()
