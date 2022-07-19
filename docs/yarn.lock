@@ -280,40 +280,40 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.0.2.tgz#1bfafe4b7ed0f3e4105837e056e0a89b108ebe36"
   integrity sha512-IkpVW/ehM1hWKln4fCA3NzJU8KwD+kIOvPZA4cqxoJHtE21CCzjyp+Kxbu0i5I4tBNOlXPL9mjwnWlL0VEG4Fg==
 
-"@docus/base@npm:@docus/base-edge@3.0.0-1138f93":
-  version "3.0.0-1138f93"
-  resolved "https://registry.yarnpkg.com/@docus/base-edge/-/base-edge-3.0.0-1138f93.tgz#b73ccc326320861e314375d7bed961f9f9d298a1"
-  integrity sha512-4x9/ump1+5Ig5S0xm7zjSPZJUr9BTI4DvhNtLZCJwLFqn2rdK1kz/x8w9QX44Q+ns6GT7Is9FCwij55hywOPbw==
+"@docus/base@npm:@docus/base-edge@3.0.0-b99961f":
+  version "3.0.0-b99961f"
+  resolved "https://registry.yarnpkg.com/@docus/base-edge/-/base-edge-3.0.0-b99961f.tgz#312e62774ac8523a6bc069ffb84d8abffafbce1a"
+  integrity sha512-KZcoG4XgBa7YTkwDRRrDkIL+UTWFqJH+Ax1LwwkT6oAmZTdr3ZskinpRa94UP674FmBb695ojEQlkw1e66YUNg==
   dependencies:
     "@nuxt/content" "npm:@nuxt/content-edge@latest"
     "@nuxthq/admin" "npm:@nuxthq/admin-edge@latest"
-    "@vueuse/core" "^8.6.0"
-    "@vueuse/nuxt" "^8.6.0"
+    "@vueuse/core" "^8.7.5"
+    "@vueuse/nuxt" "^8.7.5"
     defu "^6.0.0"
-    nuxt "^3.0.0-rc.3"
-    pkg-types "^0.3.2"
+    nuxt "^3.0.0-rc.4"
+    pkg-types "^0.3.3"
 
-"@docus/docs-theme@npm:@docus/docs-theme-edge@3.0.0-1138f93":
-  version "3.0.0-1138f93"
-  resolved "https://registry.yarnpkg.com/@docus/docs-theme-edge/-/docs-theme-edge-3.0.0-1138f93.tgz#75ea71e1f6ca1ab924db3eec2274d5538be00199"
-  integrity sha512-VZjtz1HWb7oLTY9AWGdowlGuk28ryD/BdrJICeJsS8DZ5cuS5xe84qdwW5jYRCWbA66H8O+fU68WOVJofGrN0Q==
+"@docus/docs-theme@npm:@docus/docs-theme-edge@3.0.0-b99961f":
+  version "3.0.0-b99961f"
+  resolved "https://registry.yarnpkg.com/@docus/docs-theme-edge/-/docs-theme-edge-3.0.0-b99961f.tgz#6ff256fe9c40a18d475a3f841b8641a25f2d4732"
+  integrity sha512-FhEmvI9nDJF/G7rz7XrGjwEW0H7XcF8fKmJ/HLk+/9Wsuj7X7raG/LQplPYp6s4zZPwbUbgRKiGKx2MZVQEKNA==
   dependencies:
-    "@docus/base" "npm:@docus/base-edge@3.0.0-1138f93"
+    "@docus/base" "npm:@docus/base-edge@3.0.0-b99961f"
     "@iconify/vue" "^3.2.1"
     "@nuxtjs/color-mode" "^3.1.4"
-    "@nuxtjs/tailwindcss" "^5.1.2"
+    "@nuxtjs/tailwindcss" "^5.1.3"
     "@tailwindcss/aspect-ratio" "^0.4.0"
     "@tailwindcss/forms" "^0.5.2"
     "@tailwindcss/line-clamp" "^0.4.0"
     "@tailwindcss/typography" "^0.5.2"
     "@vueuse/motion" "2.0.0-beta.12"
-    tailwindcss "^3.1.2"
+    tailwindcss "^3.1.4"
     vue-plausible "^1.3.1"
 
-"@docus/github@npm:@docus/github-edge@1.2.6-1138f93":
-  version "1.2.6-1138f93"
-  resolved "https://registry.yarnpkg.com/@docus/github-edge/-/github-edge-1.2.6-1138f93.tgz#6e159e6eee977d3c68da52f2010742f765181763"
-  integrity sha512-Q5BbEm/FMhhFyhBsBO4fxqG5DtPlt34IRf6HtulOG3jUqOlARh0OTPZSJRyrCCvhsfCwc5qzwXA3xD4kDGROlg==
+"@docus/github@npm:@docus/github-edge@1.2.6-b99961f":
+  version "1.2.6-b99961f"
+  resolved "https://registry.yarnpkg.com/@docus/github-edge/-/github-edge-1.2.6-b99961f.tgz#03ad73eb40f8deb8f327ffc1f9d20ac19d68dbaf"
+  integrity sha512-CvCVbKSXeCCEZpaI2wZRbCbucc/BJyq1py87fzwlhqhBT0/EJtZ9AdHMsmmDJpHuiXxz9gauw+WgPp2Do+VnvA==
   dependencies:
     "@nuxt/kit" "^3.0.0-rc.4"
     "@octokit/graphql" "^4.8.0"
@@ -644,7 +644,7 @@
     lodash.template "^4.5.0"
     pathe "^0.3.0"
 
-"@nuxtjs/tailwindcss@^5.1.2":
+"@nuxtjs/tailwindcss@^5.1.3":
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/@nuxtjs/tailwindcss/-/tailwindcss-5.3.0.tgz#7bd85d46909d151902e7267e6c1653e3cf6eb567"
   integrity sha512-cS4P5L09ndgWXUsN1FHBPb7m2JhXS7c26d3otfwgNHLlNdUC8qjDRp83wpvkOBOgV+AOH8auZM3fSAuXNklMyA==
@@ -1126,7 +1126,7 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.37.tgz#8e6adc3f2759af52f0e85863dfb0b711ecc5c702"
   integrity sha512-4rSJemR2NQIo9Klm1vabqWjD8rs/ZaJSzMxkMNeJS6lHiUjjUeYFbooN19NgFjztubEKh3WlZUeOLVdbbUWHsw==
 
-"@vueuse/core@8.9.4", "@vueuse/core@^8.0.1", "@vueuse/core@^8.6.0":
+"@vueuse/core@8.9.4", "@vueuse/core@^8.0.1", "@vueuse/core@^8.7.5":
   version "8.9.4"
   resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-8.9.4.tgz#c7db40f19390b3c9f4ff9294a30461497f62ec19"
   integrity sha512-B/Mdj9TK1peFyWaPof+Zf/mP9XuGAngaJZBwPaXBvU3aCTZlx3ltlrFFFyMV4iGBwsjSCeUCgZrtkEj9dS2Y3Q==
@@ -1158,7 +1158,7 @@
     style-value-types "^5.1.0"
     vue-demi "*"
 
-"@vueuse/nuxt@^8.6.0":
+"@vueuse/nuxt@^8.7.5":
   version "8.9.4"
   resolved "https://registry.yarnpkg.com/@vueuse/nuxt/-/nuxt-8.9.4.tgz#22f14e23017f406d0bd37e9b4441483a1dd4277f"
   integrity sha512-iA0/maD70161MYY7HjCGmxMd97LqiaDA5d7pZnuBe3Xanm6xetvbvYCLAlhigbTujfDUQcmD0qiHbNaXaIP5Xg==
@@ -4396,7 +4396,7 @@ nuxt-component-meta@^0.1.5:
     "@vue/compiler-sfc" "^3.2.33"
     scule "^0.2.1"
 
-nuxt@^3.0.0-rc.3, nuxt@^3.0.0-rc.6:
+nuxt@^3.0.0-rc.4, nuxt@^3.0.0-rc.6:
   version "3.0.0-rc.6"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-3.0.0-rc.6.tgz#c0a81f53d1c39fefae87abebaba8c63949e40751"
   integrity sha512-Ko/LBIUBf25bSXKoRnPEplMngw2dHU8qkV5Twdm7yZ0DfdFkwaTVzTtwvbWsFt+H9vh1aUUTCSyEWnmNorkkxQ==
@@ -5830,7 +5830,7 @@ tailwind-config-viewer@^1.7.1:
     portfinder "^1.0.26"
     replace-in-file "^6.1.0"
 
-tailwindcss@*, tailwindcss@^3.1.2, tailwindcss@^3.1.6:
+tailwindcss@*, tailwindcss@^3.1.4, tailwindcss@^3.1.6:
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.1.6.tgz#bcb719357776c39e6376a8d84e9834b2b19a49f1"
   integrity sha512-7skAOY56erZAFQssT1xkpk+kWt2NrO45kORlxFPXUt3CiGsVPhH1smuH5XoDH6sGPXLyBv+zgCKA2HWBsgCytg==
