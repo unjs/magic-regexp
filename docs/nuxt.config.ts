@@ -10,6 +10,9 @@ export default defineNuxtConfig({
   },
   theme: {},
   content: {
+    highlight: {
+      theme: 'material-palenight',
+    },
     navigation: {
       fields: ['exact'],
     },
