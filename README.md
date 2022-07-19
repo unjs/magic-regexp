@@ -14,13 +14,11 @@
 
 ## Features
 
-**⚠️ `magic-regexp` is currently a work in progress. ⚠️**
-
 - Runtime is zero-dependency and ultra-minimal
-- Ships with transform for compiling runtime to pure RegExp
-- Supports automatically typed capture groups
-- Packed with useful utilities: `charIn`, `charNotIn`, `anyOf`, `char`, `word`, `digit`, `whitespace`, `letter`, `tab`, `linefeed`, `carriageReturn`, `not`, `maybe`, `exactly`, `oneOrMore`
-- All chainable with `and`, `or`, `after`, `before`, `notAfter`, `notBefore`, `times`, `as`, `at`, `optionally`
+- Ships with transform to compile to pure RegExp
+- Automatically typed capture groups
+- Natural language syntax
+- Generated RegExp displays on hover
 
 [📖 &nbsp;Read more](https://magic-regexp.roe.dev)
 
