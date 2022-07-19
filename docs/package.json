@@ -1,0 +1,20 @@
+{
+  "name": "magic-regexp-docs",
+  "version": "1.0.0",
+  "description": "A compiled-away, type-safe, readable RegExp alternative",
+  "homepage": "https://magic-regexp.roe.dev/",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi generate",
+    "generate": "nuxi generate",
+    "preview": "nuxi preview"
+  },
+  "devDependencies": {
+    "@docus/docs-theme": "npm:@docus/docs-theme-edge@3.0.0-59b8fe5",
+    "@docus/github": "npm:@docus/github-edge@1.2.6-a0efb08",
+    "nuxt": "^3.0.0-rc.6",
+    "vue-plausible": "^1.3.2"
+  },
+  "packageManager": "pnpm@7.5.2"
+}
