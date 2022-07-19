@@ -4,8 +4,12 @@ import type { MagicRegExp, MagicRegExpMatchArray } from './core/types/magic-rege
 
 export const createRegExp = <Value extends string, NamedGroups extends string = never>(
   raw: Input<Value, NamedGroups> | Value,
-  flags?: Flag[]
-) => new RegExp(exactly(raw).toString(), flags?.join('')) as MagicRegExp<`/${Value}/`, NamedGroups>
+  flags?: Flag[] | string | Set<Flag>
+) =>
+  new RegExp(exactly(raw).toString(), [...(flags || '')].join('')) as MagicRegExp<
+    `/${Value}/`,
+    NamedGroups
+  >
 
 export * from './core/flags'
 export * from './core/inputs'
