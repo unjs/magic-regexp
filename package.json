@@ -5,10 +5,12 @@
   "repository": "danielroe/magic-regexp",
   "license": "MIT",
   "sideEffects": false,
-  "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
-    "./transform": "./dist/transform.mjs",
+    "./transform": {
+      "import": "./dist/transform.mjs",
+      "require": "./transform.cjs"
+    },
     "./nuxt": "./nuxt.mjs"
   },
   "module": "./dist/index.mjs",
@@ -16,7 +18,8 @@
   "files": [
     "dist",
     "nuxt.mjs",
-    "transform.d.ts"
+    "transform.d.ts",
+    "transform.cjs"
   ],
   "scripts": {
     "build": "unbuild",
@@ -36,6 +39,7 @@
   },
   "dependencies": {
     "estree-walker": "^3.0.1",
+    "jiti": "^1.14.0",
     "magic-string": "^0.26.2",
     "mlly": "^0.5.4",
     "ufo": "^0.8.5",

@@ -20,6 +20,7 @@ importers:
       estree-walker: ^3.0.1
       expect-type: latest
       husky: latest
+      jiti: ^1.14.0
       lint-staged: latest
       magic-string: ^0.26.2
       mlly: ^0.5.4
@@ -34,17 +35,18 @@ importers:
       vitest: latest
     dependencies:
       estree-walker: 3.0.1
+      jiti: 1.14.0
       magic-string: 0.26.2
       mlly: 0.5.4
       ufo: 0.8.5
       unplugin: 0.7.2_vite@3.0.2
     devDependencies:
       '@nuxtjs/eslint-config-typescript': 10.0.0_he2ccbldppg44uulnyq4rwocfa
-      '@release-it/conventional-changelog': 5.0.0_release-it@15.1.2
+      '@release-it/conventional-changelog': 5.0.0_release-it@15.1.3
       '@types/estree': 1.0.0
       '@types/node': 18.0.6
       acorn: 8.7.1
-      c8: 7.11.3
+      c8: 7.12.0
       conventional-changelog-conventionalcommits: 5.0.0
       eslint: 8.20.0
       eslint-config-prettier: 8.5.0_eslint@8.20.0
@@ -54,11 +56,11 @@ importers:
       lint-staged: 13.0.3
       pinst: 3.0.0
       prettier: 2.7.1
-      release-it: 15.1.2
+      release-it: 15.1.3
       typescript: 4.7.4
       unbuild: 0.7.4
       vite: 3.0.2
-      vitest: 0.18.1_c8@7.11.3
+      vitest: 0.18.1_c8@7.12.0
 
   playground:
     specifiers:
@@ -545,7 +547,7 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@release-it/conventional-changelog/5.0.0_release-it@15.1.2:
+  /@release-it/conventional-changelog/5.0.0_release-it@15.1.3:
     resolution: {integrity: sha512-YAvGgxA8cIQSbmyHmAmLMwzCkNP74upLST8jFuDJTI+AVfK2Grp2HbZu0/NeV3sHYD20sT8YMzNVUeRxNlyHeg==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -554,7 +556,7 @@ packages:
       concat-stream: 2.0.0
       conventional-changelog: 3.1.25
       conventional-recommended-bump: 6.1.0
-      release-it: 15.1.2
+      release-it: 15.1.3
     dev: true
 
   /@rollup/plugin-alias/3.1.9_rollup@2.75.6:
@@ -1145,8 +1147,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /c8/7.11.3:
-    resolution: {integrity: sha512-6YBmsaNmqRm9OS3ZbIiL2EZgi1+Xc4O24jL3vMYGE6idixYuGdy76rIfIdltSKDj9DpLNrcXSonUTR1miBD0wA==}
+  /c8/7.12.0:
+    resolution: {integrity: sha512-CtgQrHOkyxr5koX1wEUmN/5cfDa2ckbHRA4Gy5LAL0zaCFtVWJS5++n+w4/sr2GWGerBxgTjpKeDclk/Qk6W/A==}
     engines: {node: '>=10.12.0'}
     hasBin: true
     dependencies:
@@ -1412,7 +1414,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
     dev: true
 
   /concat-stream/2.0.0:
@@ -3343,8 +3345,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /inquirer/9.0.1:
-    resolution: {integrity: sha512-NO601wvGO4Zm25ctJUhuglRBShQKJSGKGQlgbeyjs3cvXqq4Ud1jhwR36zf3pTC9mmfH3uHJHb/sL3/YJPqMzw==}
+  /inquirer/9.0.2:
+    resolution: {integrity: sha512-AqmDHmz3bIe573OiM4svTZzajBzff1xpuzYAimW8gjzW5ncuPllWB8t/GKl+NSuKRJaKyIF2bU2RCx8H1dwqyQ==}
     engines: {node: '>=12.0.0'}
     dependencies:
       ansi-escapes: 5.0.0
@@ -3671,10 +3673,9 @@ packages:
       iterate-iterator: 1.0.2
     dev: true
 
-  /jiti/1.13.0:
-    resolution: {integrity: sha512-/n9mNxZj/HDSrincJ6RP+L+yXbpnB8FybySBa+IjIaoH9FIxBbrbRT5XUbe8R7zuVM2AQqNMNDDqz0bzx3znOQ==}
+  /jiti/1.14.0:
+    resolution: {integrity: sha512-4IwstlaKQc9vCTC+qUXLM1hajy2ImiL9KnLvVYiaHOtS/v3wRjhLlGl121AmgDgx/O43uKmxownJghS5XMya2A==}
     hasBin: true
-    dev: true
 
   /joycon/3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -4082,7 +4083,7 @@ packages:
       esbuild: 0.13.15
       fs-extra: 10.1.0
       globby: 11.1.0
-      jiti: 1.13.0
+      jiti: 1.14.0
       mri: 1.2.0
       pathe: 0.2.0
       typescript: 4.7.4
@@ -4162,8 +4163,8 @@ packages:
       whatwg-url: 5.0.0
     dev: true
 
-  /node-fetch/3.2.8:
-    resolution: {integrity: sha512-KtpD1YhGszhntMpBDyp5lyagk8KIMopC1LEb7cQUAh7zcosaX5uK8HnbNb2i3NTQK3sIawCItS0uFC3QzcLHdg==}
+  /node-fetch/3.2.9:
+    resolution: {integrity: sha512-/2lI+DBecVvVm9tDhjziTVjo2wmTsSxSk58saUYP0P/fRJ3xxtfMDY24+CKTkfm0Dlhyn3CSXNL0SoRiCZ8Rzg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       data-uri-to-buffer: 4.0.0
@@ -4852,8 +4853,8 @@ packages:
       rc: 1.2.8
     dev: true
 
-  /release-it/15.1.2:
-    resolution: {integrity: sha512-GLNFI4oDpxSCAOJyzmaWyel8JwZTr2eD276TivTHaUaUvP0wer2qtUYzF+Ot1V+rLGM25bE+AZwR0UFzQNgC1A==}
+  /release-it/15.1.3:
+    resolution: {integrity: sha512-pdW9Ua59S3upm2wwzrWiQK8N5vXazNBBYk/UhpVf0faHV6mmY8GunS1ZzawSNi4fOOx55zSQFj2IHkOgfBxNUg==}
     engines: {node: '>=14.9'}
     hasBin: true
     dependencies:
@@ -4867,12 +4868,12 @@ packages:
       git-url-parse: 11.6.0
       globby: 13.1.2
       got: 12.1.0
-      inquirer: 9.0.1
+      inquirer: 9.0.2
       is-ci: 3.0.1
       lodash: 4.17.21
       mime-types: 2.1.35
       new-github-release-url: 2.0.0
-      node-fetch: 3.2.8
+      node-fetch: 3.2.9
       open: 8.4.0
       ora: 6.1.2
       os-name: 5.0.1
@@ -5545,7 +5546,7 @@ packages:
       defu: 6.0.0
       esbuild: 0.14.49
       hookable: 5.1.1
-      jiti: 1.13.0
+      jiti: 1.14.0
       magic-string: 0.26.2
       mkdirp: 1.0.4
       mkdist: 0.3.10_typescript@4.7.4
@@ -5707,7 +5708,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /vitest/0.18.1_c8@7.11.3:
+  /vitest/0.18.1_c8@7.12.0:
     resolution: {integrity: sha512-4F/1K/Vn4AvJwe7i2YblR02PT5vMKcw9KN4unDq2KD0YcSxX0B/6D6Qu9PJaXwVuxXMFTQ5ovd4+CQaW3bwofA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
@@ -5732,7 +5733,7 @@ packages:
       '@types/chai': 4.3.1
       '@types/chai-subset': 1.3.3
       '@types/node': 18.0.6
-      c8: 7.11.3
+      c8: 7.12.0
       chai: 4.3.6
       debug: 4.3.4
       local-pkg: 0.4.2
@@ -5896,7 +5897,7 @@ packages:
     dev: true
 
   /xregexp/2.0.0:
-    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
+    resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
     dev: true
 
   /xtend/4.0.2:
