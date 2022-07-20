@@ -1,5 +1,17 @@
 
 
+## [0.3.0](https://github.com/danielroe/magic-regexp/compare/0.2.3...0.3.0) (2022-07-20)
+
+
+### Features
+
+* support string/Set as flags from `createRegExp` ([231dfa1](https://github.com/danielroe/magic-regexp/commit/231dfa1ef299f6f35eded17ea44f7155321f8625))
+
+
+### Bug Fixes
+
+* **transform:** add cjs stub for compatibility ([07a6ff7](https://github.com/danielroe/magic-regexp/commit/07a6ff70786c4764b583aa7cd47ada2b8d125f51)), closes [#11](https://github.com/danielroe/magic-regexp/issues/11)
+
 ## [0.2.3](https://github.com/danielroe/magic-regexp/compare/0.2.2...0.2.3) (2022-07-18)
 
 
