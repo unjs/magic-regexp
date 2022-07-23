@@ -106,9 +106,9 @@ describe('inputs', () => {
       .as('fooGroup')
       .and(exactly('bar').as('barGroup'))
       .and('baz')
-      .and.referenceToGroup('barGroup')
-      .and.referenceToGroup('fooGroup')
-      .and.referenceToGroup('barGroup')
+      .and.referenceTo('barGroup')
+      .and.referenceTo('fooGroup')
+      .and.referenceTo('barGroup')
 
     expect('foobarbazbarfoobar'.match(createRegExp(pattern))).toMatchInlineSnapshot(`
       [
@@ -117,8 +117,8 @@ describe('inputs', () => {
         "bar",
       ]
     `)
-    expectTypeOf(pattern.and.referenceToGroup).toBeCallableWith('barGroup')
+    expectTypeOf(pattern.and.referenceTo).toBeCallableWith('barGroup')
     // @ts-expect-error
-    pattern.and.referenceToGroup('bazgroup')
+    pattern.and.referenceTo('bazgroup')
   })
 })

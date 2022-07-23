@@ -10,7 +10,7 @@ export interface Input<V extends string, G extends string = never> {
       G | (I extends Input<any, infer NewGroups> ? NewGroups : never)
     >
     /** this adds a new pattern to the current input, with the pattern reference to a named group. */
-    referenceToGroup: <N extends G>(groupName: N) => Input<`${V}\\k<${N}>`, G>
+    referenceTo: <N extends G>(groupName: N) => Input<`${V}\\k<${N}>`, G>
   }
   /** this provides an alternative to the current input */
   or: <I extends InputSource<string, any>>(
@@ -58,7 +58,7 @@ export const createInput = <Value extends string, Groups extends string = never>
   return {
     toString: () => s.toString(),
     and: Object.assign((input: InputSource<string, any>) => createInput(`${s}${exactly(input)}`), {
-      referenceToGroup: (groupName: string) => createInput(`${s}\\k<${groupName}>`),
+      referenceTo: (groupName: string) => createInput(`${s}\\k<${groupName}>`),
     }),
     or: input => createInput(`(${s}|${exactly(input)})`),
     after: input => createInput(`(?<=${exactly(input)})${s}`),
