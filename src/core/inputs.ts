@@ -24,6 +24,7 @@ export const anyOf = <New extends InputSource<V, T>[], V extends string, T exten
 
 export const char = createInput('.')
 export const word = createInput('\\w')
+export const wordBoundary = createInput('\\b')
 export const digit = createInput('\\d')
 export const whitespace = createInput('\\s')
 export const letter = createInput('[a-zA-Z]')
@@ -33,6 +34,7 @@ export const carriageReturn = createInput('\\r')
 
 export const not = {
   word: createInput('\\W'),
+  wordBoundary: createInput('\\B'),
   digit: createInput('\\D'),
   whitespace: createInput('\\S'),
   letter: createInput('[^a-zA-Z]'),
