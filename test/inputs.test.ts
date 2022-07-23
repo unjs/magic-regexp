@@ -11,6 +11,7 @@ import {
   maybe,
   oneOrMore,
   word,
+  wordBoundary,
   digit,
   whitespace,
   letter,
@@ -76,6 +77,11 @@ describe('inputs', () => {
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\d/')
     expectTypeOf(extractRegExp(input)).toMatchTypeOf<'\\d'>()
   })
+  it('wordBoundary', () => {
+    const input = wordBoundary
+    expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\b/')
+    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'\\b'>()
+  })
   it('whitespace', () => {
     const input = whitespace
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\s/')
@@ -104,6 +110,8 @@ describe('inputs', () => {
   it('not', () => {
     expect(not.word.toString()).toMatchInlineSnapshot('"\\\\W"')
     expectTypeOf(extractRegExp(not.word)).toMatchTypeOf<'\\W'>()
+    expect(not.wordBoundary.toString()).toMatchInlineSnapshot('"\\\\B"')
+    expectTypeOf(extractRegExp(not.wordBoundary)).toMatchTypeOf<'\\B'>()
     expect(not.digit.toString()).toMatchInlineSnapshot('"\\\\D"')
     expectTypeOf(extractRegExp(not.digit)).toMatchTypeOf<'\\D'>()
     expect(not.whitespace.toString()).toMatchInlineSnapshot('"\\\\S"')
