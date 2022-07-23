@@ -23,7 +23,8 @@ export const anyOf = <New extends InputSource<V, T>[], V extends string, T exten
   >
 
 export const char = createInput('.')
-export const word = createInput('\\w')
+export const word = createInput('\\b\\w+\\b')
+export const wordChar = createInput('\\w')
 export const wordBoundary = createInput('\\b')
 export const digit = createInput('\\d')
 export const whitespace = createInput('\\s')
@@ -33,7 +34,7 @@ export const linefeed = createInput('\\n')
 export const carriageReturn = createInput('\\r')
 
 export const not = {
-  word: createInput('\\W'),
+  wordChar: createInput('\\W'),
   wordBoundary: createInput('\\B'),
   digit: createInput('\\D'),
   whitespace: createInput('\\S'),

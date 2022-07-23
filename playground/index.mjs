@@ -1,5 +1,5 @@
 import assert from 'node:assert'
-import { createRegExp, exactly, digit, oneOrMore, char, word } from 'magic-regexp'
+import { createRegExp, exactly, digit, oneOrMore, char, wordChar } from 'magic-regexp'
 
 // Typed capture groups
 const ID_RE = createRegExp(exactly('id-').and(digit.times(5).as('id')))
@@ -20,12 +20,12 @@ assert.equal(createRegExp(exactly('foo/test.js').after('bar/')).test('bar/foo/te
 
 // References to previously captured groups using the group name
 const TENET_RE = createRegExp(
-  word
-    .as('firstWord')
-    .and(word.as('secondWord'))
+  wordChar
+    .as('firstChar')
+    .and(wordChar.as('secondChar'))
     .and(oneOrMore(char))
-    .and.referenceTo('secondWord')
-    .and.referenceTo('firstWord')
+    .and.referenceTo('secondChar')
+    .and.referenceTo('firstChar')
 )
 
 assert.equal(TENET_RE.test('TEN<==O==>NET'), true)
