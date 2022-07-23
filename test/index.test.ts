@@ -101,4 +101,24 @@ describe('inputs', () => {
       )
     )?.groups?.id
   })
+  it('named backreference to capture groups', () => {
+    const pattern = exactly('foo')
+      .as('fooGroup')
+      .and(exactly('bar').as('barGroup'))
+      .and('baz')
+      .and.referenceToGroup('barGroup')
+      .and.referenceToGroup('fooGroup')
+      .and.referenceToGroup('barGroup')
+
+    expect('foobarbazbarfoobar'.match(createRegExp(pattern))).toMatchInlineSnapshot(`
+      [
+        "foobarbazbarfoobar",
+        "foo",
+        "bar",
+      ]
+    `)
+    expectTypeOf(pattern.and.referenceToGroup).toBeCallableWith('barGroup')
+    // @ts-expect-error
+    pattern.and.referenceToGroup('bazgroup')
+  })
 })
