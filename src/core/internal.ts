@@ -3,10 +3,15 @@ import type { GetValue } from './types/escape'
 import type { InputSource } from './types/sources'
 
 export interface Input<V extends string, G extends string = never> {
-  /** this adds a new pattern to the current input */
-  and: <I extends InputSource<string, any>>(
-    input: I
-  ) => Input<`${V}${GetValue<I>}`, G | (I extends Input<any, infer NewGroups> ? NewGroups : never)>
+  and: {
+    /** this adds a new pattern to the current input */
+    <I extends InputSource<string, any>>(input: I): Input<
+      `${V}${GetValue<I>}`,
+      G | (I extends Input<any, infer NewGroups> ? NewGroups : never)
+    >
+    /** this adds a new pattern to the current input, with the pattern reference to a named group. */
+    referenceToGroup: <N extends G>(groupName: N) => Input<`${V}\\k<${N}>`, G>
+  }
   /** this provides an alternative to the current input */
   or: <I extends InputSource<string, any>>(
     input: I
@@ -52,7 +57,9 @@ export const createInput = <Value extends string, Groups extends string = never>
 ): Input<Value, Groups> => {
   return {
     toString: () => s.toString(),
-    and: input => createInput(`${s}${exactly(input)}`),
+    and: Object.assign((input: InputSource<string, any>) => createInput(`${s}${exactly(input)}`), {
+      referenceToGroup: (groupName: string) => createInput(`${s}\\k<${groupName}>`),
+    }),
     or: input => createInput(`(${s}|${exactly(input)})`),
     after: input => createInput(`(?<=${exactly(input)})${s}`),
     before: input => createInput(`${s}(?=${exactly(input)})`),
