@@ -135,8 +135,8 @@ describe('chained inputs', () => {
     expect(regexp).toMatchInlineSnapshot('/\\\\\\?test\\\\\\.js/')
     expectTypeOf(extractRegExp(val)).toMatchTypeOf<'\\?test\\.js'>()
   })
-  it('and.referenceToGroup', () => {
-    const val = input.as('namedGroup').and(exactly('any')).and.referenceToGroup('namedGroup')
+  it('and.referenceTo', () => {
+    const val = input.as('namedGroup').and(exactly('any')).and.referenceTo('namedGroup')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<namedGroup>\\\\\\?\\)any\\\\k<namedGroup>/')
     expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(?<namedGroup>\\?)any\\k<namedGroup>'>()
