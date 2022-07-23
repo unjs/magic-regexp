@@ -117,5 +117,8 @@ describe('inputs', () => {
         "bar",
       ]
     `)
+    expectTypeOf(pattern.and.referenceToGroup).toBeCallableWith('barGroup')
+    // @ts-expect-error
+    pattern.and.referenceToGroup('bazgroup')
   })
 })
