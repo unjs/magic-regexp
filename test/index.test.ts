@@ -1,7 +1,17 @@
 import { expect, it, describe } from 'vitest'
 import { expectTypeOf } from 'expect-type'
 
-import { anyOf, char, createRegExp, exactly, global, digit, MagicRegExpMatchArray } from '../src'
+import {
+  anyOf,
+  char,
+  createRegExp,
+  exactly,
+  global,
+  digit,
+  multiline,
+  MagicRegExp,
+  MagicRegExpMatchArray,
+} from '../src'
 import { createInput } from '../src/core/internal'
 
 describe('magic-regexp', () => {
@@ -10,6 +20,10 @@ describe('magic-regexp', () => {
     expect('thing'.match(regExp)?.[0]).toMatchInlineSnapshot('"in"')
     expect(regExp.test('thing')).toBeTruthy()
     expect(regExp.lastIndex).toMatchInlineSnapshot('4')
+  })
+  it('collects flag type', () => {
+    const re = createRegExp('.', [global, multiline])
+    expectTypeOf(re).toEqualTypeOf<MagicRegExp<'/./gm', never, 'g' | 'm'>>()
   })
 })
 

@@ -1,14 +1,26 @@
-const MagicRegExpSymbol = Symbol('MagicRegExp')
+const NamedGroups = Symbol('NamedGroups')
+const Value = Symbol('Value')
+const Flags = Symbol('Flags')
 
-export type MagicRegExp<Value extends string, T = never> = RegExp & {
-  [MagicRegExpSymbol]: T & Value
+export type MagicRegExp<
+  Value extends string,
+  NamedGroups extends string | never = never,
+  Flags extends string | never = never
+> = RegExp & {
+  [NamedGroups]: NamedGroups
+  [Value]: Value
+  [Flags]: Flags
 }
 
-type ExtractGroups<T extends MagicRegExp<string, string>> = T extends MagicRegExp<string, infer V>
+type ExtractGroups<T extends MagicRegExp<string, string, string>> = T extends MagicRegExp<
+  string,
+  infer V,
+  string
+>
   ? V
   : never
 
-export type MagicRegExpMatchArray<T extends MagicRegExp<string, string>> = Omit<
+export type MagicRegExpMatchArray<T extends MagicRegExp<string, string, string>> = Omit<
   RegExpMatchArray,
   'groups'
 > & {
