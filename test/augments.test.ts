@@ -15,21 +15,30 @@ describe('String', () => {
   it('.match global', () => {
     const result = 'test'.match(createRegExp(char.as('foo'), [global]))
     expect(Array.isArray(result)).toBeTruthy()
+    // @ts-expect-error
     expect(result?.groups).toBeUndefined()
-    // TODO: https://github.com/danielroe/magic-regexp/issues/26
-    // expectTypeOf(result).toEqualTypeOf<null | string[]>()
+    expectTypeOf(result).toEqualTypeOf<null | string[]>()
   })
   it.todo('.matchAll non-global', () => {
-    // TODO: @ts-expect-error
-    'test'.matchAll(createRegExp(char.as('foo')))
+    // should be deprecated
+    expectTypeOf('test'.matchAll(createRegExp(char.as('foo')))).toEqualTypeOf<never>()
+    expectTypeOf('test'.matchAll(createRegExp(char.as('foo'), ['m']))).toEqualTypeOf<never>()
   })
   it('.matchAll global', () => {
     const results = 'test'.matchAll(createRegExp(char.as('foo'), [global]))
-    expect(Array.isArray([...results])).toBeTruthy()
+    let count = 0
     for (const result of results) {
-      expect(result?.groups).toBeUndefined()
-      // TODO: https://github.com/danielroe/magic-regexp/issues/26
-      // expectTypeOf(result).toEqualTypeOf<null | string[]>()
+      count++
+      expect([...'test'].includes(result?.groups.foo || '')).toBeTruthy()
+      expectTypeOf(result).toEqualTypeOf<
+        MagicRegExpMatchArray<MagicRegExp<'/(?<foo>.)/g', 'foo', 'g'>>
+      >()
     }
+    expect(count).toBe(4)
+  })
+  it.todo('.replaceAll non-global', () => {
+    // should be deprecated
+    expectTypeOf('test'.replaceAll(createRegExp(char.as('foo')), '')).toEqualTypeOf<never>()
+    expectTypeOf('test'.replaceAll(createRegExp(char.as('foo'), ['m']), '')).toEqualTypeOf<never>()
   })
 })
