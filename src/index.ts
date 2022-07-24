@@ -29,9 +29,9 @@ declare global {
     ): MagicRegExpMatchArray<R> | null
     match<R extends MagicRegExp<string, string, 'g'>>(regexp: R): string[] | null
 
-    /** @deprecated String.matchAll requires global flag to be set */
+    /** @deprecated String.matchAll requires global flag to be set. */
     matchAll<R extends MagicRegExp<string, string, never>>(regexp: R): never
-    /** @deprecated String.matchAll requires global flag to be set*/
+    /** @deprecated String.matchAll requires global flag to be set. */
     matchAll<R extends MagicRegExp<string, string, Exclude<Flag, 'g'>>>(regexp: R): never
 
     matchAll<R extends MagicRegExp<string, string, string>>(
