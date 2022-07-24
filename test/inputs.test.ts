@@ -21,6 +21,7 @@ import {
   carriageReturn,
   charNotIn,
 } from '../src/core/inputs'
+import { createRegExp, MagicRegExp } from '../src'
 
 describe('inputs', () => {
   it('charIn', () => {
@@ -54,12 +55,20 @@ describe('inputs', () => {
     const regexp = new RegExp(input as any)
     expect(regexp).toMatchInlineSnapshot('/\\(foo\\)\\?/')
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(foo)?'>()
+    const nestedInputWithGroup = maybe(exactly('foo').as('groupName'))
+    expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
+      MagicRegExp<'/((?<groupName>foo))?/', 'groupName', never>
+    >()
   })
   it('oneOrMore', () => {
     const input = oneOrMore('foo')
     const regexp = new RegExp(input as any)
     expect(regexp).toMatchInlineSnapshot('/\\(foo\\)\\+/')
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(foo)+'>()
+    const nestedInputWithGroup = oneOrMore(exactly('foo').as('groupName'))
+    expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
+      MagicRegExp<'/((?<groupName>foo))+/', 'groupName', never>
+    >()
   })
   it('exactly', () => {
     const input = exactly('fo?[a-z]{2}/o?')
@@ -67,6 +76,10 @@ describe('inputs', () => {
       '/fo\\\\\\?\\\\\\[a-z\\\\\\]\\\\\\{2\\\\\\}\\\\/o\\\\\\?/'
     )
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'fo\\?\\[a-z\\]\\{2\\}\\/o\\?'>()
+    const nestedInputWithGroup = exactly(maybe('foo').and('bar').as('groupName'))
+    expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
+      MagicRegExp<'/(?<groupName>(foo)?bar)/', 'groupName', never>
+    >()
   })
   it('word', () => {
     const input = word
