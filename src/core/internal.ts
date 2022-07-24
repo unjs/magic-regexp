@@ -53,7 +53,7 @@ export interface Input<V extends string, G extends string = never> {
 }
 
 export const createInput = <Value extends string, Groups extends string = never>(
-  s: Value | Input<Groups, Value>
+  s: Value | Input<Value, Groups>
 ): Input<Value, Groups> => {
   return {
     toString: () => s.toString(),
