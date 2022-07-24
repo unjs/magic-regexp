@@ -31,6 +31,11 @@ describe('inputs', () => {
   it('createInput serializes to string', () => {
     expect(`${createInput('\\s')}`).toEqual('\\s')
   })
+  it('type infer group names when nesting createInput', () => {
+    expectTypeOf(createRegExp(createInput(exactly('\\s').as('groupName')))).toEqualTypeOf<
+      MagicRegExp<'/(?<groupName>\\s)/', 'groupName', never>
+    >()
+  })
   it('any', () => {
     const regExp = createRegExp(anyOf('foo', 'bar'))
     expect(regExp).toMatchInlineSnapshot('/\\(foo\\|bar\\)/')
