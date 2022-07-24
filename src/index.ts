@@ -37,5 +37,16 @@ declare global {
     matchAll<R extends MagicRegExp<string, string, string>>(
       regexp: R
     ): IterableIterator<MagicRegExpMatchArray<R>>
+
+    /** @deprecated String.replaceAll requires global flag to be set. */
+    replaceAll<R extends MagicRegExp<string, string, never>>(
+      searchValue: R,
+      replaceValue: string | ((substring: string, ...args: any[]) => string)
+    ): never
+    /** @deprecated String.replaceAll requires global flag to be set. */
+    replaceAll<R extends MagicRegExp<string, string, Exclude<Flag, 'g'>>>(
+      searchValue: R,
+      replaceValue: string | ((substring: string, ...args: any[]) => string)
+    ): never
   }
 }

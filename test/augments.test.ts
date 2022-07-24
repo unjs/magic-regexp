@@ -36,4 +36,9 @@ describe('String', () => {
     }
     expect(count).toBe(4)
   })
+  it.todo('.replaceAll non-global', () => {
+    // should be deprecated
+    expectTypeOf('test'.replaceAll(createRegExp(char.as('foo')), '')).toEqualTypeOf<never>()
+    expectTypeOf('test'.replaceAll(createRegExp(char.as('foo'), ['m']), '')).toEqualTypeOf<never>()
+  })
 })
