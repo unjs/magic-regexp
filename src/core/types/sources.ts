@@ -2,6 +2,9 @@ import type { Input } from '../internal'
 import type { GetValue } from './escape'
 
 export type InputSource<S extends string = never, T extends string = never> = S | Input<S, T>
+export type GetGroup<T extends InputSource<string>> = T extends Input<string, infer Group>
+  ? Group
+  : never
 export type MapToValues<T extends InputSource<any, any>[]> = T extends [infer First, ...infer Rest]
   ? First extends InputSource<string>
     ? [GetValue<First>, ...MapToValues<Rest>]
