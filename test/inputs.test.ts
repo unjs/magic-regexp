@@ -26,19 +26,19 @@ describe('inputs', () => {
   it('charIn', () => {
     const input = charIn('fo]^')
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[fo\\\\\\]\\\\\\^\\]/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'[fo\\]\\^]'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[fo\\]\\^]'>()
   })
   it('charNotIn', () => {
     const input = charNotIn('fo^-')
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[\\^fo\\\\\\^\\\\-\\]/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'[^fo\\^\\-]'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[^fo\\^\\-]'>()
   })
   it('anyOf', () => {
     const values = ['fo/o', 'bar', 'baz', oneOrMore('this')] as const
     const input = anyOf(...values)
     const regexp = new RegExp(input as any)
     expect(regexp).toMatchInlineSnapshot('/\\(fo\\\\/o\\|bar\\|baz\\|\\(this\\)\\+\\)/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'(fo\\/o|bar|baz|(this)+)'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(fo\\/o|bar|baz|(this)+)'>()
     for (const value of values.slice(0, -1) as string[]) {
       expect(regexp.test(value)).toBeTruthy()
     }
@@ -47,89 +47,89 @@ describe('inputs', () => {
   it('char', () => {
     const input = char
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\./')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'.'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'.'>()
   })
   it('maybe', () => {
     const input = maybe('foo')
     const regexp = new RegExp(input as any)
     expect(regexp).toMatchInlineSnapshot('/\\(foo\\)\\?/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'(foo)?'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(foo)?'>()
   })
   it('oneOrMore', () => {
     const input = oneOrMore('foo')
     const regexp = new RegExp(input as any)
     expect(regexp).toMatchInlineSnapshot('/\\(foo\\)\\+/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'(foo)+'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(foo)+'>()
   })
   it('exactly', () => {
     const input = exactly('fo?[a-z]{2}/o?')
     expect(new RegExp(input as any)).toMatchInlineSnapshot(
       '/fo\\\\\\?\\\\\\[a-z\\\\\\]\\\\\\{2\\\\\\}\\\\/o\\\\\\?/'
     )
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'fo\\?\\[a-z\\]\\{2\\}\\/o\\?'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'fo\\?\\[a-z\\]\\{2\\}\\/o\\?'>()
   })
   it('word', () => {
     const input = word
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\b\\\\w\\+\\\\b/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'\\b\\w+\\b'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\b\\w+\\b'>()
   })
   it('wordChar', () => {
     const input = wordChar
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\w/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'\\w'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\w'>()
   })
   it('digit', () => {
     const input = digit
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\d/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'\\d'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\d'>()
   })
   it('wordBoundary', () => {
     const input = wordBoundary
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\b/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'\\b'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\b'>()
   })
   it('whitespace', () => {
     const input = whitespace
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\s/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'\\s'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\s'>()
   })
   it('letter', () => {
     const input = letter
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[a-zA-Z\\]/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'[a-zA-Z]'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[a-zA-Z]'>()
   })
   it('tab', () => {
     const input = tab
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\t/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'\\t'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\t'>()
   })
   it('linefeed', () => {
     const input = linefeed
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\n/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'\\n'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\n'>()
   })
   it('carriageReturn', () => {
     const input = carriageReturn
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\r/')
-    expectTypeOf(extractRegExp(input)).toMatchTypeOf<'\\r'>()
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\r'>()
   })
   it('not', () => {
     expect(not.wordChar.toString()).toMatchInlineSnapshot('"\\\\W"')
-    expectTypeOf(extractRegExp(not.wordChar)).toMatchTypeOf<'\\W'>()
+    expectTypeOf(extractRegExp(not.wordChar)).toEqualTypeOf<'\\W'>()
     expect(not.wordBoundary.toString()).toMatchInlineSnapshot('"\\\\B"')
-    expectTypeOf(extractRegExp(not.wordBoundary)).toMatchTypeOf<'\\B'>()
+    expectTypeOf(extractRegExp(not.wordBoundary)).toEqualTypeOf<'\\B'>()
     expect(not.digit.toString()).toMatchInlineSnapshot('"\\\\D"')
-    expectTypeOf(extractRegExp(not.digit)).toMatchTypeOf<'\\D'>()
+    expectTypeOf(extractRegExp(not.digit)).toEqualTypeOf<'\\D'>()
     expect(not.whitespace.toString()).toMatchInlineSnapshot('"\\\\S"')
-    expectTypeOf(extractRegExp(not.whitespace)).toMatchTypeOf<'\\S'>()
+    expectTypeOf(extractRegExp(not.whitespace)).toEqualTypeOf<'\\S'>()
     expect(not.letter.toString()).toMatchInlineSnapshot('"[^a-zA-Z]"')
-    expectTypeOf(extractRegExp(not.letter)).toMatchTypeOf<'[^a-zA-Z]'>()
+    expectTypeOf(extractRegExp(not.letter)).toEqualTypeOf<'[^a-zA-Z]'>()
     expect(not.tab.toString()).toMatchInlineSnapshot('"[^\\\\t]"')
-    expectTypeOf(extractRegExp(not.tab)).toMatchTypeOf<'[^\\t]'>()
+    expectTypeOf(extractRegExp(not.tab)).toEqualTypeOf<'[^\\t]'>()
     expect(not.linefeed.toString()).toMatchInlineSnapshot('"[^\\\\n]"')
-    expectTypeOf(extractRegExp(not.linefeed)).toMatchTypeOf<'[^\\n]'>()
+    expectTypeOf(extractRegExp(not.linefeed)).toEqualTypeOf<'[^\\n]'>()
     expect(not.carriageReturn.toString()).toMatchInlineSnapshot('"[^\\\\r]"')
-    expectTypeOf(extractRegExp(not.carriageReturn)).toMatchTypeOf<'[^\\r]'>()
+    expectTypeOf(extractRegExp(not.carriageReturn)).toEqualTypeOf<'[^\\r]'>()
   })
 })
 
@@ -139,90 +139,90 @@ describe('chained inputs', () => {
     const val = input.and('test.js')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\\\\\?test\\\\\\.js/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'\\?test\\.js'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?test\\.js'>()
   })
   it('and.referenceTo', () => {
     const val = input.as('namedGroup').and(exactly('any')).and.referenceTo('namedGroup')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<namedGroup>\\\\\\?\\)any\\\\k<namedGroup>/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(?<namedGroup>\\?)any\\k<namedGroup>'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<namedGroup>\\?)any\\k<namedGroup>'>()
   })
   it('or', () => {
     const val = input.or('test.js')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\|test\\\\\\.js\\)/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(\\?|test\\.js)'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?|test\\.js)'>()
   })
   it('after', () => {
     const val = input.after('test.js')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<=test\\\\\\.js\\)\\\\\\?/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(?<=test\\.js)\\?'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<=test\\.js)\\?'>()
   })
   it('before', () => {
     const val = input.before('test.js')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\(\\?=test\\\\\\.js\\)/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'\\?(?=test\\.js)'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?(?=test\\.js)'>()
   })
   it('notAfter', () => {
     const val = input.notAfter('test.js')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<!test\\\\\\.js\\)\\\\\\?/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(?<!test\\.js)\\?'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<!test\\.js)\\?'>()
   })
   it('notBefore', () => {
     const val = input.notBefore('test.js')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\(\\?!test\\\\\\.js\\)/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'\\?(?!test\\.js)'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?(?!test\\.js)'>()
   })
   it('times', () => {
     const val = input.times(500)
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)\\{500\\}/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(\\?){500}'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?){500}'>()
   })
   it('times.any', () => {
     const val = input.times.any()
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)\\*/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(\\?)*'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?)*'>()
   })
   it('times.atLeast', () => {
     const val = input.times.atLeast(2)
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)\\{2,\\}/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(\\?){2,}'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?){2,}'>()
   })
   it('times.between', () => {
     const val = input.times.between(3, 5)
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)\\{3,5\\}/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(\\?){3,5}'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?){3,5}'>()
   })
   it('optionally', () => {
     const val = input.optionally()
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)\\?/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(\\?)?'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?)?'>()
   })
   it('as', () => {
     const val = input.as('test')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<test>\\\\\\?\\)/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'(?<test>\\?)'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<test>\\?)'>()
   })
   it('at.lineStart', () => {
     const val = input.at.lineStart()
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\^\\\\\\?/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'^\\?'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'^\\?'>()
   })
   it('at.lineEnd', () => {
     const val = input.at.lineEnd()
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\$/')
-    expectTypeOf(extractRegExp(val)).toMatchTypeOf<'\\?$'>()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?$'>()
   })
 })

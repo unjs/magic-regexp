@@ -73,10 +73,10 @@ describe('inputs', () => {
     `)
 
     const regexp = createRegExp(pattern)
-    expectTypeOf('fobazzer'.match(regexp)).toMatchTypeOf<MagicRegExpMatchArray<
+    expectTypeOf('fobazzer'.match(regexp)).toEqualTypeOf<MagicRegExpMatchArray<
       typeof regexp
     > | null>()
-    expectTypeOf('fobazzer'.match(createRegExp(pattern))?.groups).toMatchTypeOf<
+    expectTypeOf('fobazzer'.match(createRegExp(pattern))?.groups).toEqualTypeOf<
       Record<'test' | 'test2', string | undefined> | undefined
     >()
 
@@ -90,7 +90,7 @@ describe('inputs', () => {
           "test2": "baz",
         }
       `)
-      expectTypeOf(match.groups).toMatchTypeOf<Record<'test' | 'test2', string | undefined>>()
+      expectTypeOf(match.groups).toEqualTypeOf<Record<'test' | 'test2', string | undefined>>()
     }
 
     ''.match(
