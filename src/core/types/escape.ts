@@ -20,6 +20,7 @@ type Escape<
 
 type CharEscapeCharacter = '\\' | '^' | '-' | ']'
 export type EscapeChar<T extends string> = Escape<T, CharEscapeCharacter>
+export type StripEscapes<T extends string> = T extends `${infer A}\\${infer B}` ? `${A}${B}` : T
 
 export type GetValue<T extends InputSource<string>> = T extends string
   ? Escape<T, ExactEscapeChar>

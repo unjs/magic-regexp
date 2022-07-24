@@ -135,6 +135,7 @@ describe('inputs', () => {
 
 describe('chained inputs', () => {
   const input = exactly('?')
+  const multichar = exactly('ab')
   it('and', () => {
     const val = input.and('test.js')
     const regexp = new RegExp(val as any)
@@ -180,32 +181,57 @@ describe('chained inputs', () => {
   it('times', () => {
     const val = input.times(500)
     const regexp = new RegExp(val as any)
-    expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)\\{500\\}/')
-    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?){500}'>()
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\{500\\}/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?{500}'>()
+
+    const val2 = multichar.times(500)
+    const regexp2 = new RegExp(val as any)
+    expect(regexp2).toMatchInlineSnapshot('/\\\\\\?\\{500\\}/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(ab){500}'>()
   })
   it('times.any', () => {
     const val = input.times.any()
     const regexp = new RegExp(val as any)
-    expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)\\*/')
-    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?)*'>()
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\*/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?*'>()
+
+    const val2 = multichar.times.any()
+    const regexp2 = new RegExp(val as any)
+    expect(regexp2).toMatchInlineSnapshot('/\\\\\\?\\*/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(ab)*'>()
   })
   it('times.atLeast', () => {
     const val = input.times.atLeast(2)
     const regexp = new RegExp(val as any)
-    expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)\\{2,\\}/')
-    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?){2,}'>()
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\{2,\\}/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?{2,}'>()
+
+    const val2 = multichar.times.atLeast(2)
+    const regexp2 = new RegExp(val as any)
+    expect(regexp2).toMatchInlineSnapshot('/\\\\\\?\\{2,\\}/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(ab){2,}'>()
   })
   it('times.between', () => {
     const val = input.times.between(3, 5)
     const regexp = new RegExp(val as any)
-    expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)\\{3,5\\}/')
-    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?){3,5}'>()
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\{3,5\\}/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?{3,5}'>()
+
+    const val2 = multichar.times.between(3, 5)
+    const regexp2 = new RegExp(val as any)
+    expect(regexp2).toMatchInlineSnapshot('/\\\\\\?\\{3,5\\}/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(ab){3,5}'>()
   })
   it('optionally', () => {
     const val = input.optionally()
     const regexp = new RegExp(val as any)
-    expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)\\?/')
-    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?)?'>()
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\?/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\??'>()
+
+    const val2 = multichar.optionally()
+    const regexp2 = new RegExp(val as any)
+    expect(regexp2).toMatchInlineSnapshot('/\\\\\\?\\?/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(ab)?'>()
   })
   it('as', () => {
     const val = input.as('test')

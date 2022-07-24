@@ -1,6 +1,19 @@
 import { exactly } from './inputs'
-import type { GetValue } from './types/escape'
+import type { GetValue, StripEscapes } from './types/escape'
 import type { InputSource } from './types/sources'
+
+type IfSingle<T extends string, Yes, No> = StripEscapes<T> extends `${infer A}${infer B}`
+  ? A extends ''
+    ? Yes
+    : B extends ''
+    ? Yes
+    : No
+  : never
+
+const wrap = (s: string | Input<any>) => {
+  const v = s.toString()
+  return v.replace(/^\\/, '').length === 1 ? v : `(${v})`
+}
 
 export interface Input<V extends string, G extends string = never> {
   and: {
@@ -29,16 +42,18 @@ export interface Input<V extends string, G extends string = never> {
   notBefore: <I extends InputSource<string>>(input: I) => Input<`${V}(?!${GetValue<I>})`, G>
   times: {
     /** repeat the previous pattern an exact number of times */
-    <N extends number>(number: N): Input<`(${V}){${N}}`, G>
+    <N extends number>(number: N): IfSingle<V, Input<`${V}{${N}}`, G>, Input<`(${V}){${N}}`, G>>
     /** specify that the expression can repeat any number of times, _including none_ */
-    any: () => Input<`(${V})*`, G>
+    any: () => IfSingle<V, Input<`${V}*`, G>, Input<`(${V})*`, G>>
+    /** specify that the expression must occur at least x times */
+    atLeast: <N extends number>(
+      number: N
+    ) => IfSingle<V, Input<`${V}{${N},}`, G>, Input<`(${V}){${N},}`, G>>
     /** specify a range of times to repeat the previous pattern */
     between: <Min extends number, Max extends number>(
       min: Min,
       max: Max
-    ) => Input<`(${V}){${Min},${Max}}`, G>
-    /** specify that the expression must occur at least x times */
-    atLeast: <N extends number>(number: N) => Input<`(${V}){${N},}`, G>
+    ) => IfSingle<V, Input<`${V}{${Min},${Max}}`, G>, Input<`(${V}){${Min},${Max}}`, G>>
   }
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()` */
   as: <K extends string>(key: K) => Input<`(?<${K}>${V})`, G | K>
@@ -48,7 +63,7 @@ export interface Input<V extends string, G extends string = never> {
     lineEnd: () => Input<`${V}$`, G>
   }
   /** this allows you to mark the input so far as optional */
-  optionally: () => Input<`(${V})?`, G>
+  optionally: () => IfSingle<V, Input<`${V}?`, G>, Input<`(${V})?`, G>>
   toString: () => string
 }
 
@@ -65,12 +80,12 @@ export const createInput = <Value extends string, Groups extends string = never>
     before: input => createInput(`${s}(?=${exactly(input)})`),
     notAfter: input => createInput(`(?<!${exactly(input)})${s}`),
     notBefore: input => createInput(`${s}(?!${exactly(input)})`),
-    times: Object.assign((number: number) => createInput(`(${s}){${number}}`), {
-      any: () => createInput(`(${s})*`),
-      atLeast: (min: number) => createInput(`(${s}){${min},}`),
-      between: (min: number, max: number) => createInput(`(${s}){${min},${max}}`),
+    times: Object.assign((number: number) => createInput(`${wrap(s)}{${number}}`) as any, {
+      any: () => createInput(`${wrap(s)}*`) as any,
+      atLeast: (min: number) => createInput(`${wrap(s)}{${min},}`) as any,
+      between: (min: number, max: number) => createInput(`${wrap(s)}{${min},${max}}`) as any,
     }),
-    optionally: () => createInput(`(${s})?`),
+    optionally: () => createInput(`${wrap(s)}?`) as any,
     as: key => createInput(`(?<${key}>${s})`),
     at: {
       lineStart: () => createInput(`^${s}`),
