@@ -1,19 +1,7 @@
 import { exactly } from './inputs'
-import type { GetValue, StripEscapes } from './types/escape'
+import type { GetValue } from './types/escape'
 import type { InputSource } from './types/sources'
-
-type IfSingle<T extends string, Yes, No> = StripEscapes<T> extends `${infer A}${infer B}`
-  ? A extends ''
-    ? Yes
-    : B extends ''
-    ? Yes
-    : No
-  : never
-
-const wrap = (s: string | Input<any>) => {
-  const v = s.toString()
-  return v.replace(/^\\/, '').length === 1 ? v : `(${v})`
-}
+import { IfSingle, wrap } from './wrap'
 
 export interface Input<V extends string, G extends string = never> {
   and: {
