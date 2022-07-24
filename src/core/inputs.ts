@@ -2,7 +2,7 @@ import { createInput, Input } from './internal'
 import type { GetValue, EscapeChar } from './types/escape'
 import type { Join } from './types/join'
 import type { MapToGroups, MapToValues, InputSource, GetGroup } from './types/sources'
-import { IfSingle, wrap } from './wrap'
+import { Wrap, wrap } from './wrap'
 
 export type { Input }
 
@@ -47,7 +47,7 @@ export const not = {
 
 /** Equivalent to `?` - this marks the input as optional */
 export const maybe = <New extends InputSource<string>>(str: New) =>
-  createInput(`${wrap(exactly(str))}?`) as IfSingle<
+  createInput(`${wrap(exactly(str))}?`) as Wrap<
     GetValue<New>,
     Input<`${GetValue<New>}?`, GetGroup<New>>,
     Input<`(${GetValue<New>})?`, GetGroup<New>>
@@ -62,7 +62,7 @@ export const exactly = <New extends InputSource<string>>(
     : input
 
 export const oneOrMore = <New extends InputSource<string>>(str: New) =>
-  createInput(`${wrap(exactly(str))}+`) as IfSingle<
+  createInput(`${wrap(exactly(str))}+`) as Wrap<
     GetValue<New>,
     Input<`${GetValue<New>}+`, GetGroup<New>>,
     Input<`(${GetValue<New>})+`, GetGroup<New>>

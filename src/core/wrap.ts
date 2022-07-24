@@ -1,7 +1,7 @@
 import { Input } from './internal'
 import { StripEscapes } from './types/escape'
 
-export type IfSingle<T extends string, Yes, No> = T extends `(${string})`
+export type Wrap<T extends string, Yes, No> = T extends `(${string})`
   ? Yes
   : StripEscapes<T> extends `${infer A}${infer B}`
   ? A extends ''
