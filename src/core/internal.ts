@@ -1,7 +1,7 @@
 import { exactly } from './inputs'
 import type { GetValue } from './types/escape'
 import type { InputSource } from './types/sources'
-import { IfSingle, wrap } from './wrap'
+import { Wrap, wrap } from './wrap'
 
 export interface Input<V extends string, G extends string = never> {
   and: {
@@ -30,18 +30,18 @@ export interface Input<V extends string, G extends string = never> {
   notBefore: <I extends InputSource<string>>(input: I) => Input<`${V}(?!${GetValue<I>})`, G>
   times: {
     /** repeat the previous pattern an exact number of times */
-    <N extends number>(number: N): IfSingle<V, Input<`${V}{${N}}`, G>, Input<`(${V}){${N}}`, G>>
+    <N extends number>(number: N): Wrap<V, Input<`${V}{${N}}`, G>, Input<`(${V}){${N}}`, G>>
     /** specify that the expression can repeat any number of times, _including none_ */
-    any: () => IfSingle<V, Input<`${V}*`, G>, Input<`(${V})*`, G>>
+    any: () => Wrap<V, Input<`${V}*`, G>, Input<`(${V})*`, G>>
     /** specify that the expression must occur at least x times */
     atLeast: <N extends number>(
       number: N
-    ) => IfSingle<V, Input<`${V}{${N},}`, G>, Input<`(${V}){${N},}`, G>>
+    ) => Wrap<V, Input<`${V}{${N},}`, G>, Input<`(${V}){${N},}`, G>>
     /** specify a range of times to repeat the previous pattern */
     between: <Min extends number, Max extends number>(
       min: Min,
       max: Max
-    ) => IfSingle<V, Input<`${V}{${Min},${Max}}`, G>, Input<`(${V}){${Min},${Max}}`, G>>
+    ) => Wrap<V, Input<`${V}{${Min},${Max}}`, G>, Input<`(${V}){${Min},${Max}}`, G>>
   }
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()` */
   as: <K extends string>(key: K) => Input<`(?<${K}>${V})`, G | K>
@@ -51,7 +51,7 @@ export interface Input<V extends string, G extends string = never> {
     lineEnd: () => Input<`${V}$`, G>
   }
   /** this allows you to mark the input so far as optional */
-  optionally: () => IfSingle<V, Input<`${V}?`, G>, Input<`(${V})?`, G>>
+  optionally: () => Wrap<V, Input<`${V}?`, G>, Input<`(${V})?`, G>>
   toString: () => string
 }
 

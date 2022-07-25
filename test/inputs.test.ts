@@ -57,7 +57,7 @@ describe('inputs', () => {
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(foo)?'>()
     const nestedInputWithGroup = maybe(exactly('foo').as('groupName'))
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
-      MagicRegExp<'/((?<groupName>foo))?/', 'groupName', never>
+      MagicRegExp<'/(?<groupName>foo)?/', 'groupName', never>
     >()
   })
   it('oneOrMore', () => {
@@ -67,7 +67,7 @@ describe('inputs', () => {
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(foo)+'>()
     const nestedInputWithGroup = oneOrMore(exactly('foo').as('groupName'))
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
-      MagicRegExp<'/((?<groupName>foo))+/', 'groupName', never>
+      MagicRegExp<'/(?<groupName>foo)+/', 'groupName', never>
     >()
   })
   it('exactly', () => {
@@ -143,6 +143,12 @@ describe('inputs', () => {
     expectTypeOf(extractRegExp(not.linefeed)).toEqualTypeOf<'[^\\n]'>()
     expect(not.carriageReturn.toString()).toMatchInlineSnapshot('"[^\\\\r]"')
     expectTypeOf(extractRegExp(not.carriageReturn)).toEqualTypeOf<'[^\\r]'>()
+  })
+  it('no extra wrap by ()', () => {
+    const input = oneOrMore(maybe(exactly('(foo)')).as('groupName'))
+    const regexp = new RegExp(input as any)
+    expect(regexp).toMatchInlineSnapshot('/\\(\\?<groupName>\\(\\\\\\(foo\\\\\\)\\)\\?\\)\\+/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(?<groupName>(\\(foo\\))?)+'>()
   })
 })
 
