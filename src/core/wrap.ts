@@ -11,7 +11,9 @@ export type Wrap<T extends string, Yes, No> = T extends `(${string})`
     : No
   : never
 
+const NEEDS_WRAP_RE = /^(\(.*\)|\\?.)$/
+
 export const wrap = (s: string | Input<any>) => {
   const v = s.toString()
-  return /^((?<!\\)(\().*(?<!\\)(\))|.|\\[^()])$/.test(v) ? v : `(${v})`
+  return NEEDS_WRAP_RE.test(v) ? v : `(${v})`
 }
