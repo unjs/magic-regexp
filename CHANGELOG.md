@@ -1,5 +1,30 @@
 
 
+## [0.4.0](https://github.com/danielroe/magic-regexp/compare/0.3.0...0.4.0) (2022-07-25)
+
+🎉 Massive thanks to @didavid61202 for lots of great contributions in this release! 🎉
+
+### ⚠ BREAKING CHANGES
+
+* do not create wrap single chars in parentheses (#27)
+* `word` has been renamed to `wordChar`
+
+### Features
+
+* add `wordBoundary` helper input ([#20](https://github.com/danielroe/magic-regexp/issues/20)) ([040c940](https://github.com/danielroe/magic-regexp/commit/040c940cdaa0488d9b105641b3e1b9d5a8682445))
+* add chained input `and.referenceToGroup` ([#21](https://github.com/danielroe/magic-regexp/issues/21)) ([a18fccb](https://github.com/danielroe/magic-regexp/commit/a18fccbadf9f755d8b00f1e6ee8278402b6a683b))
+* do not create wrap single chars in parentheses ([#27](https://github.com/danielroe/magic-regexp/issues/27)) ([a02645b](https://github.com/danielroe/magic-regexp/commit/a02645b736661c37e95dab55a0f6dfcf2a9bf2e0))
+* **types:** respect global flag for .match and .matchAll types ([#29](https://github.com/danielroe/magic-regexp/issues/29)) ([2211a83](https://github.com/danielroe/magic-regexp/commit/2211a83bcf33a37967791e86ae152dfec9cca105))
+* update `IfSingle` and `wrap` to not wrap wrapped input ([#33](https://github.com/danielroe/magic-regexp/issues/33)) ([cd233ab](https://github.com/danielroe/magic-regexp/commit/cd233abbb7a918b4cecac113a13b84264750bccd))
+
+
+### Bug Fixes
+
+* order of generic types for param of `createInput` ([#31](https://github.com/danielroe/magic-regexp/issues/31)) ([545d725](https://github.com/danielroe/magic-regexp/commit/545d7254bc2a46a5e26993705672015446db2053))
+* rename `word` to `wordChar` and add semantic `word` helper ([#23](https://github.com/danielroe/magic-regexp/issues/23)) ([033ee5c](https://github.com/danielroe/magic-regexp/commit/033ee5c0db512dc80a1f40e34f989cbaac0c819d))
+* **types:** include flags in generated RegExp type ([c78c4e1](https://github.com/danielroe/magic-regexp/commit/c78c4e1b9b313980cd7162eb82e474b5acf648e3))
+* **types:** infer group names from param with `Input` type ([#32](https://github.com/danielroe/magic-regexp/issues/32)) ([6131ac6](https://github.com/danielroe/magic-regexp/commit/6131ac605d4af213477500dc79f794f10f8687f6))
+
 ## [0.3.0](https://github.com/danielroe/magic-regexp/compare/0.2.3...0.3.0) (2022-07-20)
 
 
