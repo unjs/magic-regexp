@@ -9,7 +9,7 @@
 > A compiled-away, type-safe, readable RegExp alternative
 
 - [✨ &nbsp;Changelog](https://github.com/danielroe/magic-regexp/blob/main/CHANGELOG.md)
-- [📖 &nbsp;Documentation](https://magic-regexp.roe.dev)
+- [📖 &nbsp;Documentation](https://regexp.dev)
 - [▶️ &nbsp;Online playground](https://stackblitz.com/github/danielroe/magic-regexp/tree/main/playground)
 
 ## Features
@@ -20,7 +20,7 @@
 - Natural language syntax
 - Generated RegExp displays on hover
 
-[📖 &nbsp;Read more](https://magic-regexp.roe.dev)
+[📖 &nbsp;Read more](https://regexp.dev)
 
 ## 💻 Development
 

@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   },
   modules: ['@nuxthq/admin', '@docus/github', 'vue-plausible'],
   plausible: {
-    domain: 'magic-regexp.roe.dev',
+    domain: 'regexp.dev',
   },
   hooks: {
     'tailwindcss:config'(config) {
