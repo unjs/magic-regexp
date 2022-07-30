@@ -23,7 +23,10 @@ export default defineNuxtConfig({
   },
   hooks: {
     'vite:extendConfig'(config, { isClient }) {
-      if (isClient) config.build.rollupOptions.output.chunkFileNames = '_nuxt/[hash].mjs'
+      if (isClient) {
+        // TODO: update when updating to rc7
+        config.build.rollupOptions.output.chunkFileNames = '[hash].mjs'
+      }
     },
     'tailwindcss:config'(config) {
       config.theme.extend.colors.primary = {
