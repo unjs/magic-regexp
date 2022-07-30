@@ -22,6 +22,12 @@ export default defineNuxtConfig({
     domain: 'regexp.dev',
   },
   hooks: {
+    'vite:extendConfig'(config, { isClient }) {
+      if (isClient) {
+        // TODO: update when updating to rc7
+        config.build.rollupOptions.output.chunkFileNames = '[hash].mjs'
+      }
+    },
     'tailwindcss:config'(config) {
       config.theme.extend.colors.primary = {
         '50': '#ff46c5',
