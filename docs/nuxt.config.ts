@@ -2,6 +2,7 @@ import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
   build: { transpile: [/@docus/] },
+  vite: { build: { rollupOptions: { output: { chunkFileNames: '[hash].mjs' } } } },
   extends: ['./node_modules/@docus/docs-theme'],
   github: {
     owner: 'danielroe',
