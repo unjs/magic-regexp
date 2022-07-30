@@ -4,6 +4,7 @@
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![Github Actions][github-actions-src]][github-actions-href]
 [![Codecov][codecov-src]][codecov-href]
+[![Bundlephobia][bundlephobia-src]][bundlephobia-href]
 [![LGTM][lgtm-src]][lgtm-href]
 
 > A compiled-away, type-safe, readable RegExp alternative
@@ -50,5 +51,7 @@ Published under [MIT License](./LICENCE).
 [github-actions-href]: https://github.com/danielroe/magic-regexp/actions?query=workflow%3Aci
 [codecov-src]: https://img.shields.io/codecov/c/gh/danielroe/magic-regexp/main?style=flat-square
 [codecov-href]: https://codecov.io/gh/danielroe/magic-regexp
-[lgtm-src]: https://img.shields.io/lgtm/grade/javascript/github/danielroe/vue-bind-once?style=flat-square
+[lgtm-src]: https://img.shields.io/lgtm/grade/javascript/github/danielroe/magic-regexp?style=flat-square
 [lgtm-href]: https://lgtm.com/projects/g/danielroe/magic-regexp
+[bundlephobia-src]: https://img.shields.io/bundlephobia/minzip/magic-regexp
+[bundlephobia-href]: https://bundlephobia.com/package/magic-regexp
