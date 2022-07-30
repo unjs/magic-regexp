@@ -2,7 +2,6 @@ import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
   build: { transpile: [/@docus/] },
-  vite: { build: { rollupOptions: { output: { chunkFileNames: '[hash].mjs' } } } },
   extends: ['./node_modules/@docus/docs-theme'],
   github: {
     owner: 'danielroe',
@@ -23,6 +22,9 @@ export default defineNuxtConfig({
     domain: 'regexp.dev',
   },
   hooks: {
+    'vite:extendConfig'(config, { isClient }) {
+      if (isClient) config.build.rollupOptions.output.chunkFileNames = '_nuxt/[hash].mjs'
+    },
     'tailwindcss:config'(config) {
       config.theme.extend.colors.primary = {
         '50': '#ff46c5',
