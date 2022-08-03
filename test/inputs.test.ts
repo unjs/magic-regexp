@@ -38,10 +38,23 @@ describe('inputs', () => {
     const values = ['fo/o', 'bar', 'baz', oneOrMore('this')] as const
     const input = anyOf(...values)
     const regexp = new RegExp(input as any)
-    expect(regexp).toMatchInlineSnapshot('/\\(fo\\\\/o\\|bar\\|baz\\|\\(this\\)\\+\\)/')
-    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(fo\\/o|bar|baz|(this)+)'>()
+    expect(regexp).toMatchInlineSnapshot('/\\(\\?:fo\\\\/o\\|bar\\|baz\\|\\(\\?:this\\)\\+\\)/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(?:fo\\/o|bar|baz|(?:this)+)'>()
     for (const value of values.slice(0, -1) as string[]) {
       expect(regexp.test(value)).toBeTruthy()
+      expect(regexp.exec(value)?.[1]).toBeUndefined()
+    }
+    expect(regexp.test('qux')).toBeFalsy()
+  })
+  it('anyOf.group', () => {
+    const values = ['fo/o', 'bar', 'baz', oneOrMore('this')] as const
+    const input = anyOf.group(...values)
+    const regexp = new RegExp(input as any)
+    expect(regexp).toMatchInlineSnapshot('/\\(fo\\\\/o\\|bar\\|baz\\|\\(\\?:this\\)\\+\\)/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(fo\\/o|bar|baz|(?:this)+)'>()
+    for (const value of values.slice(0, -1) as string[]) {
+      expect(regexp.test(value)).toBeTruthy()
+      expect(regexp.exec(value)?.[1]).toBe(value)
     }
     expect(regexp.test('qux')).toBeFalsy()
   })
@@ -53,8 +66,9 @@ describe('inputs', () => {
   it('maybe', () => {
     const input = maybe('foo')
     const regexp = new RegExp(input as any)
-    expect(regexp).toMatchInlineSnapshot('/\\(foo\\)\\?/')
-    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(foo)?'>()
+    expect(regexp).toMatchInlineSnapshot('/\\(\\?:foo\\)\\?/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(?:foo)?'>()
+
     const nestedInputWithGroup = maybe(exactly('foo').as('groupName'))
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
       MagicRegExp<'/(?<groupName>foo)?/', 'groupName', never>
@@ -63,8 +77,9 @@ describe('inputs', () => {
   it('oneOrMore', () => {
     const input = oneOrMore('foo')
     const regexp = new RegExp(input as any)
-    expect(regexp).toMatchInlineSnapshot('/\\(foo\\)\\+/')
-    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(foo)+'>()
+    expect(regexp).toMatchInlineSnapshot('/\\(\\?:foo\\)\\+/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(?:foo)+'>()
+
     const nestedInputWithGroup = oneOrMore(exactly('foo').as('groupName'))
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
       MagicRegExp<'/(?<groupName>foo)+/', 'groupName', never>
@@ -76,9 +91,10 @@ describe('inputs', () => {
       '/fo\\\\\\?\\\\\\[a-z\\\\\\]\\\\\\{2\\\\\\}\\\\/o\\\\\\?/'
     )
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'fo\\?\\[a-z\\]\\{2\\}\\/o\\?'>()
+
     const nestedInputWithGroup = exactly(maybe('foo').and('bar').as('groupName'))
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
-      MagicRegExp<'/(?<groupName>(foo)?bar)/', 'groupName', never>
+      MagicRegExp<'/(?<groupName>(?:foo)?bar)/', 'groupName', never>
     >()
   })
   it('word', () => {
@@ -145,10 +161,21 @@ describe('inputs', () => {
     expectTypeOf(extractRegExp(not.carriageReturn)).toEqualTypeOf<'[^\\r]'>()
   })
   it('no extra wrap by ()', () => {
-    const input = oneOrMore(maybe(exactly('(foo)')).as('groupName'))
+    const input = oneOrMore(
+      anyOf.group(
+        maybe('foo').times(2),
+        exactly('bar').as('groupName').times.between(3, 4),
+        exactly('baz').or.group('boo').group().times.atLeast(5)
+      )
+    )
     const regexp = new RegExp(input as any)
-    expect(regexp).toMatchInlineSnapshot('/\\(\\?<groupName>\\(\\\\\\(foo\\\\\\)\\)\\?\\)\\+/')
-    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(?<groupName>(\\(foo\\))?)+'>()
+    expect(regexp).toMatchInlineSnapshot(
+      '/\\(\\(\\?:\\(\\?:foo\\)\\?\\)\\{2\\}\\|\\(\\?<groupName>bar\\)\\{3,4\\}\\|\\(\\(baz\\|boo\\)\\)\\{5,\\}\\)\\+/'
+    )
+    expectTypeOf(
+      extractRegExp(input)
+    ).toEqualTypeOf<'((?:(?:foo)?){2}|(?<groupName>bar){3,4}|((baz|boo)){5,})+'>()
+    //TODO: should ...or.group('boo').group() => ((baz|boo)) ?
   })
 })
 
@@ -168,9 +195,21 @@ describe('chained inputs', () => {
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<namedGroup>\\?)any\\k<namedGroup>'>()
   })
   it('or', () => {
-    const val = input.or('test.js')
+    const test = 'test.js'
+    const val = input.or(test)
+    const regexp = new RegExp(val as any)
+    expect(regexp).toMatchInlineSnapshot('/\\(\\?:\\\\\\?\\|test\\\\\\.js\\)/')
+    expect(regexp.test(test)).toBeTruthy()
+    expect(regexp.exec(test)?.[1]).toBeUndefined()
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?:\\?|test\\.js)'>()
+  })
+  it('or.group', () => {
+    const test = 'test.js'
+    const val = input.or.group(test)
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\|test\\\\\\.js\\)/')
+    expect(regexp.test(test)).toBeTruthy()
+    expect(regexp.exec(test)?.[1]).toMatchInlineSnapshot('"test.js"')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?|test\\.js)'>()
   })
   it('after', () => {
@@ -205,8 +244,8 @@ describe('chained inputs', () => {
 
     const val2 = multichar.times(500)
     const regexp2 = new RegExp(val2 as any)
-    expect(regexp2).toMatchInlineSnapshot('/\\(ab\\)\\{500\\}/')
-    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(ab){500}'>()
+    expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\{500\\}/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab){500}'>()
   })
   it('times.any', () => {
     const val = input.times.any()
@@ -216,8 +255,8 @@ describe('chained inputs', () => {
 
     const val2 = multichar.times.any()
     const regexp2 = new RegExp(val2 as any)
-    expect(regexp2).toMatchInlineSnapshot('/\\(ab\\)\\*/')
-    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(ab)*'>()
+    expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\*/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab)*'>()
   })
   it('times.atLeast', () => {
     const val = input.times.atLeast(2)
@@ -227,8 +266,8 @@ describe('chained inputs', () => {
 
     const val2 = multichar.times.atLeast(2)
     const regexp2 = new RegExp(val2 as any)
-    expect(regexp2).toMatchInlineSnapshot('/\\(ab\\)\\{2,\\}/')
-    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(ab){2,}'>()
+    expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\{2,\\}/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab){2,}'>()
   })
   it('times.between', () => {
     const val = input.times.between(3, 5)
@@ -238,8 +277,8 @@ describe('chained inputs', () => {
 
     const val2 = multichar.times.between(3, 5)
     const regexp2 = new RegExp(val2 as any)
-    expect(regexp2).toMatchInlineSnapshot('/\\(ab\\)\\{3,5\\}/')
-    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(ab){3,5}'>()
+    expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\{3,5\\}/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab){3,5}'>()
   })
   it('optionally', () => {
     const val = input.optionally()
@@ -249,14 +288,21 @@ describe('chained inputs', () => {
 
     const val2 = multichar.optionally()
     const regexp2 = new RegExp(val2 as any)
-    expect(regexp2).toMatchInlineSnapshot('/\\(ab\\)\\?/')
-    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(ab)?'>()
+    expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\?/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab)?'>()
   })
   it('as', () => {
     const val = input.as('test')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<test>\\\\\\?\\)/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<test>\\?)'>()
+  })
+  it('group', () => {
+    const val = input.group()
+    const regexp = new RegExp(val as any)
+    expect(regexp).toMatchInlineSnapshot('/\\(\\\\\\?\\)/')
+    expect(regexp.exec('?')?.[1]).toMatchInlineSnapshot('"?"')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(\\?)'>()
   })
   it('at.lineStart', () => {
     const val = input.at.lineStart()
