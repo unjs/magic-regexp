@@ -14,14 +14,22 @@ export const charIn = <T extends string>(chars: T) =>
 export const charNotIn = <T extends string>(chars: T) =>
   createInput(`[^${chars.replace(/[-\\^\]]/g, '\\$&')}]`) as Input<`[^${EscapeChar<T>}]`>
 
-/** This takes an array of inputs and matches any of them. */
-export const anyOf = <New extends InputSource<V, T>[], V extends string, T extends string>(
-  ...args: New
-) =>
-  createInput(`(${args.map(a => exactly(a)).join('|')})`) as Input<
-    `(${Join<MapToValues<New>>})`,
-    MapToGroups<New>
-  >
+export const anyOf = Object.assign(
+  /** This takes an array of inputs and matches any of them, use `anyOf.group()` instead to capture as an anonymous group  */
+  <New extends InputSource<string, string>[]>(...args: New) =>
+    createInput(`(?:${args.map(a => exactly(a)).join('|')})`) as Input<
+      `(?:${Join<MapToValues<New>>})`,
+      MapToGroups<New>
+    >,
+  {
+    /** This takes an array of inputs and matches any of them, and capture as an anonymous group */
+    group: <New extends InputSource<string, string>[]>(...args: New) =>
+      createInput(`(${args.map(a => exactly(a)).join('|')})`) as Input<
+        `(${Join<MapToValues<New>>})`,
+        MapToGroups<New>
+      >,
+  }
+)
 
 export const char = createInput('.')
 export const word = createInput('\\b\\w+\\b')
@@ -49,8 +57,8 @@ export const not = {
 export const maybe = <New extends InputSource<string>>(str: New) =>
   createInput(`${wrap(exactly(str))}?`) as Wrap<
     GetValue<New>,
-    Input<`${GetValue<New>}?`, GetGroup<New>>,
-    Input<`(${GetValue<New>})?`, GetGroup<New>>
+    Input<`(?:${GetValue<New>})?`, GetGroup<New>>,
+    Input<`${GetValue<New>}?`, GetGroup<New>>
   >
 
 /** This escapes a string input to match it exactly */
@@ -61,9 +69,10 @@ export const exactly = <New extends InputSource<string>>(
     ? (createInput(input.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')) as any)
     : input
 
+/** Equivalent to `+` - this marks the input as repeatable, any number of times but at least once */
 export const oneOrMore = <New extends InputSource<string>>(str: New) =>
   createInput(`${wrap(exactly(str))}+`) as Wrap<
     GetValue<New>,
-    Input<`${GetValue<New>}+`, GetGroup<New>>,
-    Input<`(${GetValue<New>})+`, GetGroup<New>>
+    Input<`(?:${GetValue<New>})+`, GetGroup<New>>,
+    Input<`${GetValue<New>}+`, GetGroup<New>>
   >
