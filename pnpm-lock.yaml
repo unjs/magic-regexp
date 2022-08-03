@@ -20,7 +20,6 @@ importers:
       estree-walker: ^3.0.1
       expect-type: latest
       husky: latest
-      jiti: ^1.14.0
       lint-staged: latest
       magic-string: ^0.26.2
       mlly: ^0.5.7
@@ -35,7 +34,6 @@ importers:
       vitest: latest
     dependencies:
       estree-walker: 3.0.1
-      jiti: 1.14.0
       magic-string: 0.26.2
       mlly: 0.5.7
       ufo: 0.8.5
@@ -1418,7 +1416,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
     dev: true
 
   /concat-stream/2.0.0:
@@ -3515,6 +3513,7 @@ packages:
   /jiti/1.14.0:
     resolution: {integrity: sha512-4IwstlaKQc9vCTC+qUXLM1hajy2ImiL9KnLvVYiaHOtS/v3wRjhLlGl121AmgDgx/O43uKmxownJghS5XMya2A==}
     hasBin: true
+    dev: true
 
   /joycon/3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -4986,6 +4985,7 @@ packages:
   /source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dev: true
 
   /sourcemap-codec/1.4.8:
@@ -5713,7 +5713,7 @@ packages:
     dev: true
 
   /xregexp/2.0.0:
-    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
+    resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
     dev: true
 
   /xtend/4.0.2:

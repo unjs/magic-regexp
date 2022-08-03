@@ -6,20 +6,23 @@
   "license": "MIT",
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.mjs",
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
     "./transform": {
       "import": "./dist/transform.mjs",
-      "require": "./transform.cjs"
+      "require": "./dist/transform.cjs"
     },
     "./nuxt": "./nuxt.mjs"
   },
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "nuxt.mjs",
-    "transform.d.ts",
-    "transform.cjs"
+    "transform.d.ts"
   ],
   "scripts": {
     "build": "unbuild",
@@ -34,12 +37,11 @@
     "release": "release-it",
     "test": "vitest run",
     "test:types": "tsc --noEmit",
-    "postinstall": "husky install",
+    "_postinstall": "husky install",
     "postpublish": "pinst --enable"
   },
   "dependencies": {
     "estree-walker": "^3.0.1",
-    "jiti": "^1.14.0",
     "magic-string": "^0.26.2",
     "mlly": "^0.5.7",
     "ufo": "^0.8.5",
