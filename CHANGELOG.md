@@ -1,5 +1,12 @@
 
 
+## [0.4.1](https://github.com/danielroe/magic-regexp/compare/0.4.0...0.4.1) (2022-08-05)
+
+
+### Bug Fixes
+
+* **types:** differentiate symbols from generics ([d92393d](https://github.com/danielroe/magic-regexp/commit/d92393dff2aa1592bd695bd592d58948af273808))
+
 ## [0.4.0](https://github.com/danielroe/magic-regexp/compare/0.3.0...0.4.0) (2022-07-25)
 
 🎉 Massive thanks to @didavid61202 for lots of great contributions in this release! 🎉
