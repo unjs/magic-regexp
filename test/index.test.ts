@@ -20,6 +20,7 @@ describe('magic-regexp', () => {
     expect('thing'.match(regExp)?.[0]).toMatchInlineSnapshot('"in"')
     expect(regExp.test('thing')).toBeTruthy()
     expect(regExp.lastIndex).toMatchInlineSnapshot('4')
+    expectTypeOf(regExp).not.toEqualTypeOf(RegExp)
   })
   it('collects flag type', () => {
     const re = createRegExp('.', [global, multiline])
