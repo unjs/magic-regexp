@@ -1,25 +1,28 @@
 {
   "name": "magic-regexp",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A compiled-away, type-safe, readable RegExp alternative",
   "repository": "danielroe/magic-regexp",
   "license": "MIT",
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.mjs",
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
     "./transform": {
       "import": "./dist/transform.mjs",
-      "require": "./transform.cjs"
+      "require": "./dist/transform.cjs"
     },
     "./nuxt": "./nuxt.mjs"
   },
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "nuxt.mjs",
-    "transform.d.ts",
-    "transform.cjs"
+    "transform.d.ts"
   ],
   "scripts": {
     "build": "unbuild",
@@ -34,16 +37,15 @@
     "release": "release-it",
     "test": "vitest run",
     "test:types": "tsc --noEmit",
-    "postinstall": "husky install",
+    "_postinstall": "husky install",
     "postpublish": "pinst --enable"
   },
   "dependencies": {
     "estree-walker": "^3.0.1",
-    "jiti": "^1.14.0",
     "magic-string": "^0.26.2",
-    "mlly": "^0.5.5",
+    "mlly": "^0.5.7",
     "ufo": "^0.8.5",
-    "unplugin": "^0.8.0"
+    "unplugin": "^0.8.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "latest",
@@ -64,13 +66,13 @@
     "release-it": "latest",
     "typescript": "latest",
     "unbuild": "latest",
-    "vite": "^3.0.3",
+    "vite": "^3.0.4",
     "vitest": "latest"
   },
   "resolutions": {
     "magic-regexp": "link:."
   },
-  "packageManager": "pnpm@7.6.0",
+  "packageManager": "pnpm@7.8.0",
   "volta": {
     "node": "16.16.0"
   }
