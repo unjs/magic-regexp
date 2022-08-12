@@ -70,7 +70,7 @@ export const createInput = <Value extends string, Groups extends string = never>
     and: Object.assign((input: InputSource<string, any>) => createInput(`${s}${exactly(input)}`), {
       referenceTo: (groupName: string) => createInput(`${s}\\k<${groupName}>`),
     }),
-    or: (input: InputSource<string, any>) => createInput(`(?:${s}|${exactly(input)})`),
+    or: input => createInput(`(?:${s}|${exactly(input)})`),
     after: input => createInput(`(?<=${exactly(input)})${s}`),
     before: input => createInput(`${s}(?=${exactly(input)})`),
     notAfter: input => createInput(`(?<!${exactly(input)})${s}`),
