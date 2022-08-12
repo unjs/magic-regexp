@@ -33,7 +33,7 @@ describe('inputs', () => {
     expect(`${createInput('\\s')}`).toEqual('\\s')
   })
   it('type infer group names when nesting createInput', () => {
-    expectTypeOf(createRegExp(createInput(exactly('\\s').as('groupName')))).toEqualTypeOf<
+    expectTypeOf(createRegExp(createInput(exactly('\\s').groupedAs('groupName')))).toEqualTypeOf<
       MagicRegExp<'/(?<groupName>\\s)/', 'groupName', never>
     >()
   })
@@ -79,7 +79,7 @@ describe('inputs', () => {
     )
   })
   it('capture groups', () => {
-    const pattern = anyOf(anyOf('foo', 'bar').as('test'), exactly('baz').as('test2'))
+    const pattern = anyOf(anyOf('foo', 'bar').groupedAs('test'), exactly('baz').groupedAs('test2'))
     const regexp = createRegExp(pattern)
 
     expect('football'.match(regexp)?.groups).toMatchInlineSnapshot(`
@@ -117,16 +117,16 @@ describe('inputs', () => {
 
     ''.match(
       createRegExp(
-        anyOf(anyOf('foo', 'bar').as('test'), exactly('baz').as('test2')).and(
-          digit.times(5).as('id').optionally()
+        anyOf(anyOf('foo', 'bar').groupedAs('test'), exactly('baz').groupedAs('test2')).and(
+          digit.times(5).groupedAs('id').optionally()
         )
       )
     )?.groups?.id
   })
   it('named backreference to capture groups', () => {
     const pattern = exactly('foo')
-      .as('fooGroup')
-      .and(exactly('bar').as('barGroup'))
+      .groupedAs('fooGroup')
+      .and(exactly('bar').groupedAs('barGroup'))
       .and('baz')
       .and.referenceTo('barGroup')
       .and.referenceTo('fooGroup')
