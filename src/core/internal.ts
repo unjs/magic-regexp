@@ -4,7 +4,7 @@ import type { InputSource } from './types/sources'
 import { Wrap, wrap } from './wrap'
 
 const GROUPED_AS_REPLACE_RE = /^(?:\(\?:(.+)\)|(\(?.+\)?))$/
-const GROUPED_REPLACE_RE = /^(?:^\(\??:?(.+?)(?:\)([?+*]|{.+})?)|(.+))$/
+const GROUPED_REPLACE_RE = /^(?:\(\??:?(.+)\)([?+*]|{[\d,]+})?|(.+))$/
 
 export interface Input<V extends string, G extends string = never> {
   and: {
