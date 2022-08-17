@@ -1,7 +1,7 @@
 import { exactly } from './inputs'
 import type { GetValue } from './types/escape'
 import type { InputSource } from './types/sources'
-import { Wrap, wrap } from './wrap'
+import { IfUnwrapped, wrap } from './wrap'
 
 const GROUPED_AS_REPLACE_RE = /^(?:\(\?:(.+)\)|(\(?.+\)?))$/
 const GROUPED_REPLACE_RE = /^(?:\(\??:?(.+)\)([?+*]|{[\d,]+})?|(.+))$/
@@ -33,18 +33,22 @@ export interface Input<V extends string, G extends string = never> {
   notBefore: <I extends InputSource<string>>(input: I) => Input<`${V}(?!${GetValue<I>})`, G>
   times: {
     /** repeat the previous pattern an exact number of times */
-    <N extends number>(number: N): Wrap<V, Input<`(?:${V}){${N}}`, G>, Input<`${V}{${N}}`, G>>
+    <N extends number>(number: N): IfUnwrapped<
+      V,
+      Input<`(?:${V}){${N}}`, G>,
+      Input<`${V}{${N}}`, G>
+    >
     /** specify that the expression can repeat any number of times, _including none_ */
-    any: () => Wrap<V, Input<`(?:${V})*`, G>, Input<`${V}*`, G>>
+    any: () => IfUnwrapped<V, Input<`(?:${V})*`, G>, Input<`${V}*`, G>>
     /** specify that the expression must occur at least x times */
     atLeast: <N extends number>(
       number: N
-    ) => Wrap<V, Input<`(?:${V}){${N},}`, G>, Input<`${V}{${N},}`, G>>
+    ) => IfUnwrapped<V, Input<`(?:${V}){${N},}`, G>, Input<`${V}{${N},}`, G>>
     /** specify a range of times to repeat the previous pattern */
     between: <Min extends number, Max extends number>(
       min: Min,
       max: Max
-    ) => Wrap<V, Input<`(?:${V}){${Min},${Max}}`, G>, Input<`${V}{${Min},${Max}}`, G>>
+    ) => IfUnwrapped<V, Input<`(?:${V}){${Min},${Max}}`, G>, Input<`${V}{${Min},${Max}}`, G>>
   }
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()`. Alias for `groupedAs` */
   as: <K extends string>(
@@ -62,7 +66,7 @@ export interface Input<V extends string, G extends string = never> {
     lineEnd: () => Input<`${V}$`, G>
   }
   /** this allows you to mark the input so far as optional */
-  optionally: () => Wrap<V, Input<`(?:${V})?`, G>, Input<`${V}?`, G>>
+  optionally: () => IfUnwrapped<V, Input<`(?:${V})?`, G>, Input<`${V}?`, G>>
   toString: () => string
 }
 

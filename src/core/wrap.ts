@@ -1,7 +1,7 @@
 import { Input } from './internal'
 import { StripEscapes } from './types/escape'
 
-export type Wrap<
+export type IfUnwrapped<
   Value extends string,
   Yes extends Input<string>,
   No extends Input<string>
