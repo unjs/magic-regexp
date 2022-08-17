@@ -33,13 +33,13 @@ describe('inputs', () => {
     expect(`${createInput('\\s')}`).toEqual('\\s')
   })
   it('type infer group names when nesting createInput', () => {
-    expectTypeOf(createRegExp(createInput(exactly('\\s').as('groupName')))).toEqualTypeOf<
+    expectTypeOf(createRegExp(createInput(exactly('\\s').groupedAs('groupName')))).toEqualTypeOf<
       MagicRegExp<'/(?<groupName>\\s)/', 'groupName', never>
     >()
   })
   it('any', () => {
     const regExp = createRegExp(anyOf('foo', 'bar'))
-    expect(regExp).toMatchInlineSnapshot('/\\(foo\\|bar\\)/')
+    expect(regExp).toMatchInlineSnapshot('/\\(\\?:foo\\|bar\\)/')
     expect(regExp.test('foo')).toBeTruthy()
     expect(regExp.test('bar')).toBeTruthy()
     expect(regExp.test('baz')).toBeFalsy()
@@ -73,30 +73,32 @@ describe('inputs', () => {
     expect(createRegExp(pattern).test('test/thing')).toBeTruthy()
   })
   it('times', () => {
-    expect(exactly('test').times.between(1, 3).toString()).toMatchInlineSnapshot('"(test){1,3}"')
-    expect(exactly('test').times(4).or('foo').toString()).toMatchInlineSnapshot('"((test){4}|foo)"')
+    expect(exactly('test').times.between(1, 3).toString()).toMatchInlineSnapshot('"(?:test){1,3}"')
+    expect(exactly('test').times(4).or('foo').toString()).toMatchInlineSnapshot(
+      '"(?:(?:test){4}|foo)"'
+    )
   })
   it('capture groups', () => {
-    const pattern = anyOf(anyOf('foo', 'bar').as('test'), exactly('baz').as('test2'))
+    const pattern = anyOf(anyOf('foo', 'bar').groupedAs('test'), exactly('baz').groupedAs('test2'))
+    const regexp = createRegExp(pattern)
 
-    expect('football'.match(createRegExp(pattern))?.groups).toMatchInlineSnapshot(`
+    expect('football'.match(regexp)?.groups).toMatchInlineSnapshot(`
       {
         "test": "foo",
         "test2": undefined,
       }
     `)
-    expect('fobazzer'.match(createRegExp(pattern))?.groups).toMatchInlineSnapshot(`
+    expect('fobazzer'.match(regexp)?.groups).toMatchInlineSnapshot(`
       {
         "test": undefined,
         "test2": "baz",
       }
     `)
 
-    const regexp = createRegExp(pattern)
     expectTypeOf('fobazzer'.match(regexp)).toEqualTypeOf<MagicRegExpMatchArray<
       typeof regexp
     > | null>()
-    expectTypeOf('fobazzer'.match(createRegExp(pattern))?.groups).toEqualTypeOf<
+    expectTypeOf('fobazzer'.match(regexp)?.groups).toEqualTypeOf<
       Record<'test' | 'test2', string | undefined> | undefined
     >()
 
@@ -115,16 +117,16 @@ describe('inputs', () => {
 
     ''.match(
       createRegExp(
-        anyOf(anyOf('foo', 'bar').as('test'), exactly('baz').as('test2')).and(
-          digit.times(5).as('id').optionally()
+        anyOf(anyOf('foo', 'bar').groupedAs('test'), exactly('baz').groupedAs('test2')).and(
+          digit.times(5).groupedAs('id').optionally()
         )
       )
     )?.groups?.id
   })
   it('named backreference to capture groups', () => {
     const pattern = exactly('foo')
-      .as('fooGroup')
-      .and(exactly('bar').as('barGroup'))
+      .groupedAs('fooGroup')
+      .and(exactly('bar').groupedAs('barGroup'))
       .and('baz')
       .and.referenceTo('barGroup')
       .and.referenceTo('fooGroup')

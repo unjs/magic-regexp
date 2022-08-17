@@ -49,7 +49,7 @@ describe('transformer', () => {
       import { createRegExp, exactly, anyOf } from 'magic-regexp'
       //
       const re1 = /bar(?!foo)/
-      const re2 = /(bar|foo)/
+      const re2 = /(?:bar|foo)/
       const re3 = /\\\\/foo\\\\/bar/
       re3.test('/foo/bar')"
     `)
@@ -71,7 +71,7 @@ describe('transformer', () => {
       import { exactly as ext, createRegExp } from \\"magic-regexp\\"
       import * as magicRE from \\"magic-regexp\\"
       const re1 = /bar(?!foo)/
-      const re2 = /(bar|foo)/
+      const re2 = /(?:bar|foo)/
       const re3 = /test\\\\/value/"
     `)
   })
