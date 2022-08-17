@@ -23,9 +23,8 @@ export default defineNuxtConfig({
   },
   hooks: {
     'vite:extendConfig'(config, { isClient }) {
-      if (isClient) {
-        // TODO: update when updating to rc7
-        config.build.rollupOptions.output.chunkFileNames = '[hash].mjs'
+      if (isClient && !Array.isArray(config.build.rollupOptions.output)) {
+        config.build.rollupOptions.output.chunkFileNames = '_nuxt/[hash].mjs'
       }
     },
     'tailwindcss:config'(config) {
