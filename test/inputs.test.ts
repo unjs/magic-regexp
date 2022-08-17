@@ -269,6 +269,24 @@ describe('chained inputs', () => {
     expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\?/')
     expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab)?'>()
   })
+  it('as', () => {
+    const val = input.as('test')
+    const regexp = new RegExp(val as any)
+    expect(regexp).toMatchInlineSnapshot('/\\(\\?<test>\\\\\\?\\)/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<test>\\?)'>()
+
+    const retentEssentailWrap = oneOrMore('foo').as('groupName')
+    expect(createRegExp(retentEssentailWrap)).toMatchInlineSnapshot(
+      '/\\(\\?<groupName>\\(\\?:foo\\)\\+\\)/'
+    )
+    expectTypeOf(extractRegExp(retentEssentailWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
+
+    const removeExtraWrap = anyOf('foo', 'bar', 'baz').as('groupName')
+    expect(createRegExp(removeExtraWrap)).toMatchInlineSnapshot(
+      '/\\(\\?<groupName>foo\\|bar\\|baz\\)/'
+    )
+    expectTypeOf(extractRegExp(removeExtraWrap)).toEqualTypeOf<'(?<groupName>foo|bar|baz)'>()
+  })
   it('groupedAs', () => {
     const val = input.groupedAs('test')
     const regexp = new RegExp(val as any)

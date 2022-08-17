@@ -46,6 +46,10 @@ export interface Input<V extends string, G extends string = never> {
       max: Max
     ) => Wrap<V, Input<`(?:${V}){${Min},${Max}}`, G>, Input<`${V}{${Min},${Max}}`, G>>
   }
+  /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()`. Alias for `groupedAs` */
+  as: <K extends string>(
+    key: K
+  ) => Input<`(?<${K}>${V extends `(?:${infer S extends string})` ? S : V})`, G | K>
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()` */
   groupedAs: <K extends string>(
     key: K
@@ -65,6 +69,9 @@ export interface Input<V extends string, G extends string = never> {
 export const createInput = <Value extends string, Groups extends string = never>(
   s: Value | Input<Value, Groups>
 ): Input<Value, Groups> => {
+  const groupedAsFn = (key: string) =>
+    createInput(`(?<${key}>${`${s}`.replace(GROUPED_AS_REPLACE_RE, '$1$2')})`)
+
   return {
     toString: () => s.toString(),
     and: Object.assign((input: InputSource<string, any>) => createInput(`${s}${exactly(input)}`), {
@@ -81,7 +88,8 @@ export const createInput = <Value extends string, Groups extends string = never>
       between: (min: number, max: number) => createInput(`${wrap(s)}{${min},${max}}`) as any,
     }),
     optionally: () => createInput(`${wrap(s)}?`) as any,
-    groupedAs: key => createInput(`(?<${key}>${`${s}`.replace(GROUPED_AS_REPLACE_RE, '$1$2')})`),
+    as: groupedAsFn,
+    groupedAs: groupedAsFn,
     grouped: () => createInput(`${s}`.replace(GROUPED_REPLACE_RE, '($1$3)$2')),
     at: {
       lineStart: () => createInput(`^${s}`),
