@@ -11,7 +11,7 @@ importers:
       '@release-it/conventional-changelog': latest
       '@types/estree': ^1.0.0
       '@types/node': latest
-      '@vitest/coverage-c8': ^0.22.0
+      '@vitest/coverage-c8': ^0.22.1
       acorn: ^8.8.0
       c8: latest
       conventional-changelog-conventionalcommits: latest
@@ -23,28 +23,28 @@ importers:
       husky: latest
       lint-staged: latest
       magic-string: ^0.26.2
-      mlly: ^0.5.12
+      mlly: ^0.5.13
       pinst: latest
       prettier: latest
       release-it: latest
       typescript: latest
       ufo: ^0.8.5
       unbuild: latest
-      unplugin: ^0.9.2
+      unplugin: ^0.9.3
       vite: ^3.0.8
       vitest: latest
     dependencies:
       estree-walker: 3.0.1
       magic-string: 0.26.2
-      mlly: 0.5.12
+      mlly: 0.5.13
       ufo: 0.8.5
-      unplugin: 0.9.2_vite@3.0.8
+      unplugin: 0.9.3_vite@3.0.8
     devDependencies:
       '@nuxtjs/eslint-config-typescript': 10.0.0_4rv7y5c6xz3vfxwhbrcxxi73bq
-      '@release-it/conventional-changelog': 5.0.0_release-it@15.3.0
+      '@release-it/conventional-changelog': 5.1.0_release-it@15.3.0
       '@types/estree': 1.0.0
-      '@types/node': 18.7.5
-      '@vitest/coverage-c8': 0.22.0
+      '@types/node': 18.7.6
+      '@vitest/coverage-c8': 0.22.1
       acorn: 8.8.0
       c8: 7.12.0
       conventional-changelog-conventionalcommits: 5.0.0
@@ -60,7 +60,7 @@ importers:
       typescript: 4.7.4
       unbuild: 0.8.8
       vite: 3.0.8
-      vitest: 0.22.0
+      vitest: 0.22.1
 
   playground:
     specifiers:
@@ -574,16 +574,17 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@release-it/conventional-changelog/5.0.0_release-it@15.3.0:
-    resolution: {integrity: sha512-YAvGgxA8cIQSbmyHmAmLMwzCkNP74upLST8jFuDJTI+AVfK2Grp2HbZu0/NeV3sHYD20sT8YMzNVUeRxNlyHeg==}
+  /@release-it/conventional-changelog/5.1.0_release-it@15.3.0:
+    resolution: {integrity: sha512-o55D822tVIoldUDj1Fp1KvenVREcEEjYOyuVNwRVnTcExFN6nWUPrH05q7Y8opT23N5snuCwPJ5bzLPEcpBvRg==}
     engines: {node: '>=14'}
     peerDependencies:
-      release-it: ^15.0.0-esm.4
+      release-it: ^15.3.0
     dependencies:
       concat-stream: 2.0.0
       conventional-changelog: 3.1.25
       conventional-recommended-bump: 6.1.0
       release-it: 15.3.0
+      semver: 7.3.7
     dev: true
 
   /@rollup/plugin-alias/3.1.9_rollup@2.77.3:
@@ -688,7 +689,7 @@ packages:
     dependencies:
       '@types/http-cache-semantics': 4.0.1
       '@types/keyv': 3.1.4
-      '@types/node': 18.7.5
+      '@types/node': 18.7.6
       '@types/responselike': 1.0.0
     dev: true
 
@@ -733,15 +734,15 @@ packages:
   /@types/keyv/3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 18.7.5
+      '@types/node': 18.7.6
     dev: true
 
   /@types/minimist/1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
 
-  /@types/node/18.7.5:
-    resolution: {integrity: sha512-NcKK6Ts+9LqdHJaW6HQmgr7dT/i3GOHG+pt6BiWv++5SnjtRd4NXeiuN2kA153SjhXPR/AhHIPHPbrsbpUVOww==}
+  /@types/node/18.7.6:
+    resolution: {integrity: sha512-EdxgKRXgYsNITy5mjjXjVE/CS8YENSdhiagGrLqjG0pvA2owgJ6i4l7wy/PFZGC0B1/H20lWKN7ONVDNYDZm7A==}
     dev: true
 
   /@types/normalize-package-data/2.4.1:
@@ -755,13 +756,13 @@ packages:
   /@types/resolve/1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
-      '@types/node': 18.7.5
+      '@types/node': 18.7.6
     dev: true
 
   /@types/responselike/1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.7.5
+      '@types/node': 18.7.6
     dev: true
 
   /@typescript-eslint/eslint-plugin/5.33.0_yy5c4q6zhpajzhorvwhnwvctfe:
@@ -890,11 +891,11 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitest/coverage-c8/0.22.0:
-    resolution: {integrity: sha512-jwW6b8U+h9nbzQfKoRmpf2xjDg+mcAjLIdVUrZGhjTnIdekGfvoqFoeiXzsLv2HwYBeFi4943lYUftuj8qD1FQ==}
+  /@vitest/coverage-c8/0.22.1:
+    resolution: {integrity: sha512-KOOYpO7EGpaF+nD8GD+Y05D0JtZp12NUu6DdLXvBPqSOPo2HkZ7KNBtfR0rb6gOy3NLtGiWTYTzCwhajgb2HlA==}
     dependencies:
       c8: 7.12.0
-      vitest: 0.22.0
+      vitest: 0.22.1
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@vitest/browser'
@@ -1458,7 +1459,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
   /concat-stream/2.0.0:
@@ -4186,8 +4187,8 @@ packages:
       typescript: 4.7.4
     dev: true
 
-  /mlly/0.5.12:
-    resolution: {integrity: sha512-8moXGh6Hfy2Nmys3DDEm4CuxDBk5Y7Lk1jQ4JcwW0djO9b+SCKTpw0enIQeZIuEnPljdxHSGmcbXU9hpIIEYeQ==}
+  /mlly/0.5.13:
+    resolution: {integrity: sha512-0SK2fqoan+PMjADs4I2egAtrtNtpjqRez6PDTCeAdGjUQNJCvO5o9v2NEq52WA1jFmMU97qBr/JgdvCquehDbA==}
     dependencies:
       acorn: 8.8.0
       pathe: 0.3.4
@@ -4656,7 +4657,7 @@ packages:
     resolution: {integrity: sha512-6AJcCMnjUQPQv/Wk960w0TOmjhdjbeaQJoSKWRQv9N3rgkessCu6J0Ydsog/nw1MbpnxHuPzYbfOn2KmlZO1FA==}
     dependencies:
       jsonc-parser: 3.1.0
-      mlly: 0.5.12
+      mlly: 0.5.13
       pathe: 0.3.4
 
   /pluralize/8.0.0:
@@ -5445,8 +5446,8 @@ packages:
     engines: {node: '>=14.0.0'}
     dev: true
 
-  /tinyspy/1.0.0:
-    resolution: {integrity: sha512-FI5B2QdODQYDRjfuLF+OrJ8bjWRMCXokQPcwKm0W3IzcbUmBNv536cQc7eXGoAuXphZwgx1DFbqImwzz08Fnhw==}
+  /tinyspy/1.0.2:
+    resolution: {integrity: sha512-bSGlgwLBYf7PnUsQ6WOc6SJ3pGOcd+d8AA6EUnLDDM0kWEstC1JIlSZA3UNliDXhd9ABoS7hiRBDCu+XP/sf1Q==}
     engines: {node: '>=14.0.0'}
     dev: true
 
@@ -5619,7 +5620,7 @@ packages:
       magic-string: 0.26.2
       mkdirp: 1.0.4
       mkdist: 0.3.13_typescript@4.7.4
-      mlly: 0.5.12
+      mlly: 0.5.13
       mri: 1.2.0
       pathe: 0.3.4
       pkg-types: 0.3.3
@@ -5661,8 +5662,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /unplugin/0.9.2_vite@3.0.8:
-    resolution: {integrity: sha512-Wo9lx9rA0O3AWhLYYNZ6DgnNhL5t5r7kV/Jg5BXjTQtY+DEWrD8VLFSaOmKN0tgqZCMqZ+XrzgOe/3DzIO4/SA==}
+  /unplugin/0.9.3_vite@3.0.8:
+    resolution: {integrity: sha512-GWXxizZG+tobNs8fuGTCeilerkkfZTZax2iivuE4pxLaF9wTnPJHOq8tbLKDb5ohVb+2BXNjrU9xx59yWTUnuw==}
     peerDependencies:
       esbuild: '>=0.13'
       rollup: ^2.50.0
@@ -5788,8 +5789,8 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /vitest/0.22.0:
-    resolution: {integrity: sha512-BSIro/QOHLaQY08FHwT6THWhqLQ+VPU+N4Rdo4pcP+16XB6oLmNNAXGcSh/MOLUhfUy+mqCwx7AyKmU7Ms5R+g==}
+  /vitest/0.22.1:
+    resolution: {integrity: sha512-+x28YTnSLth4KbXg7MCzoDAzPJlJex7YgiZbUh6YLp0/4PqVZ7q7/zyfdL0OaPtKTpNiQFPpMC8Y2MSzk8F7dw==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -5812,12 +5813,12 @@ packages:
     dependencies:
       '@types/chai': 4.3.3
       '@types/chai-subset': 1.3.3
-      '@types/node': 18.7.5
+      '@types/node': 18.7.6
       chai: 4.3.6
       debug: 4.3.4
       local-pkg: 0.4.2
       tinypool: 0.2.4
-      tinyspy: 1.0.0
+      tinyspy: 1.0.2
       vite: 3.0.8
     transitivePeerDependencies:
       - less
@@ -5976,7 +5977,7 @@ packages:
     dev: true
 
   /xregexp/2.0.0:
-    resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
+    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
     dev: true
 
   /xtend/4.0.2:
