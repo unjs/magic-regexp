@@ -30,7 +30,7 @@ importers:
       typescript: latest
       ufo: ^0.8.5
       unbuild: latest
-      unplugin: ^0.9.4
+      unplugin: ^0.9.5
       vite: ^3.0.9
       vitest: latest
     dependencies:
@@ -38,12 +38,12 @@ importers:
       magic-string: 0.26.2
       mlly: 0.5.14
       ufo: 0.8.5
-      unplugin: 0.9.4_vite@3.0.9
+      unplugin: 0.9.5_vite@3.0.9
     devDependencies:
       '@nuxtjs/eslint-config-typescript': 10.0.0_4rv7y5c6xz3vfxwhbrcxxi73bq
-      '@release-it/conventional-changelog': 5.1.0_release-it@15.3.0
+      '@release-it/conventional-changelog': 5.1.0_release-it@15.4.0
       '@types/estree': 1.0.0
-      '@types/node': 18.7.9
+      '@types/node': 18.7.13
       '@vitest/coverage-c8': 0.22.1
       acorn: 8.8.0
       c8: 7.12.0
@@ -56,7 +56,7 @@ importers:
       lint-staged: 13.0.3
       pinst: 3.0.0
       prettier: 2.7.1
-      release-it: 15.3.0
+      release-it: 15.4.0
       typescript: 4.7.4
       unbuild: 0.8.9
       vite: 3.0.9
@@ -574,7 +574,7 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@release-it/conventional-changelog/5.1.0_release-it@15.3.0:
+  /@release-it/conventional-changelog/5.1.0_release-it@15.4.0:
     resolution: {integrity: sha512-o55D822tVIoldUDj1Fp1KvenVREcEEjYOyuVNwRVnTcExFN6nWUPrH05q7Y8opT23N5snuCwPJ5bzLPEcpBvRg==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -583,7 +583,7 @@ packages:
       concat-stream: 2.0.0
       conventional-changelog: 3.1.25
       conventional-recommended-bump: 6.1.0
-      release-it: 15.3.0
+      release-it: 15.4.0
       semver: 7.3.7
     dev: true
 
@@ -689,7 +689,7 @@ packages:
     dependencies:
       '@types/http-cache-semantics': 4.0.1
       '@types/keyv': 3.1.4
-      '@types/node': 18.7.9
+      '@types/node': 18.7.13
       '@types/responselike': 1.0.0
     dev: true
 
@@ -734,15 +734,15 @@ packages:
   /@types/keyv/3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 18.7.9
+      '@types/node': 18.7.13
     dev: true
 
   /@types/minimist/1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
 
-  /@types/node/18.7.9:
-    resolution: {integrity: sha512-0N5Y1XAdcl865nDdjbO0m3T6FdmQ4ijE89/urOHLREyTXbpMWbSafx9y7XIsgWGtwUP2iYTinLyyW3FatAxBLQ==}
+  /@types/node/18.7.13:
+    resolution: {integrity: sha512-46yIhxSe5xEaJZXWdIBP7GU4HDTG8/eo0qd9atdiL+lFpA03y8KS+lkTN834TWJj5767GbWv4n/P6efyTFt1Dw==}
     dev: true
 
   /@types/normalize-package-data/2.4.1:
@@ -756,13 +756,13 @@ packages:
   /@types/resolve/1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
-      '@types/node': 18.7.9
+      '@types/node': 18.7.13
     dev: true
 
   /@types/responselike/1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.7.9
+      '@types/node': 18.7.13
     dev: true
 
   /@typescript-eslint/eslint-plugin/5.33.0_yy5c4q6zhpajzhorvwhnwvctfe:
@@ -4932,8 +4932,8 @@ packages:
       rc: 1.2.8
     dev: true
 
-  /release-it/15.3.0:
-    resolution: {integrity: sha512-MI4EBGca+y4SskgBkWNIakFp/GvXfpZEMWkmqmsysPcou/L+E+sKd0oy33ovGCyLic+9SI2rv/lQ3ACgonmqdQ==}
+  /release-it/15.4.0:
+    resolution: {integrity: sha512-l7ZHfg5SHXWaAQy5gUS1dowryqjLevpXKvyNt8V7QCqqGQO/IvQEfLnc5xx4unBgJvxjt/X2f9KZ8FOzRnaT9w==}
     engines: {node: '>=14.9'}
     hasBin: true
     dependencies:
@@ -5670,8 +5670,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /unplugin/0.9.4_vite@3.0.9:
-    resolution: {integrity: sha512-lUe769wSsZiltVA1Ns9ZRx3K1ri/4yzOrLLI/ebSAj2f0PsXqIJeHIXhkhiayEe1pv+mHuZYyBS3B2RXG2Q2EQ==}
+  /unplugin/0.9.5_vite@3.0.9:
+    resolution: {integrity: sha512-luraheyfxwtvkvHpsOvMNv7IjLdORTWKZp0gWYNHGLi2ImON3iIZOj464qEyyEwLA/EMt12fC415HW9zRpOfTg==}
     peerDependencies:
       esbuild: '>=0.13'
       rollup: ^2.50.0
@@ -5821,7 +5821,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.3
       '@types/chai-subset': 1.3.3
-      '@types/node': 18.7.9
+      '@types/node': 18.7.13
       chai: 4.3.6
       debug: 4.3.4
       local-pkg: 0.4.2
