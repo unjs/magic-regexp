@@ -53,5 +53,5 @@ Published under [MIT License](./LICENCE).
 [codecov-href]: https://codecov.io/gh/danielroe/magic-regexp
 [lgtm-src]: https://img.shields.io/lgtm/grade/javascript/github/danielroe/magic-regexp?style=flat-square
 [lgtm-href]: https://lgtm.com/projects/g/danielroe/magic-regexp
-[bundlephobia-src]: https://img.shields.io/bundlephobia/minzip/magic-regexp
+[bundlephobia-src]: https://img.shields.io/bundlephobia/minzip/magic-regexp?style=flat-square
 [bundlephobia-href]: https://bundlephobia.com/package/magic-regexp
