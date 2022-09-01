@@ -59,7 +59,7 @@ describe('inputs', () => {
 
     const nestedInputWithGroup = maybe(exactly('foo').groupedAs('groupName'))
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
-      MagicRegExp<'/(?<groupName>foo)?/', 'groupName', never>
+      MagicRegExp<'/(?<groupName>foo)?/', 'groupName', ['(?<groupName>foo)'], never>
     >()
   })
   it('oneOrMore', () => {
@@ -70,7 +70,7 @@ describe('inputs', () => {
 
     const nestedInputWithGroup = oneOrMore(exactly('foo').groupedAs('groupName'))
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
-      MagicRegExp<'/(?<groupName>foo)+/', 'groupName', never>
+      MagicRegExp<'/(?<groupName>foo)+/', 'groupName', ['(?<groupName>foo)'], never>
     >()
   })
   it('exactly', () => {
@@ -80,9 +80,14 @@ describe('inputs', () => {
     )
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'fo\\?\\[a-z\\]\\{2\\}\\/o\\?'>()
 
-    const nestedInputWithGroup = exactly(maybe('foo').and('bar').groupedAs('groupName'))
+    const nestedInputWithGroup = exactly(maybe('foo').grouped().and('bar').groupedAs('groupName'))
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
-      MagicRegExp<'/(?<groupName>(?:foo)?bar)/', 'groupName', never>
+      MagicRegExp<
+        '/(?<groupName>(foo)?bar)/',
+        'groupName',
+        ['(?<groupName>(foo)?bar)', '(foo)'],
+        never
+      >
     >()
   })
   it('word', () => {
