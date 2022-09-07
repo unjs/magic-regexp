@@ -9,7 +9,7 @@ describe('String', () => {
     expect(Array.isArray(result)).toBeTruthy()
     expect(result?.groups?.foo).toEqual('t')
     expectTypeOf(result).toEqualTypeOf<MagicRegExpMatchArray<
-      MagicRegExp<'/(?<foo>.)/', 'foo', never>
+      MagicRegExp<'/(?<foo>.)/', 'foo', ['(?<foo>.)'], never>
     > | null>()
   })
   it('.match global', () => {
@@ -31,7 +31,7 @@ describe('String', () => {
       count++
       expect([...'test'].includes(result?.groups.foo || '')).toBeTruthy()
       expectTypeOf(result).toEqualTypeOf<
-        MagicRegExpMatchArray<MagicRegExp<'/(?<foo>.)/g', 'foo', 'g'>>
+        MagicRegExpMatchArray<MagicRegExp<'/(?<foo>.)/g', 'foo', ['(?<foo>.)'], 'g'>>
       >()
     }
     expect(count).toBe(4)

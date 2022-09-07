@@ -6,11 +6,13 @@ import {
   char,
   createRegExp,
   exactly,
+  maybe,
   global,
   digit,
   multiline,
   MagicRegExp,
   MagicRegExpMatchArray,
+  StringCapturedBy,
 } from '../src'
 import { createInput } from '../src/core/internal'
 
@@ -24,7 +26,7 @@ describe('magic-regexp', () => {
   })
   it('collects flag type', () => {
     const re = createRegExp('.', [global, multiline])
-    expectTypeOf(re).toEqualTypeOf<MagicRegExp<'/./gm', never, 'g' | 'm'>>()
+    expectTypeOf(re).toEqualTypeOf<MagicRegExp<'/./gm', never, [], 'g' | 'm'>>()
   })
 })
 
@@ -34,7 +36,7 @@ describe('inputs', () => {
   })
   it('type infer group names when nesting createInput', () => {
     expectTypeOf(createRegExp(createInput(exactly('\\s').groupedAs('groupName')))).toEqualTypeOf<
-      MagicRegExp<'/(?<groupName>\\s)/', 'groupName', never>
+      MagicRegExp<'/(?<groupName>\\s)/', 'groupName', ['(?<groupName>\\s)'], never>
     >()
   })
   it('any', () => {
@@ -142,5 +144,43 @@ describe('inputs', () => {
     expectTypeOf(pattern.and.referenceTo).toBeCallableWith('barGroup')
     // @ts-expect-error
     pattern.and.referenceTo('bazgroup')
+  })
+  it('can type-safe access matched array with hint for corresponding capture group', () => {
+    const pattern = anyOf(
+      exactly('foo|?').grouped(),
+      exactly('bar').and(maybe('baz').grouped()).groupedAs('groupName'),
+      exactly('boo').times(2).grouped(),
+      anyOf(
+        exactly('a').times(3),
+        exactly('b').and(maybe('c|d?')).times.any(),
+        exactly('1')
+          .and(maybe(exactly('2').and(maybe('3')).and('2')))
+          .and('1')
+      ).grouped()
+    ).grouped()
+
+    const match = 'booboo'.match(createRegExp(pattern))
+
+    if (!match) return expect(match).toBeTruthy()
+    expectTypeOf(match.length).toEqualTypeOf<7>()
+    expectTypeOf(match[0]).toEqualTypeOf<string | undefined>()
+    expectTypeOf(match[1]).toEqualTypeOf<
+      | StringCapturedBy<'((foo\\|\\?)|(?<groupName>bar(baz)?)|(boo){2}|(a{3}|(?:b(?:c\\|d\\?)?)*|1(?:23?2)?1))'>
+      | undefined
+    >()
+    //@ts-expect-error
+    match[1] = 'match result array marked as readonly'
+    let typedVar: string | undefined
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
+    typedVar = match[1] // can be assign to typed variable
+    expectTypeOf(match[2]).toEqualTypeOf<StringCapturedBy<'(foo\\|\\?)'> | undefined>()
+    expectTypeOf(match[2]?.concat(match[3] || '')).toEqualTypeOf<string | undefined>()
+    expectTypeOf(match[3]).toEqualTypeOf<StringCapturedBy<'(?<groupName>bar(baz)?)'> | undefined>()
+    expectTypeOf(match[4]).toEqualTypeOf<StringCapturedBy<'(baz)'> | undefined>()
+    expectTypeOf(match[5]).toEqualTypeOf<StringCapturedBy<'(boo)'> | undefined>()
+    expectTypeOf(match[6]).toEqualTypeOf<
+      StringCapturedBy<'(a{3}|(?:b(?:c\\|d\\?)?)*|1(?:23?2)?1)'> | undefined
+    >()
+    expectTypeOf(match[7]).toEqualTypeOf<never>()
   })
 })
