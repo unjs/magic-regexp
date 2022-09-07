@@ -12,7 +12,7 @@ import {
   multiline,
   MagicRegExp,
   MagicRegExpMatchArray,
-  StringCaptureBy,
+  StringCapturedBy,
 } from '../src'
 import { createInput } from '../src/core/internal'
 
@@ -165,7 +165,7 @@ describe('inputs', () => {
     expectTypeOf(match.length).toEqualTypeOf<7>()
     expectTypeOf(match[0]).toEqualTypeOf<string | undefined>()
     expectTypeOf(match[1]).toEqualTypeOf<
-      | StringCaptureBy<'((foo\\|\\?)|(?<groupName>bar(baz)?)|(boo){2}|(a{3}|(?:b(?:c\\|d\\?)?)*|1(?:23?2)?1))'>
+      | StringCapturedBy<'((foo\\|\\?)|(?<groupName>bar(baz)?)|(boo){2}|(a{3}|(?:b(?:c\\|d\\?)?)*|1(?:23?2)?1))'>
       | undefined
     >()
     //@ts-expect-error
@@ -173,13 +173,13 @@ describe('inputs', () => {
     let typedVar: string | undefined
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
     typedVar = match[1] // can be assign to typed variable
-    expectTypeOf(match[2]).toEqualTypeOf<StringCaptureBy<'(foo\\|\\?)'> | undefined>()
+    expectTypeOf(match[2]).toEqualTypeOf<StringCapturedBy<'(foo\\|\\?)'> | undefined>()
     expectTypeOf(match[2]?.concat(match[3] || '')).toEqualTypeOf<string | undefined>()
-    expectTypeOf(match[3]).toEqualTypeOf<StringCaptureBy<'(?<groupName>bar(baz)?)'> | undefined>()
-    expectTypeOf(match[4]).toEqualTypeOf<StringCaptureBy<'(baz)'> | undefined>()
-    expectTypeOf(match[5]).toEqualTypeOf<StringCaptureBy<'(boo)'> | undefined>()
+    expectTypeOf(match[3]).toEqualTypeOf<StringCapturedBy<'(?<groupName>bar(baz)?)'> | undefined>()
+    expectTypeOf(match[4]).toEqualTypeOf<StringCapturedBy<'(baz)'> | undefined>()
+    expectTypeOf(match[5]).toEqualTypeOf<StringCapturedBy<'(boo)'> | undefined>()
     expectTypeOf(match[6]).toEqualTypeOf<
-      StringCaptureBy<'(a{3}|(?:b(?:c\\|d\\?)?)*|1(?:23?2)?1)'> | undefined
+      StringCapturedBy<'(a{3}|(?:b(?:c\\|d\\?)?)*|1(?:23?2)?1)'> | undefined
     >()
     expectTypeOf(match[7]).toEqualTypeOf<never>()
   })

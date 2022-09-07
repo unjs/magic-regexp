@@ -19,13 +19,13 @@ type ExtractGroups<T extends MagicRegExp<string, string, (string | undefined)[],
   T extends MagicRegExp<string, infer V, (string | undefined)[], string> ? V : never
 
 type StringWithHint<S extends string> = string & {
-  _captureBy: S
+  _capturedBy: S
 }
 
-export type StringCaptureBy<S extends string> = StringWithHint<S>
+export type StringCapturedBy<S extends string> = StringWithHint<S>
 
-export type MapToStringCaptureBy<Ar extends (string | undefined)[]> = {
-  [K in keyof Ar]: Ar[K] extends string ? StringCaptureBy<Ar[K]> | undefined : undefined
+export type MapToStringCapturedBy<Ar extends (string | undefined)[]> = {
+  [K in keyof Ar]: Ar[K] extends string ? StringCapturedBy<Ar[K]> | undefined : undefined
 }
 
 export type MagicRegExpMatchArray<T extends MagicRegExp<string, string, any[], string>> = Omit<
@@ -36,5 +36,5 @@ export type MagicRegExpMatchArray<T extends MagicRegExp<string, string, any[], s
 } & {
   [index: number | string | symbol]: never
 } & (T extends MagicRegExp<string, string, infer CapturedGroupsArr, string>
-    ? readonly [string | undefined, ...MapToStringCaptureBy<CapturedGroupsArr>]
+    ? readonly [string | undefined, ...MapToStringCapturedBy<CapturedGroupsArr>]
     : {})
