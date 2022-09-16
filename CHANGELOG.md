@@ -1,5 +1,13 @@
 
 
+## [0.5.0](https://github.com/danielroe/magic-regexp/compare/0.4.1...0.5.0) (2022-09-16)
+
+
+### Features
+
+* default to non-capture, add `grouped` and `groupedAs` ([#42](https://github.com/danielroe/magic-regexp/issues/42)) ([6b8d4dc](https://github.com/danielroe/magic-regexp/commit/6b8d4dcbbd45ccd96349f2ef7420cacb389c6d96))
+* type-safe `String.match` ([#68](https://github.com/danielroe/magic-regexp/issues/68)) ([1a2d5d4](https://github.com/danielroe/magic-regexp/commit/1a2d5d4acda0a82778b1a1452f50014fd6a108bc))
+
 ## [0.4.1](https://github.com/danielroe/magic-regexp/compare/0.4.0...0.4.1) (2022-08-05)
 
 
