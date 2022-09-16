@@ -3,12 +3,16 @@ import * as magicRegexp from 'magic-regexp'
 
 export default function MagicRegExpNuxtModule() {
   const nuxt = this.nuxt
-  nuxt.hook('autoImports:sources', presets => {
-    presets.push({
-      from: 'magic-regexp',
-      imports: Object.keys(magicRegexp),
-    })
-  })
+  nuxt.hook(
+    'autoImports:sources',
+    presets => {
+      presets.push({
+        from: 'magic-regexp',
+        imports: Object.keys(magicRegexp),
+      })
+    },
+    { allowDeprecated: true }
+  )
 
   // Disable RegExp code transformation in development mode
   if (nuxt.options.dev) return
