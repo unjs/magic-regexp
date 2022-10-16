@@ -42,33 +42,33 @@
   },
   "dependencies": {
     "estree-walker": "^3.0.1",
-    "magic-string": "^0.26.3",
-    "mlly": "^0.5.14",
-    "ufo": "^0.8.5",
-    "unplugin": "^0.9.5"
+    "magic-string": "^0.26.7",
+    "mlly": "^0.5.16",
+    "ufo": "^0.8.6",
+    "unplugin": "^0.9.6"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "latest",
-    "@release-it/conventional-changelog": "latest",
+    "@release-it/conventional-changelog": "^5.1.1",
     "@types/estree": "^1.0.0",
-    "@types/node": "latest",
-    "@vitest/coverage-c8": "^0.23.1",
+    "@types/node": "^18.11.0",
+    "@vitest/coverage-c8": "^0.24.3",
     "acorn": "^8.8.0",
     "c8": "latest",
     "conventional-changelog-conventionalcommits": "latest",
-    "eslint": "latest",
+    "eslint": "^8.25.0",
     "eslint-config-prettier": "latest",
     "eslint-plugin-prettier": "latest",
-    "expect-type": "latest",
+    "expect-type": "^0.14.2",
     "husky": "latest",
     "lint-staged": "latest",
     "pinst": "latest",
     "prettier": "latest",
-    "release-it": "latest",
-    "typescript": "latest",
-    "unbuild": "latest",
-    "vite": "^3.1.0",
-    "vitest": "latest"
+    "release-it": "^15.5.0",
+    "typescript": "^4.8.4",
+    "unbuild": "^0.9.4",
+    "vite": "^3.1.8",
+    "vitest": "^0.24.3"
   },
   "resolutions": {
     "magic-regexp": "link:."
