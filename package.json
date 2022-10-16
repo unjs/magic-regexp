@@ -8,11 +8,13 @@
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
     },
     "./transform": {
       "import": "./dist/transform.mjs",
-      "require": "./dist/transform.cjs"
+      "require": "./dist/transform.cjs",
+      "types": "./dist/transform.d.ts"
     },
     "./nuxt": "./nuxt.mjs"
   },
