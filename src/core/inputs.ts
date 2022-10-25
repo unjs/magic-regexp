@@ -37,7 +37,10 @@ export const wordChar = createInput('\\w')
 export const wordBoundary = createInput('\\b')
 export const digit = createInput('\\d')
 export const whitespace = createInput('\\s')
-export const letter = createInput('[a-zA-Z]')
+export const letter = Object.assign(createInput('[a-zA-Z]'), {
+  lowercase: createInput('[a-z]'),
+  uppercase: createInput('[A-Z]'),
+})
 export const tab = createInput('\\t')
 export const linefeed = createInput('\\n')
 export const carriageReturn = createInput('\\r')
@@ -47,7 +50,10 @@ export const not = {
   wordBoundary: createInput('\\B'),
   digit: createInput('\\D'),
   whitespace: createInput('\\S'),
-  letter: createInput('[^a-zA-Z]'),
+  letter: Object.assign(createInput('[^a-zA-Z]'), {
+    lowercase: createInput('[^a-z]'),
+    uppercase: createInput('[^A-Z]'),
+  }),
   tab: createInput('[^\\t]'),
   linefeed: createInput('[^\\n]'),
   carriageReturn: createInput('[^\\r]'),
