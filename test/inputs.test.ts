@@ -20,6 +20,7 @@ import {
   linefeed,
   carriageReturn,
   charNotIn,
+  type Input,
 } from '../src/core/inputs'
 import { createRegExp, MagicRegExp } from '../src'
 
@@ -116,7 +117,7 @@ describe('inputs', () => {
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\s'>()
   })
   it('letter', () => {
-    const input = letter
+    const input = letter as Input<'[a-zA-Z]', never, []>
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[a-zA-Z\\]/')
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[a-zA-Z]'>()
   })
@@ -145,7 +146,7 @@ describe('inputs', () => {
     expect(not.whitespace.toString()).toMatchInlineSnapshot('"\\\\S"')
     expectTypeOf(extractRegExp(not.whitespace)).toEqualTypeOf<'\\S'>()
     expect(not.letter.toString()).toMatchInlineSnapshot('"[^a-zA-Z]"')
-    expectTypeOf(extractRegExp(not.letter)).toEqualTypeOf<'[^a-zA-Z]'>()
+    expectTypeOf(extractRegExp(not.letter as Input<'[^a-zA-Z]'>)).toEqualTypeOf<'[^a-zA-Z]'>()
     expect(not.tab.toString()).toMatchInlineSnapshot('"[^\\\\t]"')
     expectTypeOf(extractRegExp(not.tab)).toEqualTypeOf<'[^\\t]'>()
     expect(not.linefeed.toString()).toMatchInlineSnapshot('"[^\\\\n]"')
