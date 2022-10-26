@@ -121,6 +121,16 @@ describe('inputs', () => {
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[a-zA-Z\\]/')
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[a-zA-Z]'>()
   })
+  it('letter.lowercase', () => {
+    const input = letter.lowercase
+    expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[a-z\\]/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[a-z]'>()
+  })
+  it('letter.uppercase', () => {
+    const input = letter.uppercase
+    expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[A-Z\\]/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[A-Z]'>()
+  })
   it('tab', () => {
     const input = tab
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\\\t/')
@@ -147,6 +157,10 @@ describe('inputs', () => {
     expectTypeOf(extractRegExp(not.whitespace)).toEqualTypeOf<'\\S'>()
     expect(not.letter.toString()).toMatchInlineSnapshot('"[^a-zA-Z]"')
     expectTypeOf(extractRegExp(not.letter as Input<'[^a-zA-Z]'>)).toEqualTypeOf<'[^a-zA-Z]'>()
+    expect(not.letter.lowercase.toString()).toMatchInlineSnapshot('"[^a-z]"')
+    expectTypeOf(extractRegExp(not.letter.lowercase)).toEqualTypeOf<'[^a-z]'>()
+    expect(not.letter.uppercase.toString()).toMatchInlineSnapshot('"[^A-Z]"')
+    expectTypeOf(extractRegExp(not.letter.uppercase)).toEqualTypeOf<'[^A-Z]'>()
     expect(not.tab.toString()).toMatchInlineSnapshot('"[^\\\\t]"')
     expectTypeOf(extractRegExp(not.tab)).toEqualTypeOf<'[^\\t]'>()
     expect(not.linefeed.toString()).toMatchInlineSnapshot('"[^\\\\n]"')
