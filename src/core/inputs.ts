@@ -24,7 +24,7 @@ export const charNotIn = <T extends string>(chars: T) =>
   createInput(`[^${chars.replace(/[-\\^\]]/g, '\\$&')}]`) as Input<`[^${EscapeChar<T>}]`>
 
 /** This takes an array of inputs and matches any of them */
-export const anyOf = <New extends InputSource<string, string>[]>(...args: New) =>
+export const anyOf = <New extends InputSource[]>(...args: New) =>
   createInput(`(?:${args.map(a => exactly(a)).join('|')})`) as Input<
     `(?:${Join<MapToValues<New>>})`,
     MapToGroups<New>,
@@ -54,23 +54,23 @@ export const not = {
 }
 
 /** Equivalent to `?` - this marks the input as optional */
-export const maybe = <New extends InputSource<string>>(str: New) =>
-  createInput(`${wrap(exactly(str))}?`) as IfUnwrapped<
-    GetValue<New>,
-    Input<`(?:${GetValue<New>})?`, GetGroup<New>, GetCapturedGroupsArr<New>>,
-    Input<`${GetValue<New>}?`, GetGroup<New>, GetCapturedGroupsArr<New>>
+export const maybe = <New extends InputSource>(str: New) =>
+  createInput(`${wrap(exactly(str))}?`) as Input<
+    IfUnwrapped<GetValue<New>, `(?:${GetValue<New>})?`, `${GetValue<New>}?`>,
+    GetGroup<New>,
+    GetCapturedGroupsArr<New>
   >
 
 /** This escapes a string input to match it exactly */
-export const exactly = <New extends InputSource<string>>(
+export const exactly = <New extends InputSource>(
   input: New
 ): Input<GetValue<New>, GetGroup<New>, GetCapturedGroupsArr<New>> =>
   typeof input === 'string' ? (createInput(input.replace(ESCAPE_REPLACE_RE, '\\$&')) as any) : input
 
 /** Equivalent to `+` - this marks the input as repeatable, any number of times but at least once */
-export const oneOrMore = <New extends InputSource<string>>(str: New) =>
-  createInput(`${wrap(exactly(str))}+`) as IfUnwrapped<
-    GetValue<New>,
-    Input<`(?:${GetValue<New>})+`, GetGroup<New>, GetCapturedGroupsArr<New>>,
-    Input<`${GetValue<New>}+`, GetGroup<New>, GetCapturedGroupsArr<New>>
+export const oneOrMore = <New extends InputSource>(str: New) =>
+  createInput(`${wrap(exactly(str))}+`) as Input<
+    IfUnwrapped<GetValue<New>, `(?:${GetValue<New>})+`, `${GetValue<New>}+`>,
+    GetGroup<New>,
+    GetCapturedGroupsArr<New>
   >

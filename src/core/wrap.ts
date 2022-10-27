@@ -3,8 +3,8 @@ import { StripEscapes } from './types/escape'
 
 export type IfUnwrapped<
   Value extends string,
-  Yes extends Input<string>,
-  No extends Input<string>
+  Yes extends string,
+  No extends string
 > = Value extends `(${string})`
   ? No
   : StripEscapes<Value> extends `${infer A}${infer B}`
