@@ -19,8 +19,11 @@ export type Escape<
 export type EscapeChar<T extends string> = Escape<T, '\\' | '^' | '-' | ']'>
 export type StripEscapes<T extends string> = T extends `${infer A}\\${infer B}` ? `${A}${B}` : T
 
+// prettier-ignore
+type ExactEscapeChar = '.' | '*' | '+' | '?' | '^' | '$' | '{' | '}' | '(' | ')' | '|' | '[' | ']' | '/'
+
 export type GetValue<T extends InputSource> = T extends string
-  ? EscapeChar<T>
+  ? Escape<T, ExactEscapeChar>
   : T extends Input<infer R>
   ? R
   : never
