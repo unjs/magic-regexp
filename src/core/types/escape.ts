@@ -1,9 +1,7 @@
 import type { Input } from '../inputs'
 import { InputSource } from './sources'
 
-// prettier-ignore
-type ExactEscapeChar = '.' | '*' | '+' | '?' | '^' | '$' | '{' | '}' | '(' | ')' | '|' | '[' | ']' | '/'
-type Escape<
+export type Escape<
   T extends string,
   EscapeChar extends string
 > = T extends `${infer Start}${EscapeChar}${string}`
@@ -18,12 +16,11 @@ type Escape<
     : never
   : T
 
-type CharEscapeCharacter = '\\' | '^' | '-' | ']'
-export type EscapeChar<T extends string> = Escape<T, CharEscapeCharacter>
+export type EscapeChar<T extends string> = Escape<T, '\\' | '^' | '-' | ']'>
 export type StripEscapes<T extends string> = T extends `${infer A}\\${infer B}` ? `${A}${B}` : T
 
-export type GetValue<T extends InputSource<string>> = T extends string
-  ? Escape<T, ExactEscapeChar>
+export type GetValue<T extends InputSource> = T extends string
+  ? EscapeChar<T>
   : T extends Input<infer R>
   ? R
   : never

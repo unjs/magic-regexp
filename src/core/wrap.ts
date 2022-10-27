@@ -1,11 +1,7 @@
 import { Input } from './internal'
 import { StripEscapes } from './types/escape'
 
-export type IfUnwrapped<
-  Value extends string,
-  Yes extends Input<string>,
-  No extends Input<string>
-> = Value extends `(${string})`
+export type IfUnwrapped<Value extends string, Yes, No> = Value extends `(${string})`
   ? No
   : StripEscapes<Value> extends `${infer A}${infer B}`
   ? A extends ''
