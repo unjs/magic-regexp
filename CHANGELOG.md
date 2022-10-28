@@ -1,5 +1,17 @@
 
 
+## [0.6.0](https://github.com/danielroe/magic-regexp/compare/0.5.0...0.6.0) (2022-10-28)
+
+
+### Features
+
+* implement `letter.lowercase` and `letter.uppercase` ([#77](https://github.com/danielroe/magic-regexp/issues/77)) ([70afa5b](https://github.com/danielroe/magic-regexp/commit/70afa5b88019ca4147706a50b0085193a53b7900))
+
+
+### Bug Fixes
+
+* update interface `Input` type parameter to contravariant type ([#79](https://github.com/danielroe/magic-regexp/issues/79)) ([c9707a2](https://github.com/danielroe/magic-regexp/commit/c9707a2d290712afc8e1928db51ec3f0f503207c))
+
 ## [0.5.0](https://github.com/danielroe/magic-regexp/compare/0.4.1...0.5.0) (2022-09-16)
 
 
