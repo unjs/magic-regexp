@@ -50,6 +50,7 @@
     "unplugin": "^0.10.2"
   },
   "devDependencies": {
+    "@nuxt/kit": "3.0.0",
     "@nuxtjs/eslint-config-typescript": "latest",
     "@release-it/conventional-changelog": "5.1.1",
     "@types/estree": "1.0.0",
@@ -67,12 +68,13 @@
     "pinst": "latest",
     "prettier": "latest",
     "release-it": "15.5.0",
-    "typescript": "4.9.3",
+    "typescript": "4.8.4",
     "unbuild": "1.0.1",
     "vite": "3.2.4",
     "vitest": "0.25.2"
   },
   "resolutions": {
+    "typescript": "4.8.4",
     "magic-regexp": "link:."
   },
   "packageManager": "pnpm@7.16.1",
