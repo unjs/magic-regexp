@@ -1,5 +1,12 @@
 
 
+## [0.6.1](https://github.com/danielroe/magic-regexp/compare/0.6.0...0.6.1) (2022-11-16)
+
+
+### Bug Fixes
+
+* **nuxt:** use rc14+ compatible nuxt module ([98c4dc9](https://github.com/danielroe/magic-regexp/commit/98c4dc9de4ace2a7d11714a8453a605bbc1f5de5))
+
 ## [0.6.0](https://github.com/danielroe/magic-regexp/compare/0.5.0...0.6.0) (2022-10-28)
 
 
