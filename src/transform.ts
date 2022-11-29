@@ -19,17 +19,12 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
       const { pathname, search } = parseURL(decodeURIComponent(pathToFileURL(id).href))
       const { type } = parseQuery(search)
 
-      // vue files
-      if (pathname.endsWith('.vue') && (type === 'script' || !search)) {
-        return true
-      }
-
-      // js files
-      if (pathname.match(/\.((c|m)?j|t)sx?$/g)) {
-        return true
-      }
-
-      return false
+      return !!(
+        (
+          (pathname.endsWith('.vue') && (type === 'script' || !search)) || // vue files
+          pathname.match(/\.((c|m)?j|t)sx?$/g)
+        ) // js files
+      )
     },
     transform(code, id) {
       if (!code.includes('magic-regexp')) return
@@ -62,17 +57,17 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
 
       walk(this.parse(code), {
         enter(_node) {
-          if (_node.type !== 'CallExpression') return
           const node = _node as SimpleCallExpression
           if (
+            _node.type !== 'CallExpression' ||
             // Normal call
-            !wrapperNames.includes((node.callee as any).name) &&
-            // Namespaced call
-            (node.callee.type !== 'MemberExpression' ||
-              node.callee.object.type !== 'Identifier' ||
-              node.callee.object.name !== namespace ||
-              node.callee.property.type !== 'Identifier' ||
-              node.callee.property.name !== 'createRegExp')
+            (!wrapperNames.includes((node.callee as any).name) &&
+              // Namespaced call
+              (node.callee.type !== 'MemberExpression' ||
+                node.callee.object.type !== 'Identifier' ||
+                node.callee.object.name !== namespace ||
+                node.callee.property.type !== 'Identifier' ||
+                node.callee.property.name !== 'createRegExp'))
           ) {
             return
           }
