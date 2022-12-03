@@ -1,14 +1,13 @@
-import { defineNuxtConfig } from 'nuxt'
-
 export default defineNuxtConfig({
-  build: { transpile: [/@docus/] },
-  extends: ['./node_modules/@docus/docs-theme'],
-  github: {
-    owner: 'danielroe',
-    repo: 'magic-regexp',
-    branch: 'main',
+  extends: '@nuxt-themes/docus',
+  build: {
+    transpile: [/content-edge/],
   },
-  theme: {},
+  // github: {
+  //   owner: 'danielroe',
+  //   repo: 'magic-regexp',
+  //   branch: 'main',
+  // },
   content: {
     highlight: {
       theme: 'material-palenight',
@@ -17,29 +16,8 @@ export default defineNuxtConfig({
       fields: ['exact'],
     },
   },
-  modules: ['@nuxthq/admin', '@docus/github', 'vue-plausible'],
+  modules: ['nuxt-plausible'],
   plausible: {
     domain: 'regexp.dev',
-  },
-  hooks: {
-    'vite:extendConfig'(config, { isClient }) {
-      if (isClient && !Array.isArray(config.build.rollupOptions.output)) {
-        config.build.rollupOptions.output.chunkFileNames = '_nuxt/[hash].mjs'
-      }
-    },
-    'tailwindcss:config'(config) {
-      config.theme.extend.colors.primary = {
-        '50': '#ff46c5',
-        '100': '#ff3cbb',
-        '200': '#ff32b1',
-        '300': '#ff28a7',
-        '400': '#ff1e9d',
-        '500': '#ff1493',
-        '600': '#f50a89',
-        '700': '#eb007f',
-        '800': '#e10075',
-        '900': '#d7006b',
-      }
-    },
   },
 })

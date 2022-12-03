@@ -29,6 +29,7 @@
   "scripts": {
     "build": "unbuild",
     "dev": "vitest dev",
+    "docs:generate": "nuxi generate docs",
     "lint": "pnpm lint:all:eslint && pnpm lint:all:prettier",
     "lint:all:eslint": "pnpm lint:eslint --ext .ts,.js,.mjs,.cjs .",
     "lint:all:prettier": "pnpm lint:prettier \"{src,test}/**/*.{js,json,ts}\"",
