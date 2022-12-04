@@ -24,7 +24,7 @@ importers:
       expect-type: 0.15.0
       husky: latest
       lint-staged: latest
-      magic-string: ^0.26.7
+      magic-string: ^0.27.0
       mlly: ^1.0.0
       pinst: latest
       prettier: latest
@@ -37,7 +37,7 @@ importers:
       vitest: 0.25.3
     dependencies:
       estree-walker: 3.0.1
-      magic-string: 0.26.7
+      magic-string: 0.27.0
       mlly: 1.0.0
       ufo: 1.0.0
       unplugin: 1.0.0
@@ -730,7 +730,6 @@ packages:
 
   /@jridgewell/sourcemap-codec/1.4.14:
     resolution: {integrity: sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==}
-    dev: true
 
   /@jridgewell/trace-mapping/0.3.17:
     resolution: {integrity: sha512-MCNzAp77qzKca9+W/+I0+sEpaUnZoeasnghNeVc41VZCEKaCH73Vq3BZZ/SzWIgrqE4H4ceI+p+b6C0mHf9T4g==}
@@ -808,14 +807,14 @@ packages:
       '@nuxt/content': /@nuxt/content-edge/2.2.2-27833120.4c37658
       '@nuxtjs/algolia': 1.3.1
       '@nuxtjs/color-mode': 3.2.0
-      '@nuxtjs/tailwindcss': 6.1.3
+      '@nuxtjs/tailwindcss': 5.3.5
       '@tailwindcss/aspect-ratio': 0.4.2
       '@tailwindcss/forms': 0.5.3
       '@tailwindcss/line-clamp': 0.4.2
       '@tailwindcss/typography': 0.5.8
       '@vueuse/core': 9.6.0
       '@vueuse/nuxt': 9.6.0_nuxt@3.0.0
-      pinceau: 0.8.3
+      pinceau: 0.8.4
       socket.io-client: 4.5.4
       vue-plausible: 1.3.2
     transitivePeerDependencies:
@@ -972,7 +971,7 @@ packages:
       postcss-import-resolver: 2.0.0
       scule: 1.0.0
       std-env: 3.3.1
-      ufo: 1.0.0
+      ufo: 1.0.1
       unimport: 1.0.1
       untyped: 1.0.0
     transitivePeerDependencies:
@@ -993,7 +992,7 @@ packages:
       postcss-import-resolver: 2.0.0
       scule: 1.0.0
       std-env: 3.3.1
-      ufo: 1.0.0
+      ufo: 1.0.1
       unimport: 1.0.1_rollup@2.79.1
       untyped: 1.0.0
     transitivePeerDependencies:
@@ -1158,8 +1157,8 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxtjs/tailwindcss/6.1.3:
-    resolution: {integrity: sha512-XgoltsFhpX5SCxgUA9cEyLuKyH9xkjlfT+npDQNhSW71/BpeNPmmtjyD+o5ShAvyiZD2AzvZ0/P/eMNDfT33fA==}
+  /@nuxtjs/tailwindcss/5.3.5:
+    resolution: {integrity: sha512-d6noacVfcN88R6Iqd5/kl7YyumE+EIsz6ky26JvidHtkTeAPxZt8XN/KFEMJ6xwSvhsUndrNW94XYPKv7l79jg==}
     dependencies:
       '@nuxt/kit': 3.0.0
       '@nuxt/postcss8': 1.1.3
@@ -1168,7 +1167,6 @@ packages:
       clear-module: 4.1.2
       consola: 2.15.3
       defu: 6.1.1
-      h3: 0.8.6
       postcss: 8.4.19
       postcss-custom-properties: 12.1.11_postcss@8.4.19
       postcss-nesting: 10.2.0_postcss@8.4.19
@@ -2615,7 +2613,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001420
+      caniuse-lite: 1.0.30001436
       electron-to-chromium: 1.4.283
       node-releases: 2.0.6
       update-browserslist-db: 1.0.10_browserslist@4.21.4
@@ -2799,10 +2797,6 @@ packages:
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-lite/1.0.30001420:
-    resolution: {integrity: sha512-OnyeJ9ascFA9roEj72ok2Ikp7PHJTKubtEJIQ/VK3fdsS50q4KWy+Z5X0A1/GswEItKX0ctAp8n4SYDE7wTu6A==}
-    dev: true
-
   /caniuse-lite/1.0.30001436:
     resolution: {integrity: sha512-ZmWkKsnC2ifEPoWUvSAIGyOYwT+keAaaWPHiQ9DfMqS1t6tfuyFYoWR78TeZtznkEQ64+vGXH9cZrElwR2Mrxg==}
     dev: true
@@ -2920,10 +2914,6 @@ packages:
 
   /chroma-js/2.4.2:
     resolution: {integrity: sha512-U9eDw6+wt7V8z5NncY2jJfZa+hUH8XEj8FQHgFJTrUFnJfXYf4Ml4adI2vXZOjqRDpFWtYVWypDfZwnJ+HIR4A==}
-    dev: true
-
-  /ci-info/3.5.0:
-    resolution: {integrity: sha512-yH4RezKOGlOhxkmhbeNuC4eYZKAUsEaGtBuBzDDP1eFUKiccDWzBABxBfOx31IDwDIXMTxWuwAxUGModvkbuVw==}
     dev: true
 
   /ci-info/3.7.0:
@@ -3894,7 +3884,7 @@ packages:
     dev: true
 
   /ee-first/1.1.1:
-    resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
+    resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
   /electron-to-chromium/1.4.283:
@@ -5492,15 +5482,6 @@ packages:
       duplexer: 0.1.2
     dev: true
 
-  /h3/0.8.6:
-    resolution: {integrity: sha512-CSWNOKa3QGo67rFU2PhbFTp0uPJtilNji2Z0pMiSRQt3+OkIW0u3E1WMJqIycLqaTgb9JyFqH/S4mcTyyGtvyQ==}
-    dependencies:
-      cookie-es: 0.5.0
-      destr: 1.2.1
-      radix3: 0.2.1
-      ufo: 0.8.6
-    dev: true
-
   /h3/1.0.1:
     resolution: {integrity: sha512-gDCGpRvjchZW2JBlTqbJ9IOs+mdkXXuwSQkSye+jubHAv/UhdamKqoQvd4RFgyBNjHSId8Y+b10UdTcPlP/V+w==}
     dependencies:
@@ -6070,7 +6051,7 @@ packages:
     resolution: {integrity: sha512-ZYvCgrefwqoQ6yTyYUbQu64HsITZ3NfKX1lzaEYdkTDcfKzzCI/wthRRYKkdjHKFVgNiXKAKm65Zo1pk2as/QQ==}
     hasBin: true
     dependencies:
-      ci-info: 3.5.0
+      ci-info: 3.7.0
     dev: true
 
   /is-core-module/2.11.0:
@@ -6822,6 +6803,14 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       sourcemap-codec: 1.4.8
+    dev: true
+
+  /magic-string/0.27.0:
+    resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.4.14
+    dev: false
 
   /make-dir/3.1.0:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
@@ -8287,8 +8276,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pinceau/0.8.3:
-    resolution: {integrity: sha512-kZ87ZLjrM3mzlh+1LiTVc1ewRRzp4I0Bu6e6DaeIYW9WQDFFulSJT7A14SE5ac6HyDomLtDRiU51hi4t2xz1jQ==}
+  /pinceau/0.8.4:
+    resolution: {integrity: sha512-S5M3Rvee529rTfjCTgTPvSCuytCYHftoQB0qxr6BrKIyVrTINf7agZsx+QM3OFfbyLBPgGUv6HDDnlK7TyR2pw==}
     dependencies:
       '@unocss/reset': 0.47.5
       '@volar/vue-language-core': 1.0.11
@@ -8979,10 +8968,6 @@ packages:
   /quick-lru/5.1.1:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
-    dev: true
-
-  /radix3/0.2.1:
-    resolution: {integrity: sha512-FnhArTl5Tq7dodiLeSPKrDUyCQuJqEncP8cKdyy399g8F/cz7GH6FmzA3Rkosu2IZMkpswFFwXfb2ERSiL06pg==}
     dev: true
 
   /radix3/1.0.0:
@@ -9821,6 +9806,8 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
+    dev: true
 
   /space-separated-tokens/2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
