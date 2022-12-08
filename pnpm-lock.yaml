@@ -13,7 +13,7 @@ importers:
       '@release-it/conventional-changelog': 5.1.1
       '@types/estree': 1.0.0
       '@types/node': 18.11.11
-      '@vitest/coverage-c8': 0.25.5
+      '@vitest/coverage-c8': 0.25.6
       acorn: 8.8.1
       c8: latest
       conventional-changelog-conventionalcommits: latest
@@ -34,7 +34,7 @@ importers:
       unbuild: 1.0.2
       unplugin: ^1.0.0
       vite: 3.2.5
-      vitest: 0.25.5
+      vitest: 0.25.6
     dependencies:
       estree-walker: 3.0.1
       magic-string: 0.27.0
@@ -47,23 +47,23 @@ importers:
       '@release-it/conventional-changelog': 5.1.1_release-it@15.5.1
       '@types/estree': 1.0.0
       '@types/node': 18.11.11
-      '@vitest/coverage-c8': 0.25.5
+      '@vitest/coverage-c8': 0.25.6
       acorn: 8.8.1
       c8: 7.12.0
       conventional-changelog-conventionalcommits: 5.0.0
       eslint: 8.29.0
       eslint-config-prettier: 8.5.0_eslint@8.29.0
-      eslint-plugin-prettier: 4.2.1_nrhoyyjffvfyk4vtlt5destxgm
+      eslint-plugin-prettier: 4.2.1_5dgjrgoi64tgrv3zzn3walur3u
       expect-type: 0.15.0
       husky: 8.0.2
       lint-staged: 13.1.0
       pinst: 3.0.0
-      prettier: 2.8.0
+      prettier: 2.8.1
       release-it: 15.5.1
       typescript: 4.8.4
       unbuild: 1.0.2
       vite: 3.2.5_@types+node@18.11.11
-      vitest: 0.25.5
+      vitest: 0.25.6
 
   docs:
     specifiers:
@@ -804,7 +804,7 @@ packages:
       '@docsearch/js': 3.3.0
       '@fontsource/inter': 4.5.14
       '@iconify/vue': 4.0.1
-      '@nuxt/content': /@nuxt/content-edge/2.2.2-27839181.9258e5c
+      '@nuxt/content': /@nuxt/content-edge/2.2.2-27841679.a41c078
       '@nuxtjs/algolia': 1.3.1
       '@nuxtjs/color-mode': 3.2.0
       '@nuxtjs/tailwindcss': 5.3.5
@@ -839,13 +839,13 @@ packages:
       - webpack
     dev: true
 
-  /@nuxt/content-edge/2.2.2-27839181.9258e5c:
-    resolution: {integrity: sha512-YeLIg/EvnfdTK/n5zFJflLQWHjBOiAuZYemHJrr+mZLapeZr+B4QkR4HqkWT6U2mMquCkVCTjCc4yKLqU9gJog==}
+  /@nuxt/content-edge/2.2.2-27841679.a41c078:
+    resolution: {integrity: sha512-Gn1g3JHBlZLiUcaO5BB6dJLuyM4NYqkwzBbdfY8v/bHvTEBVbuTQ4/Y5kdX8X33qv6srN3zCieksBHS/Ve/tiw==}
     dependencies:
       '@nuxt/kit': 3.0.0
       consola: 2.15.3
       defu: 6.1.1
-      destr: 1.2.1
+      destr: 1.2.2
       detab: 3.0.2
       html-tags: 3.2.0
       json5: 2.2.1
@@ -1010,7 +1010,7 @@ packages:
       consola: 2.15.3
       create-require: 1.1.1
       defu: 6.1.1
-      destr: 1.2.1
+      destr: 1.2.2
       dotenv: 16.0.3
       fs-extra: 10.1.0
       git-url-parse: 13.1.0
@@ -1958,11 +1958,11 @@ packages:
       vue: 3.2.45
     dev: true
 
-  /@vitest/coverage-c8/0.25.5:
-    resolution: {integrity: sha512-tXlg0QVkTQ+7dqhsuwRFovP5vjgYGyBrRREFS55IQ20IsiSaRug9sRblRsckTXmGtz1OMJy/Lxv1gFVo24/ipA==}
+  /@vitest/coverage-c8/0.25.6:
+    resolution: {integrity: sha512-+Bcs1XZ8CuEe52QSOgzqmqiV82CXZRRj3yclPQqtLkUV4S6+kdOdfRTtMHOilwhZH70giDjBQx3jgiZoYgFVMA==}
     dependencies:
       c8: 7.12.0
-      vitest: 0.25.5
+      vitest: 0.25.6
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@vitest/browser'
@@ -3753,6 +3753,10 @@ packages:
     resolution: {integrity: sha512-ud8w0qMLlci6iFG7CNgeRr8OcbUWMsbfjtWft1eJ5Luqrz/M8Ebqk/KCzne8rKUlIQWWfLv0wD6QHrqOf4GshA==}
     dev: true
 
+  /destr/1.2.2:
+    resolution: {integrity: sha512-lrbCJwD9saUQrqUfXvl6qoM+QN3W7tLV5pAOs+OqOmopCCz/JkE05MHedJR1xfk4IAnZuJXPVuN5+7jNA2ZCiA==}
+    dev: true
+
   /destroy/1.2.0:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
@@ -4663,7 +4667,7 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /eslint-plugin-prettier/4.2.1_nrhoyyjffvfyk4vtlt5destxgm:
+  /eslint-plugin-prettier/4.2.1_5dgjrgoi64tgrv3zzn3walur3u:
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -4676,7 +4680,7 @@ packages:
     dependencies:
       eslint: 8.29.0
       eslint-config-prettier: 8.5.0_eslint@8.29.0
-      prettier: 2.8.0
+      prettier: 2.8.1
       prettier-linter-helpers: 1.0.0
     dev: true
 
@@ -5486,7 +5490,7 @@ packages:
     resolution: {integrity: sha512-gDCGpRvjchZW2JBlTqbJ9IOs+mdkXXuwSQkSye+jubHAv/UhdamKqoQvd4RFgyBNjHSId8Y+b10UdTcPlP/V+w==}
     dependencies:
       cookie-es: 0.5.0
-      destr: 1.2.1
+      destr: 1.2.2
       radix3: 1.0.0
       ufo: 1.0.1
     dev: true
@@ -7552,7 +7556,7 @@ packages:
       consola: 2.15.3
       cookie-es: 0.5.0
       defu: 6.1.1
-      destr: 1.2.1
+      destr: 1.2.2
       dot-prop: 7.2.0
       esbuild: 0.15.18
       escape-string-regexp: 5.0.0
@@ -7873,7 +7877,7 @@ packages:
   /ofetch/1.0.0:
     resolution: {integrity: sha512-d40aof8czZFSQKJa4+F7Ch3UC5D631cK1TTUoK+iNEut9NoiCL+u0vykl/puYVUS2df4tIQl5upQcolIcEzQjQ==}
     dependencies:
-      destr: 1.2.1
+      destr: 1.2.2
       node-fetch-native: 1.0.1
       ufo: 1.0.1
     dev: true
@@ -7885,7 +7889,7 @@ packages:
   /ohmyfetch/0.4.21:
     resolution: {integrity: sha512-VG7f/JRvqvBOYvL0tHyEIEG7XHWm7OqIfAs6/HqwWwDfjiJ1g0huIpe5sFEmyb+7hpFa1EGNH2aERWR72tlClw==}
     dependencies:
-      destr: 1.2.1
+      destr: 1.2.2
       node-fetch-native: 0.1.8
       ufo: 0.8.6
       undici: 5.13.0
@@ -8854,8 +8858,8 @@ packages:
       fast-diff: 1.2.0
     dev: true
 
-  /prettier/2.8.0:
-    resolution: {integrity: sha512-9Lmg8hTFZKG0Asr/kW9Bp8tJjRVluO8EJQVfY2T7FMw9T5jy4I/Uvx0Rca/XWf50QQ1/SS48+6IJWnrb+2yemA==}
+  /prettier/2.8.1:
+    resolution: {integrity: sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
@@ -8999,7 +9003,7 @@ packages:
     resolution: {integrity: sha512-yVeYJHOpJLOhs3V6RKwz7RPPwPurrx3JjwK264sPgvo/lFdhuUrLien7iSvAO6STVkN0gSMk/MehQNHQhflqZw==}
     dependencies:
       defu: 6.1.1
-      destr: 1.2.1
+      destr: 1.2.2
       flat: 5.0.2
     dev: true
 
@@ -10642,7 +10646,7 @@ packages:
     dependencies:
       anymatch: 3.1.2
       chokidar: 3.5.3
-      destr: 1.2.1
+      destr: 1.2.2
       h3: 1.0.1
       ioredis: 5.2.4
       listhen: 1.0.1
@@ -10906,8 +10910,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.25.5:
-    resolution: {integrity: sha512-lFKSTZV+AjuL44/yNC0aDPKTiasYSqOQ97Gg2G4P2LnjyzQ21ZUs4rQOscHK3lrSnVuir3+1QavHzbDgH4tWQA==}
+  /vitest/0.25.6:
+    resolution: {integrity: sha512-jdPgmZ7BcDnm1+hmMPIl9BZjSy+b8Y8V0tQMsv7ECO90Qic7EZ5/+traILXLpsXgqK5KgVrUJmchevAUuKL/1w==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
