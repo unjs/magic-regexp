@@ -13,7 +13,7 @@ importers:
       '@release-it/conventional-changelog': 5.1.1
       '@types/estree': 1.0.0
       '@types/node': 18.11.13
-      '@vitest/coverage-c8': 0.25.6
+      '@vitest/coverage-c8': 0.25.7
       acorn: 8.8.1
       c8: latest
       conventional-changelog-conventionalcommits: latest
@@ -34,7 +34,7 @@ importers:
       unbuild: 1.0.2
       unplugin: ^1.0.0
       vite: 3.2.5
-      vitest: 0.25.6
+      vitest: 0.25.7
     dependencies:
       estree-walker: 3.0.1
       magic-string: 0.27.0
@@ -47,7 +47,7 @@ importers:
       '@release-it/conventional-changelog': 5.1.1_release-it@15.5.1
       '@types/estree': 1.0.0
       '@types/node': 18.11.13
-      '@vitest/coverage-c8': 0.25.6
+      '@vitest/coverage-c8': 0.25.7
       acorn: 8.8.1
       c8: 7.12.0
       conventional-changelog-conventionalcommits: 5.0.0
@@ -63,7 +63,7 @@ importers:
       typescript: 4.8.4
       unbuild: 1.0.2
       vite: 3.2.5_@types+node@18.11.13
-      vitest: 0.25.6
+      vitest: 0.25.7
 
   docs:
     specifiers:
@@ -1958,11 +1958,11 @@ packages:
       vue: 3.2.45
     dev: true
 
-  /@vitest/coverage-c8/0.25.6:
-    resolution: {integrity: sha512-+Bcs1XZ8CuEe52QSOgzqmqiV82CXZRRj3yclPQqtLkUV4S6+kdOdfRTtMHOilwhZH70giDjBQx3jgiZoYgFVMA==}
+  /@vitest/coverage-c8/0.25.7:
+    resolution: {integrity: sha512-TEoYjW4YIDXKCMmLqduIGpIq2JmlhE3M0Q68apjNM0ljrJyEvYpaDI5b7OyfXbAJjhmZvIlfEZfZnmhbExHLHg==}
     dependencies:
       c8: 7.12.0
-      vitest: 0.25.6
+      vitest: 0.25.7
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@vitest/browser'
@@ -10910,8 +10910,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.25.6:
-    resolution: {integrity: sha512-jdPgmZ7BcDnm1+hmMPIl9BZjSy+b8Y8V0tQMsv7ECO90Qic7EZ5/+traILXLpsXgqK5KgVrUJmchevAUuKL/1w==}
+  /vitest/0.25.7:
+    resolution: {integrity: sha512-lJ+Ue+v8kHl2JzjaKHJ9u5Yo/loU7zrWK2/Whn8OKQjtq5G7nkeWfXuq3elZaC8xKdkdIuWiiIicaNBG1F5yzg==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
