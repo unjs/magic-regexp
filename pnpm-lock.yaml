@@ -28,7 +28,7 @@ importers:
       mlly: ^1.0.0
       pinst: latest
       prettier: latest
-      release-it: 15.5.1
+      release-it: 15.6.0
       typescript: 4.8.4
       ufo: ^1.0.0
       unbuild: 1.0.2
@@ -44,7 +44,7 @@ importers:
     devDependencies:
       '@nuxt/kit': 3.0.0
       '@nuxtjs/eslint-config-typescript': 12.0.0_d6qaxtm4z57fslwcbi4d5wrunu
-      '@release-it/conventional-changelog': 5.1.1_release-it@15.5.1
+      '@release-it/conventional-changelog': 5.1.1_release-it@15.6.0
       '@types/estree': 1.0.0
       '@types/node': 18.11.18
       '@vitest/coverage-c8': 0.26.2
@@ -59,7 +59,7 @@ importers:
       lint-staged: 13.1.0
       pinst: 3.0.0
       prettier: 2.8.1
-      release-it: 15.5.1
+      release-it: 15.6.0
       typescript: 4.8.4
       unbuild: 1.0.2
       vite: 4.0.3_@types+node@18.11.18
@@ -994,7 +994,7 @@ packages:
       '@tailwindcss/typography': 0.5.8
       '@vueuse/core': 9.6.0
       '@vueuse/nuxt': 9.6.0_nuxt@3.0.0
-      pinceau: 0.9.13
+      pinceau: 0.9.19
       socket.io-client: 4.5.4
       vue-plausible: 1.3.2
     transitivePeerDependencies:
@@ -1503,7 +1503,7 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@release-it/conventional-changelog/5.1.1_release-it@15.5.1:
+  /@release-it/conventional-changelog/5.1.1_release-it@15.6.0:
     resolution: {integrity: sha512-QtbDBe36dQfzexAfDYrbLPvd5Cb5bMWmLcjcGhCOWBss7fe1/gCjoxDULVz+7N7G5Nu2UMeBwHcUp/w8RDh5VQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -1512,7 +1512,7 @@ packages:
       concat-stream: 2.0.0
       conventional-changelog: 3.1.25
       conventional-recommended-bump: 6.1.0
-      release-it: 15.5.1
+      release-it: 15.6.0
       semver: 7.3.8
     dev: true
 
@@ -2681,10 +2681,6 @@ packages:
     resolution: {integrity: sha512-iAB+JbDEGXhyIUavoDl9WP/Jj106Kz9DEn1DPgYw5ruDn0e3Wgi3sKFm55sASdGBNOQB8F59d9qQ7deqrHA8wQ==}
     dev: true
 
-  /asynckit/0.4.0:
-    resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
-    dev: true
-
   /at-least-node/1.0.0:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
     engines: {node: '>= 4.0.0'}
@@ -3259,13 +3255,6 @@ packages:
 
   /colorette/2.0.19:
     resolution: {integrity: sha512-3tlv/dIP7FWvj3BsbHrGLJ6l/oKh1O3TcgBqMn+yyCagOxc23fyzDS6HypQbgxWbkpDnf52p1LuR4eWDQ/K9WQ==}
-    dev: true
-
-  /combined-stream/1.0.8:
-    resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
-    engines: {node: '>= 0.8'}
-    dependencies:
-      delayed-stream: 1.0.0
     dev: true
 
   /comma-separated-tokens/2.0.3:
@@ -3908,11 +3897,6 @@ packages:
       escodegen: 1.14.3
       esprima: 4.0.1
       vm2: 3.9.11
-    dev: true
-
-  /delayed-stream/1.0.0:
-    resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
-    engines: {node: '>=0.4.0'}
     dev: true
 
   /delegates/1.0.0:
@@ -5106,15 +5090,6 @@ packages:
   /form-data-encoder/2.1.3:
     resolution: {integrity: sha512-KqU0nnPMgIJcCOFTNJFEA8epcseEaoox4XZffTgy8jlI6pL/5EFyR54NRG7CnCJN0biY7q52DO3MH6/sJ/TKlQ==}
     engines: {node: '>= 14.17'}
-    dev: true
-
-  /form-data/4.0.0:
-    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
-    engines: {node: '>= 6'}
-    dependencies:
-      asynckit: 0.4.0
-      combined-stream: 1.0.8
-      mime-types: 2.1.35
     dev: true
 
   /formdata-polyfill/4.0.10:
@@ -8336,8 +8311,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pinceau/0.9.13:
-    resolution: {integrity: sha512-r6NGrA0lfqwUXYsUG0DLGgbb2f8PT4hu8Sbindzj8h18UBuvjD/nfqK4tRQwTYl1bfUY9H9ujp0h+lskTmJfyA==}
+  /pinceau/0.9.19:
+    resolution: {integrity: sha512-rVIjHw2v1ueATPXF69lAgHfaR/8C9santlzXun9p/Fke8y1MGXcDa68yTmviQYy+WLOQI76MzxUkxE9H0R2anA==}
     dependencies:
       '@unocss/reset': 0.48.0
       '@volar/vue-language-core': 1.0.18
@@ -9271,8 +9246,8 @@ packages:
       unist-util-visit: 4.1.1
     dev: true
 
-  /release-it/15.5.1:
-    resolution: {integrity: sha512-1X1oyqay/amJh/V+xkSU9zN6LqGmLQJ0Q40+FaHE6+Pu6QCmgX9HbrpHxvF0HZeXkB5cdhHjmYsPbHnUQLRnYg==}
+  /release-it/15.6.0:
+    resolution: {integrity: sha512-NXewgzO8QV1LOFjn2K7/dgE1Y1cG+2JiLOU/x9X/Lq9UdFn2hTH1r9SSrufCxG+y/Rp+oN8liYTsNptKrj92kg==}
     engines: {node: '>=14.9'}
     hasBin: true
     dependencies:
@@ -9282,7 +9257,6 @@ packages:
       chalk: 5.1.2
       cosmiconfig: 8.0.0
       execa: 6.1.0
-      form-data: 4.0.0
       git-url-parse: 13.1.0
       globby: 13.1.2
       got: 12.5.3
