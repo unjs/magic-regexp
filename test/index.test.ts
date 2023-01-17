@@ -75,13 +75,13 @@ describe('inputs', () => {
     expect(createRegExp(pattern).test('test/thing')).toBeTruthy()
   })
   it('between', () => {
-    const digitBetween = exactly('').between('c', 'g')
-    expect(digitBetween.toString()).toMatchInlineSnapshot('"[c-g]"')
-    expect(createRegExp(digitBetween).test('abcdefghi')).toBeTruthy()
+    const letterBetween = exactly('').between('c', 'g')
+    expect(letterBetween.toString()).toMatchInlineSnapshot('"[c-g]"')
+    expect(createRegExp(letterBetween).test('abcdefghi')).toBeTruthy()
 
-    const letterBetween = exactly('').between(2, 4)
-    expect(letterBetween.toString()).toMatchInlineSnapshot('"[2-4]"')
-    expect(createRegExp(letterBetween).test('1234567')).toBeTruthy()
+    const digitBetween = exactly('').between(2, 4)
+    expect(digitBetween.toString()).toMatchInlineSnapshot('"[2-4]"')
+    expect(createRegExp(digitBetween).test('1234567')).toBeTruthy()
   })
   it('times', () => {
     expect(exactly('test').times.between(1, 3).toString()).toMatchInlineSnapshot('"(?:test){1,3}"')
