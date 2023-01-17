@@ -60,6 +60,10 @@ export interface Input<
       max: Max
     ) => Input<IfUnwrapped<V, `(?:${V}){${Min},${Max}}`, `${V}{${Min},${Max}}`>, G, C>
   }
+  between: <First extends number | string, Last extends number | string>(
+    first: First,
+    last: First extends string ? string : number
+  ) => Input<IfUnwrapped<V, `(?:${V}){${First},${Last}}`, `${V}{${First},${Last}}`>, G, C>
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()`. Alias for `groupedAs` */
   as: <K extends string>(
     key: K
@@ -117,6 +121,8 @@ export const createInput = <
       atLeast: (min: number) => createInput(`${wrap(s)}{${min},}`) as any,
       between: (min: number, max: number) => createInput(`${wrap(s)}{${min},${max}}`) as any,
     }),
+    between: (first: string | number, last: string | number) =>
+      createInput(`[${first}-${last}]`) as any,
     optionally: () => createInput(`${wrap(s)}?`) as any,
     as: groupedAsFn,
     groupedAs: groupedAsFn,

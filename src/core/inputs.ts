@@ -31,6 +31,7 @@ export const anyOf = <New extends InputSource[]>(...args: New) =>
     MapToCapturedGroupsArr<New>
   >
 
+export const between = createInput('[\\w-\\w]')
 export const char = createInput('.')
 export const word = createInput('\\b\\w+\\b')
 export const wordChar = createInput('\\w')
