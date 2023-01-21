@@ -13,7 +13,7 @@ importers:
       '@release-it/conventional-changelog': 5.1.1
       '@types/estree': 1.0.0
       '@types/node': 18.11.18
-      '@vitest/coverage-c8': 0.27.2
+      '@vitest/coverage-c8': 0.27.3
       acorn: 8.8.1
       c8: latest
       conventional-changelog-conventionalcommits: latest
@@ -34,7 +34,7 @@ importers:
       unbuild: 1.1.1
       unplugin: ^1.0.0
       vite: 4.0.4
-      vitest: 0.27.2
+      vitest: 0.27.3
     dependencies:
       estree-walker: 3.0.1
       magic-string: 0.27.0
@@ -47,7 +47,7 @@ importers:
       '@release-it/conventional-changelog': 5.1.1_release-it@15.6.0
       '@types/estree': 1.0.0
       '@types/node': 18.11.18
-      '@vitest/coverage-c8': 0.27.2
+      '@vitest/coverage-c8': 0.27.3
       acorn: 8.8.1
       c8: 7.12.0
       conventional-changelog-conventionalcommits: 5.0.0
@@ -63,7 +63,7 @@ importers:
       typescript: 4.8.4
       unbuild: 1.1.1
       vite: 4.0.4_@types+node@18.11.18
-      vitest: 0.27.2
+      vitest: 0.27.3
 
   docs:
     specifiers:
@@ -1183,7 +1183,7 @@ packages:
       '@docsearch/js': 3.3.0
       '@fontsource/inter': 4.5.14
       '@iconify/vue': 4.0.1
-      '@nuxt/content': /@nuxt/content-edge/2.3.0-27899094.b4750ed
+      '@nuxt/content': /@nuxt/content-edge/2.3.0-27903798.383f707
       '@nuxtjs/algolia': 1.3.1
       '@nuxtjs/color-mode': 3.2.0
       '@nuxtjs/tailwindcss': 5.3.5
@@ -1218,8 +1218,8 @@ packages:
       - webpack
     dev: true
 
-  /@nuxt/content-edge/2.3.0-27899094.b4750ed:
-    resolution: {integrity: sha512-HoU8buOeXn3RI5m663OPolADg3X+rs5PZlRbYJhnmp1M70+Ug2XNWfQkuzbb3lFFVYwQiBwyHq1ixinYjRmbBA==}
+  /@nuxt/content-edge/2.3.0-27903798.383f707:
+    resolution: {integrity: sha512-NpTMQYQzC8ESQSvE9Y4CdJ0G9kzmCmPPgzHq0XSM/UlR0njlupRGGBi+UdN+CnvJo0z+rzD70NnEFBR/S5saGw==}
     dependencies:
       '@nuxt/kit': 3.0.0
       consola: 2.15.3
@@ -2337,11 +2337,11 @@ packages:
       vue: 3.2.45
     dev: true
 
-  /@vitest/coverage-c8/0.27.2:
-    resolution: {integrity: sha512-1MFwlwfwIfPFLfu6aN+dZ5jo2aOah5nAwoq/SrqUkt9rXzUmohLOgI1GTT0PpXbJKqaZicIlWuBjiC+BjVgRwQ==}
+  /@vitest/coverage-c8/0.27.3:
+    resolution: {integrity: sha512-xIN4FXXwJqeP6z0gfQ06gbyBMRN2mYvZ4/mn4F96mKXzch0Y93fBeS81eo7D/2YtjbeJBUcU9/amPVb2T+h83Q==}
     dependencies:
       c8: 7.12.0
-      vitest: 0.27.2
+      vitest: 0.27.3
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@vitest/browser'
@@ -3486,11 +3486,6 @@ packages:
   /commander/8.3.0:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
     engines: {node: '>= 12'}
-    dev: true
-
-  /commander/9.4.1:
-    resolution: {integrity: sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw==}
-    engines: {node: ^12.20.0 || >=14}
     dev: true
 
   /commander/9.5.0:
@@ -6859,7 +6854,7 @@ packages:
     dependencies:
       cli-truncate: 3.1.0
       colorette: 2.0.19
-      commander: 9.4.1
+      commander: 9.5.0
       debug: 4.3.4
       execa: 6.1.0
       lilconfig: 2.0.6
@@ -11158,8 +11153,8 @@ packages:
       - terser
     dev: true
 
-  /vite-node/0.27.2_@types+node@18.11.18:
-    resolution: {integrity: sha512-IDwuVhslF10qCnWOGJui7/2KksAOBHi+UbVo6Pqt4f5lgn+kS2sVvYDsETRG5PSuslisGB5CFGvb9I6FQgymBQ==}
+  /vite-node/0.27.3_@types+node@18.11.18:
+    resolution: {integrity: sha512-eyJYOO64o5HIp8poc4bJX+ZNBwMZeI3f6/JdiUmJgW02Mt7LnoCtDMRVmLaY9S05SIsjGe339ZK4uo2wQ+bF9g==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     dependencies:
@@ -11285,8 +11280,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.27.2:
-    resolution: {integrity: sha512-y7tdsL2uaQy+KF18AlmNHZe29ukyFytlxrpSTwwmgLE2XHR/aPucJP9FLjWoqjgqFlXzRAjHlFJLU+HDyI/OsA==}
+  /vitest/0.27.3:
+    resolution: {integrity: sha512-Ld3UVgRVhJUtqvQ3dW89GxiApFAgBsWJZBCWzK+gA3w2yG68csXlGZZ4WDJURf+8ecNfgrScga6xY+8YSOpiMg==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
@@ -11318,12 +11313,13 @@ packages:
       local-pkg: 0.4.2
       picocolors: 1.0.0
       source-map: 0.6.1
+      std-env: 3.3.1
       strip-literal: 1.0.0
       tinybench: 2.3.1
       tinypool: 0.3.0
       tinyspy: 1.0.2
       vite: 4.0.4_@types+node@18.11.18
-      vite-node: 0.27.2_@types+node@18.11.18
+      vite-node: 0.27.3_@types+node@18.11.18
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
