@@ -1,7 +1,7 @@
 export default defineAppConfig({
   docus: {
     title: 'magic-regexp',
-    layout: 'docs',
+    header: { logo: true },
     url: 'https://regexp.dev',
     description: '🦄 A compiled-away, type-safe, readable RegExp alternative',
     socials: {
@@ -22,20 +22,20 @@ export default defineAppConfig({
       credits: [
         {
           icon: 'IconDocus',
-          text: 'Powered by Docus',
+          label: 'Powered by Docus',
           href: 'https://docus.com',
         },
       ],
-      icons: [
+      iconLinks: [
         {
           label: 'Nuxt',
           href: 'https://nuxt.com',
-          component: 'IconNuxt',
+          icon: 'IconNuxt',
         },
         {
           label: 'Vue Telescope',
           href: 'https://vuetelescope.com',
-          component: 'IconVueTelescope',
+          icon: 'IconVueTelescope',
         },
       ],
     },
