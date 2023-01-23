@@ -16,7 +16,7 @@ export default defineNuxtConfig({
       fields: ['exact'],
     },
   },
-  modules: ['nuxt-plausible'],
+  modules: ['@nuxtjs/plausible'],
   plausible: {
     domain: 'regexp.dev',
   },
