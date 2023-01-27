@@ -67,11 +67,11 @@ importers:
 
   docs:
     specifiers:
-      '@nuxt-themes/docus': 1.6.1
+      '@nuxt-themes/docus': 1.6.3
       '@nuxtjs/plausible': 0.2.0
       nuxt: 3.1.1
     devDependencies:
-      '@nuxt-themes/docus': 1.6.1_nuxt@3.1.1
+      '@nuxt-themes/docus': 1.6.3_nuxt@3.1.1
       '@nuxtjs/plausible': 0.2.0
       nuxt: 3.1.1
 
@@ -1167,13 +1167,13 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@nuxt-themes/docus/1.6.1_nuxt@3.1.1:
-    resolution: {integrity: sha512-3d8MxxQyBGlvAGNzxyvM5eUcgNY/EJAYfzaKAwqB59CzhCZKTvdNtxPh28GtlgBC1U82WzsyUtkCer10fLKQSg==}
+  /@nuxt-themes/docus/1.6.3_nuxt@3.1.1:
+    resolution: {integrity: sha512-H+9kiwufFFQGMsU1iyJieHVr0g8Kj664PrSMI2+bveEMbM1ui1xvDBIk6YhkTQbN3Y7rqOeSiKfr5YGp3zYPSg==}
     dependencies:
       '@nuxt-themes/elements': 0.5.2
-      '@nuxt-themes/tokens': 1.6.1
-      '@nuxt-themes/typography': 0.5.0
-      '@nuxt/content': 2.3.0
+      '@nuxt-themes/tokens': 1.6.2
+      '@nuxt-themes/typography': 0.6.0
+      '@nuxt/content': 2.4.1
       '@nuxthq/studio': 0.6.5
       '@vueuse/nuxt': 9.11.1_nuxt@3.1.1
     transitivePeerDependencies:
@@ -1191,7 +1191,7 @@ packages:
   /@nuxt-themes/elements/0.5.2:
     resolution: {integrity: sha512-jwcMbXJ9zK8mGi8vJJqKObVlfpkfyr3f1ngKyrX3n8Hphy/G8wKpTLvUKPL28Rzr2fj0FPTT6aOe6VBsB47EJA==}
     dependencies:
-      '@nuxt-themes/tokens': 1.6.1
+      '@nuxt-themes/tokens': 1.6.2
       '@vueuse/core': 9.11.1
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -1202,12 +1202,12 @@ packages:
       - vue
     dev: true
 
-  /@nuxt-themes/tokens/1.6.1:
-    resolution: {integrity: sha512-mEMFOpMwHmLQnvVbL7bSkKuYqR/8RXta6SaS0a0CqJLND901J934ADWFJf+/i/E1+rCerLUpROIbAx0Sx13jkA==}
+  /@nuxt-themes/tokens/1.6.2:
+    resolution: {integrity: sha512-J2UZpN7iccMCHB2MHfgJ9od85xmfH1Apwu2NEYynNDBHhQG2e9f2JlByEHJbtTQW7soBFjYJQVSxU2XtzASBTw==}
     dependencies:
       '@nuxtjs/color-mode': 3.2.0
       '@vueuse/core': 9.11.1
-      pinceau: 0.12.5
+      pinceau: 0.12.8
     transitivePeerDependencies:
       - '@vue/composition-api'
       - postcss
@@ -1217,13 +1217,13 @@ packages:
       - vue
     dev: true
 
-  /@nuxt-themes/typography/0.5.0:
-    resolution: {integrity: sha512-o49O165xjzFPRRuBiq8oYiBQ2C4iWM/PFaytNdh3vjOrIH0/uSkGoPg3U+5QVBJaAkcp4+aSCwxPNp348YVO4A==}
+  /@nuxt-themes/typography/0.6.0:
+    resolution: {integrity: sha512-RGLi4Ylu7KBr5JYyQQNOafNyDy707C81XjdzmbTznmmKb6VIa5z0rO7XwpsnZhA+wjRkXGJv9B1L+ABhxKEAIA==}
     dependencies:
-      '@nuxt-themes/tokens': 1.6.1
+      '@nuxt-themes/tokens': 1.6.2
       '@nuxtjs/color-mode': 3.2.0
       nuxt-config-schema: 0.4.4
-      nuxt-icon: 0.2.7
+      nuxt-icon: 0.2.10
       ufo: 1.0.1
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -1234,10 +1234,10 @@ packages:
       - vue
     dev: true
 
-  /@nuxt/content/2.3.0:
-    resolution: {integrity: sha512-7IudXOiycHXWxRDe7tWFwnIVT6bp0YG5O4wttCYYd7cvyjX3k6d3zD2j1IkjJMhfqU2PWQ/Wd+A2+oeiLNg3gA==}
+  /@nuxt/content/2.4.1:
+    resolution: {integrity: sha512-p9QWo/Erl75inMPZd+9ez9F60Mgua+vQK55R4QOgnBv2EbtVGM0wAm159u5WBHw0k6VbrT/ULvwQf+xMOHQ+kg==}
     dependencies:
-      '@nuxt/kit': 3.0.0
+      '@nuxt/kit': 3.1.1
       consola: 2.15.3
       defu: 6.1.2
       destr: 1.2.2
@@ -1245,7 +1245,7 @@ packages:
       html-tags: 3.2.0
       json5: 2.2.3
       knitwork: 1.0.0
-      listhen: 1.0.1
+      listhen: 1.0.2
       mdast-util-to-hast: 12.2.6
       mdurl: 1.0.1
       ohash: 1.0.0
@@ -1263,14 +1263,14 @@ packages:
       remark-rehype: 10.1.0
       remark-squeeze-paragraphs: 5.0.1
       scule: 1.0.0
-      shiki-es: 0.1.2
+      shiki-es: 0.2.0
       slugify: 1.6.5
       socket.io-client: 4.5.4
       ufo: 1.0.1
       unified: 10.1.2
       unist-builder: 3.0.1
       unist-util-position: 4.0.4
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
       unstorage: 1.0.1
       ws: 8.12.0
     transitivePeerDependencies:
@@ -2270,8 +2270,8 @@ packages:
       vue: 3.2.45
     dev: true
 
-  /@unocss/reset/0.48.5:
-    resolution: {integrity: sha512-+JJT3Btj1oNX4XwKBDPRUYre3NYBNmi0PsC3tqkHN2VphJG0iZl91XNfsveLz8pVpDJPUDdLH4xsqh52WmxU1g==}
+  /@unocss/reset/0.49.0:
+    resolution: {integrity: sha512-OvLVSv4Q9lWXQYQWMvdhlufVV3UUvJ9jeh3OLTvYwkdxUovdGOK7IJfP0F9sEOth/wI7BD1Z6Zyn8A/gjJ9MQA==}
     dev: true
 
   /@vercel/nft/0.22.6:
@@ -4998,10 +4998,6 @@ packages:
       universalify: 0.1.2
     dev: true
 
-  /fs-memo/1.2.0:
-    resolution: {integrity: sha512-YEexkCpL4j03jn5SxaMHqcO6IuWuqm8JFUYhyCep7Ao89JIYmB8xoKhK7zXXJ9cCaNXpyNH5L3QtAmoxjoHW2w==}
-    dev: true
-
   /fs-minipass/2.1.0:
     resolution: {integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==}
     engines: {node: '>= 8'}
@@ -5092,12 +5088,6 @@ packages:
       hosted-git-info: 4.1.0
       through2: 2.0.5
       yargs: 16.2.0
-    dev: true
-
-  /get-port-please/2.6.1:
-    resolution: {integrity: sha512-4PDSrL6+cuMM1xs6w36ZIkaKzzE0xzfVBCfebHIJ3FE8iB9oic/ECwPw3iNiD4h1AoJ5XLLBhEviFAVrZsDC5A==}
-    dependencies:
-      fs-memo: 1.2.0
     dev: true
 
   /get-port-please/3.0.1:
@@ -5478,7 +5468,7 @@ packages:
       html-void-elements: 2.0.1
       parse5: 6.0.1
       unist-util-position: 4.0.4
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
       vfile: 5.3.6
       web-namespaces: 2.0.1
       zwitch: 2.0.4
@@ -6296,13 +6286,13 @@ packages:
       - supports-color
     dev: true
 
-  /listhen/1.0.1:
-    resolution: {integrity: sha512-RBzBGHMCc5wP8J5Vf8WgF4CAJH8dWHi9LaKB7vfzZt54CiH/0dp01rudy2hFD9wCrTM+UfxFVnn5wTIiY+Qhiw==}
+  /listhen/1.0.2:
+    resolution: {integrity: sha512-yXz0NIYfVJDBQK2vlCpD/OjSzYkur2mR44boUtlg0eES4holn7oYZf439y5JxP55EOzFtClZ8eZlMJ8a++FwlQ==}
     dependencies:
       clipboardy: 3.0.0
       colorette: 2.0.19
       defu: 6.1.2
-      get-port-please: 2.6.1
+      get-port-please: 3.0.1
       http-shutdown: 1.2.2
       ip-regex: 5.0.0
       node-forge: 1.3.1
@@ -6543,7 +6533,7 @@ packages:
     dependencies:
       '@types/mdast': 3.0.10
       '@types/unist': 2.0.6
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
     dev: true
 
   /mdast-util-find-and-replace/2.2.1:
@@ -6640,7 +6630,7 @@ packages:
       unist-builder: 3.0.1
       unist-util-generated: 2.0.0
       unist-util-position: 4.0.4
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
     dev: true
 
   /mdast-util-to-markdown/1.3.0:
@@ -6651,7 +6641,7 @@ packages:
       longest-streak: 3.1.0
       mdast-util-to-string: 3.1.0
       micromark-util-decode-string: 1.0.2
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
       zwitch: 2.0.4
     dev: true
 
@@ -7215,7 +7205,7 @@ packages:
       jiti: 1.16.2
       klona: 2.0.6
       knitwork: 1.0.0
-      listhen: 1.0.1
+      listhen: 1.0.2
       mime: 3.0.0
       mlly: 1.1.0
       mri: 1.2.0
@@ -7413,8 +7403,8 @@ packages:
       - supports-color
     dev: true
 
-  /nuxt-icon/0.2.7:
-    resolution: {integrity: sha512-Tv1oh33oLJfFDhQ5nMZ8I5vspbg7A8JTW7sVtD58gDkHfFzEHXBcXz7OesFZZQvKPwBWSKhBLgIenbFu5Jkzlw==}
+  /nuxt-icon/0.2.10:
+    resolution: {integrity: sha512-pI0BOF1bHw73MbDYsTNpZNJhWJ3XAjG4SO7B8sHCfxb3SZmw3Uu/KoKiLtyO68Oc4z4CYCMIjbkTflwpoOBMEQ==}
     dependencies:
       '@iconify/vue': 4.0.2
       '@nuxt/kit': 3.1.1
@@ -7913,10 +7903,10 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pinceau/0.12.5:
-    resolution: {integrity: sha512-5qHP6Fy53XZqXOHwaXbJ9v8M0Zz+baqyxLvDtjIzsLkix5KlOr34smulkoWem+H0jSE343P+J3dZGBKb0LUSUg==}
+  /pinceau/0.12.8:
+    resolution: {integrity: sha512-kwNUgaJdfTgBn3cD/UNHNJIdzznqvNJ1/vTeK0mPGBTlQgRAsd5dduSPZM4cTrJe53nPWf4YwzPounhWlinp0A==}
     dependencies:
-      '@unocss/reset': 0.48.5
+      '@unocss/reset': 0.49.0
       '@volar/vue-language-core': 1.0.24
       acorn: 8.8.2
       chroma-js: 2.4.2
@@ -8664,7 +8654,7 @@ packages:
       is-absolute-url: 4.0.1
       space-separated-tokens: 2.0.2
       unified: 10.1.2
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
     dev: true
 
   /rehype-raw/6.1.1:
@@ -8684,7 +8674,7 @@ packages:
       hast-util-heading-rank: 2.1.0
       hast-util-to-string: 2.0.0
       unified: 10.1.2
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
     dev: true
 
   /rehype-sort-attribute-values/4.0.0:
@@ -8693,7 +8683,7 @@ packages:
       '@types/hast': 2.3.4
       hast-util-is-element: 2.1.2
       unified: 10.1.2
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
     dev: true
 
   /rehype-sort-attributes/4.0.0:
@@ -8701,7 +8691,7 @@ packages:
     dependencies:
       '@types/hast': 2.3.4
       unified: 10.1.2
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
     dev: true
 
   /release-it/15.6.0:
@@ -8746,7 +8736,7 @@ packages:
     dependencies:
       emoticon: 4.0.1
       node-emoji: 1.11.0
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
     dev: true
 
   /remark-gfm/3.0.1:
@@ -8775,7 +8765,7 @@ packages:
       parse-entities: 4.0.0
       scule: 1.0.0
       stringify-entities: 4.0.3
-      unist-util-visit: 4.1.1
+      unist-util-visit: 4.1.2
       unist-util-visit-parents: 5.1.1
     transitivePeerDependencies:
       - supports-color
@@ -9101,8 +9091,8 @@ packages:
       rechoir: 0.6.2
     dev: true
 
-  /shiki-es/0.1.2:
-    resolution: {integrity: sha512-eqtfk8idlYlSLAn0gp0Ly2+FbKc2d78IddigHSS4iHAnpXoY2kdRzyFGZOdi6TvemYMnRhZBi1HsSqZc5eNKqg==}
+  /shiki-es/0.2.0:
+    resolution: {integrity: sha512-RbRMD+IuJJseSZljDdne9ThrUYrwBwJR04FvN4VXpfsU3MNID5VJGHLAD5je/HGThCyEKNgH+nEkSFEWKD7C3Q==}
     dev: true
 
   /side-channel/1.0.4:
@@ -10005,8 +9995,8 @@ packages:
       unist-util-is: 5.1.1
     dev: true
 
-  /unist-util-visit/4.1.1:
-    resolution: {integrity: sha512-n9KN3WV9k4h1DxYR1LoajgN93wpEi/7ZplVe02IoB4gH5ctI1AaF2670BLHQYbwj+pY83gFtyeySFiyMHJklrg==}
+  /unist-util-visit/4.1.2:
+    resolution: {integrity: sha512-MSd8OUGISqHdVvfY9TPhyK2VdUrPgxkUtWSuMHF6XAAFuL4LokseigBnZtPnJMu+FbynTkFNnFlyjxpVKujMRg==}
     dependencies:
       '@types/unist': 2.0.6
       unist-util-is: 5.1.1
@@ -10058,7 +10048,7 @@ packages:
       destr: 1.2.2
       h3: 1.0.2
       ioredis: 5.2.4
-      listhen: 1.0.1
+      listhen: 1.0.2
       mkdir: 0.0.2
       mri: 1.2.0
       ofetch: 1.0.0
