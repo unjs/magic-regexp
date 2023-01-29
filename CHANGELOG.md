@@ -1,5 +1,12 @@
 
 
+## [0.6.2](https://github.com/danielroe/magic-regexp/compare/0.6.1...0.6.2) (2023-01-29)
+
+
+### Bug Fixes
+
+* sanitize `createRegExp` return type ([#180](https://github.com/danielroe/magic-regexp/issues/180)) ([5264256](https://github.com/danielroe/magic-regexp/commit/526425648ce1c16f434e6ed336577309ddf83167))
+
 ## [0.6.1](https://github.com/danielroe/magic-regexp/compare/0.6.0...0.6.1) (2022-11-16)
 
 
