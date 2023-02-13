@@ -1,9 +1,9 @@
 import { Context, createContext, runInContext } from 'node:vm'
 import { pathToFileURL } from 'node:url'
 
-import { walk } from 'estree-walker'
+import { walk, Node } from 'estree-walker'
 import type { SimpleCallExpression } from 'estree'
-
+import type { SourceMapInput } from 'rollup'
 import { createUnplugin } from 'unplugin'
 import MagicString from 'magic-string'
 import { parseURL, parseQuery } from 'ufo'
@@ -60,7 +60,7 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
 
       const s = new MagicString(code)
 
-      walk(this.parse(code), {
+      walk(this.parse(code) as Node, {
         enter(_node) {
           if (_node.type !== 'CallExpression') return
           const node = _node as SimpleCallExpression
@@ -92,7 +92,7 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
       if (s.hasChanged()) {
         return {
           code: s.toString(),
-          map: s.generateMap({ includeContent: true, source: id }),
+          map: s.generateMap({ includeContent: true, source: id }) as SourceMapInput,
         }
       }
     },
