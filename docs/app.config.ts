@@ -10,9 +10,11 @@ export default defineAppConfig({
     },
     debug: false,
     github: {
-      root: 'docs/content',
+      owner: 'danielroe',
+      repo: 'magic-regexp',
+      branch: 'main',
+      dir: 'docs/content',
       edit: true,
-      releases: true,
     },
     cover: {
       src: '/cover.png',
