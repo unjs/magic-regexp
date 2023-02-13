@@ -4,6 +4,7 @@ export default defineAppConfig({
     header: { logo: true },
     url: 'https://regexp.dev',
     description: '🦄 A compiled-away, type-safe, readable RegExp alternative',
+    image: 'https://regexp.dev/cover.png',
     socials: {
       twitter: 'danielcroe',
       github: 'danielroe/magic-regexp',
