@@ -5,7 +5,10 @@ export default defineNuxtConfig({
   },
   content: {
     highlight: {
-      theme: 'material-palenight',
+      theme: {
+        light: 'github-light',
+        default: 'material-palenight',
+      },
     },
     navigation: {
       fields: ['exact'],
