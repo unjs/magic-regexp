@@ -24,7 +24,7 @@ importers:
       expect-type: 0.15.0
       husky: latest
       lint-staged: latest
-      magic-string: ^0.29.0
+      magic-string: ^0.30.0
       mlly: ^1.0.0
       pinst: latest
       prettier: latest
@@ -37,7 +37,7 @@ importers:
       vitest: 0.28.5
     dependencies:
       estree-walker: 3.0.3
-      magic-string: 0.29.0
+      magic-string: 0.30.0
       mlly: 1.1.0
       ufo: 1.0.1
       unplugin: 1.0.1
@@ -5303,6 +5303,14 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.14
+    dev: true
+
+  /magic-string/0.30.0:
+    resolution: {integrity: sha512-LA+31JYDJLs82r2ScLrlz1GjSgu66ZV518eyWT+S8VhyQn/JL0u9MeBOvQMGYiPk1DBiSN9DDMOcXvigJZaViQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.4.14
+    dev: false
 
   /make-dir/3.1.0:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
