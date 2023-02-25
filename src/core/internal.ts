@@ -37,6 +37,15 @@ export interface Input<
   before: <I extends InputSource>(
     input: I
   ) => Input<`${V}(?=${GetValue<I>})`, G, [...C, ...GetCapturedGroupsArr<I>]>
+
+  between: <I1 extends InputSource, I2 extends InputSource>(
+    input1: I1,
+    input2: I2
+  ) => Input<
+    `(?<=${GetValue<I1>})${V}(?=${GetValue<I2>})`,
+    G,
+    [...GetCapturedGroupsArr<I1>, ...C, ...GetCapturedGroupsArr<I2>]
+  >
   /** these is a negative lookbehind. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari) */
   notAfter: <I extends InputSource>(
     input: I
@@ -110,6 +119,7 @@ export const createInput = <
     or: input => createInput(`(?:${s}|${exactly(input)})`),
     after: input => createInput(`(?<=${exactly(input)})${s}`),
     before: input => createInput(`${s}(?=${exactly(input)})`),
+    between: (input1, input2) => createInput(`(?<=${exactly(input1)})${s}(?=${exactly(input2)})`),
     notAfter: input => createInput(`(?<!${exactly(input)})${s}`),
     notBefore: input => createInput(`${s}(?!${exactly(input)})`),
     times: Object.assign((number: number) => createInput(`${wrap(s)}{${number}}`) as any, {

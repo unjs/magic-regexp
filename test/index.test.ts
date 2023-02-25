@@ -68,6 +68,14 @@ describe('inputs', () => {
     expect('fooafoo'.match(regExp)?.[0]).toMatchInlineSnapshot('"a"')
     expect(regExp.test('foo')).toBeFalsy()
   })
+
+  it('between', () => {
+    const regExp = createRegExp(char.between('foo', 'bar'))
+    expect(regExp).toMatchInlineSnapshot('/\\(\\?<=foo\\)\\.\\(\\?=bar\\)/')
+    expect('fooabar'.match(regExp)?.[0]).toMatchInlineSnapshot('"a"')
+    expect(regExp.test('foo')).toBeFalsy()
+    expect(regExp.test('bar')).toBeFalsy()
+  })
   it('notBefore', () => {
     const regExp = createRegExp(exactly('bar').notBefore('foo'))
     expect(regExp).toMatchInlineSnapshot('/bar\\(\\?!foo\\)/')
