@@ -86,6 +86,8 @@ describe('inputs', () => {
   })
   it('times', () => {
     expect(exactly('test').times.between(1, 3).toString()).toMatchInlineSnapshot('"(?:test){1,3}"')
+    expect(exactly('test').times.atLeast(3).toString()).toMatchInlineSnapshot('"(?:test){3,}"')
+    expect(exactly('test').times.atMost(3).toString()).toMatchInlineSnapshot('"(?:test){0,3}"')
     expect(exactly('test').times(4).or('foo').toString()).toMatchInlineSnapshot(
       '"(?:(?:test){4}|foo)"'
     )

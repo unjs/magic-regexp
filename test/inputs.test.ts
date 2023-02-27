@@ -266,6 +266,18 @@ describe('chained inputs', () => {
     expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\{2,\\}/')
     expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab){2,}'>()
   })
+  it('times.atMost', () => {
+    const val = input.times.atMost(2)
+    const regexp = new RegExp(val as any)
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\{0,2\\}/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?{0,2}'>()
+
+    const val2 = multichar.times.atMost(2)
+    const regexp2 = new RegExp(val2 as any)
+    expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\{0,2\\}/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab){0,2}'>()
+  })
+
   it('times.between', () => {
     const val = input.times.between(3, 5)
     const regexp = new RegExp(val as any)
