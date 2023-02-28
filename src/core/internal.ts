@@ -50,10 +50,14 @@ export interface Input<
     <N extends number>(number: N): Input<IfUnwrapped<V, `(?:${V}){${N}}`, `${V}{${N}}`>, G, C>
     /** specify that the expression can repeat any number of times, _including none_ */
     any: () => Input<IfUnwrapped<V, `(?:${V})*`, `${V}*`>, G, C>
-    /** specify that the expression must occur at least x times */
+    /** specify that the expression must occur at least `N` times */
     atLeast: <N extends number>(
       number: N
     ) => Input<IfUnwrapped<V, `(?:${V}){${N},}`, `${V}{${N},}`>, G, C>
+    /** specify that the expression must occur at most `N` times */
+    atMost: <N extends number>(
+      number: N
+    ) => Input<IfUnwrapped<V, `(?:${V}){0,${N}}`, `${V}{0,${N}}`>, G, C>
     /** specify a range of times to repeat the previous pattern */
     between: <Min extends number, Max extends number>(
       min: Min,
@@ -115,6 +119,7 @@ export const createInput = <
     times: Object.assign((number: number) => createInput(`${wrap(s)}{${number}}`) as any, {
       any: () => createInput(`${wrap(s)}*`) as any,
       atLeast: (min: number) => createInput(`${wrap(s)}{${min},}`) as any,
+      atMost: (max: number) => createInput(`${wrap(s)}{0,${max}}`) as any,
       between: (min: number, max: number) => createInput(`${wrap(s)}{${min},${max}}`) as any,
     }),
     optionally: () => createInput(`${wrap(s)}?`) as any,
