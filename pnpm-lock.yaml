@@ -67,11 +67,11 @@ importers:
 
   docs:
     specifiers:
-      '@nuxt-themes/docus': 1.9.0
+      '@nuxt-themes/docus': 1.9.1
       '@nuxtjs/plausible': 0.2.0
       nuxt: 3.2.3
     devDependencies:
-      '@nuxt-themes/docus': 1.9.0_nuxt@3.2.3
+      '@nuxt-themes/docus': 1.9.1_nuxt@3.2.3
       '@nuxtjs/plausible': 0.2.0
       nuxt: 3.2.3
 
@@ -984,12 +984,12 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@nuxt-themes/docus/1.9.0_nuxt@3.2.3:
-    resolution: {integrity: sha512-pScPfeI5553dY1jODqRUGtrKJtc1rynygWdV5qVux7sfibEWJL7FzoWJ80wl/xOaU/Wd9lF/E8ywhO6vs6vmqA==}
+  /@nuxt-themes/docus/1.9.1_nuxt@3.2.3:
+    resolution: {integrity: sha512-g3W1bkOWVUEV3hs2hJg/kHWc2NL0IPw75HmBFr12k+eG5wddSvWLJcdJZnfbPTLy9M9A4C71TvZIFWcg1qpm4A==}
     dependencies:
       '@nuxt-themes/elements': 0.9.0
       '@nuxt-themes/tokens': 1.9.0
-      '@nuxt-themes/typography': 0.9.0
+      '@nuxt-themes/typography': 0.9.1
       '@nuxt/content': 2.4.3
       '@nuxthq/studio': 0.7.7
       '@vueuse/nuxt': 9.13.0_nuxt@3.2.3
@@ -1034,13 +1034,13 @@ packages:
       - vue
     dev: true
 
-  /@nuxt-themes/typography/0.9.0:
-    resolution: {integrity: sha512-bxprKQU8IbShQ436nFGsUWLkPIyZdSdnq+4HeIQGs6teannXAX4LoOkOwRFQOYHmeR9ZEGwLlzLckWyvSkwVuw==}
+  /@nuxt-themes/typography/0.9.1:
+    resolution: {integrity: sha512-J6uBewdVAJveDFuZrt5o9zgXAIJrLMsocN+AbPItKiO1X9gkNMHOEc/FCSRYWqGpXK03bxsDLiHOc7t4V18B7A==}
     dependencies:
       '@nuxtjs/color-mode': 3.2.0
       nuxt-config-schema: 0.4.4
       nuxt-icon: 0.3.2
-      pinceau: 0.18.0
+      pinceau: 0.18.1
       ufo: 1.1.1
     transitivePeerDependencies:
       - postcss
@@ -6626,6 +6626,35 @@ packages:
 
   /pinceau/0.18.0:
     resolution: {integrity: sha512-nko5WqjDp8kKlkKe9i/Bopa0iqdfxzdQAErtMVlkDF+Evi6DlLi562sJsN+1dLa4rIKHheBGnufhBgLObOthDA==}
+    dependencies:
+      '@unocss/reset': 0.50.1
+      '@volar/vue-language-core': 1.2.0
+      acorn: 8.8.2
+      chroma-js: 2.4.2
+      consola: 2.15.3
+      csstype: 3.1.1
+      defu: 6.1.2
+      magic-string: 0.30.0
+      nanoid: 4.0.1
+      ohash: 1.0.0
+      paneer: 0.1.0
+      pathe: 1.1.0
+      postcss-custom-properties: 13.1.4
+      postcss-dark-theme-class: 0.7.3
+      postcss-nested: 6.0.1
+      recast: 0.22.0
+      scule: 1.0.0
+      style-dictionary-esm: 1.3.7
+      unbuild: 1.1.2
+      unplugin: 1.1.0
+    transitivePeerDependencies:
+      - postcss
+      - sass
+      - supports-color
+    dev: true
+
+  /pinceau/0.18.1:
+    resolution: {integrity: sha512-2JcRT5sLg52Aq1il28VlUdS59i4gtGwLfO9Q92o+eX098zGI0VkvrRhvN+NmxQl5xxkdQF185x8CMkEQeuMmMw==}
     dependencies:
       '@unocss/reset': 0.50.1
       '@volar/vue-language-core': 1.2.0
