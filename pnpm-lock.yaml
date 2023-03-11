@@ -67,11 +67,11 @@ importers:
 
   docs:
     specifiers:
-      '@nuxt-themes/docus': 1.9.8
+      '@nuxt-themes/docus': 1.9.9
       '@nuxtjs/plausible': 0.2.0
       nuxt: 3.2.3
     devDependencies:
-      '@nuxt-themes/docus': 1.9.8_nuxt@3.2.3
+      '@nuxt-themes/docus': 1.9.9_nuxt@3.2.3
       '@nuxtjs/plausible': 0.2.0
       nuxt: 3.2.3
 
@@ -1331,12 +1331,12 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@nuxt-themes/docus/1.9.8_nuxt@3.2.3:
-    resolution: {integrity: sha512-nmyZduhjZjc67FfGy+LYj0ru6hkebPtRB1Gnn/I0M1Yn8/BfnteXeJwDnDzruFoSd4M0G17eZo96rHy64qyJdw==}
+  /@nuxt-themes/docus/1.9.9_nuxt@3.2.3:
+    resolution: {integrity: sha512-JIrG8dlJOUCu4HQ4IlYr04xryFs7ePKzAvA4cb0VPKP4+ukNEuJwGV3JPFprV3uac9jtPr/HawuoLm/TV5rgtw==}
     dependencies:
       '@nuxt-themes/elements': 0.9.0
       '@nuxt-themes/tokens': 1.9.0
-      '@nuxt-themes/typography': 0.9.2
+      '@nuxt-themes/typography': 0.10.0
       '@nuxt/content': 2.5.2
       '@nuxthq/studio': 0.8.5
       '@vueuse/nuxt': 9.13.0_nuxt@3.2.3
@@ -1382,13 +1382,13 @@ packages:
       - vue
     dev: true
 
-  /@nuxt-themes/typography/0.9.2:
-    resolution: {integrity: sha512-18FELiIkl6govA6hu/oZl3TsUBOHc1ERuSGxux0bZ9pT2K3zFqsAw0JsN41y+ABzpjmIMM2mELsFQAdExFR96Q==}
+  /@nuxt-themes/typography/0.10.0:
+    resolution: {integrity: sha512-paC+s9205Ww6YLg2i2CgGnmfkZZzSbmxJyrWjb3KuI5eaJlIJ/EPUjfsUw15tOsFiM8your+akuH4f20UDKg1w==}
     dependencies:
       '@nuxtjs/color-mode': 3.2.0
       nuxt-config-schema: 0.4.5
       nuxt-icon: 0.3.2
-      pinceau: 0.18.1
+      pinceau: 0.18.8
       ufo: 1.1.1
     transitivePeerDependencies:
       - postcss
@@ -2221,6 +2221,10 @@ packages:
 
   /@unocss/reset/0.50.1:
     resolution: {integrity: sha512-BcANWHHrKgHML5TLaPuSl148L2WLA938r0pLi4PrRTmZtkgP4OhBLs8U8BaDNVVGR/nli7VDxNRZFb9es3Tq9Q==}
+    dev: true
+
+  /@unocss/reset/0.50.4:
+    resolution: {integrity: sha512-UHNDhClJMx3sG3oi68XkOcTeJ2hkI20O0eHowSoua10NClbnS9tiKxeo4ZLInouzvac3tb1TsjKEgTosHfkR/w==}
     dev: true
 
   /@vercel/nft/0.22.6:
@@ -7106,6 +7110,35 @@ packages:
     resolution: {integrity: sha512-2JcRT5sLg52Aq1il28VlUdS59i4gtGwLfO9Q92o+eX098zGI0VkvrRhvN+NmxQl5xxkdQF185x8CMkEQeuMmMw==}
     dependencies:
       '@unocss/reset': 0.50.1
+      '@volar/vue-language-core': 1.2.0
+      acorn: 8.8.2
+      chroma-js: 2.4.2
+      consola: 2.15.3
+      csstype: 3.1.1
+      defu: 6.1.2
+      magic-string: 0.30.0
+      nanoid: 4.0.1
+      ohash: 1.0.0
+      paneer: 0.1.0
+      pathe: 1.1.0
+      postcss-custom-properties: 13.1.4
+      postcss-dark-theme-class: 0.7.3
+      postcss-nested: 6.0.1
+      recast: 0.22.0
+      scule: 1.0.0
+      style-dictionary-esm: 1.3.7
+      unbuild: 1.1.2
+      unplugin: 1.1.0
+    transitivePeerDependencies:
+      - postcss
+      - sass
+      - supports-color
+    dev: true
+
+  /pinceau/0.18.8:
+    resolution: {integrity: sha512-aVIRYxz80nweDjabJzauKtsSVS48JdWWVwWnHxG/e1HI9/aV0/RmdTD3P/8KXfYZ9OySl3MjCgUc7MZb+IwwEw==}
+    dependencies:
+      '@unocss/reset': 0.50.4
       '@volar/vue-language-core': 1.2.0
       acorn: 8.8.2
       chroma-js: 2.4.2
