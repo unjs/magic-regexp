@@ -14,7 +14,7 @@ importers:
       '@types/node': 18.15.11
       '@vitest/coverage-c8': 0.29.8
       acorn: 8.8.2
-      bumpp: 9.0.0
+      bumpp: 9.1.0
       c8: latest
       conventional-changelog-conventionalcommits: latest
       eslint: 8.37.0
@@ -48,7 +48,7 @@ importers:
       '@types/node': 18.15.11
       '@vitest/coverage-c8': 0.29.8_vitest@0.29.8
       acorn: 8.8.2
-      bumpp: 9.0.0
+      bumpp: 9.1.0
       c8: 7.13.0
       conventional-changelog-conventionalcommits: 5.0.0
       eslint: 8.37.0
@@ -2326,16 +2326,19 @@ packages:
       semver: 7.3.8
     dev: true
 
-  /bumpp/9.0.0:
-    resolution: {integrity: sha512-I2+JLFQin46NioHg6wi23hYQMVExiJyGblARp5fIHUzLv3rRz9me38eUe2xlQCAl7Ys9X+SlhTaIkttTxiL6cQ==}
+  /bumpp/9.1.0:
+    resolution: {integrity: sha512-m3+YD8uoa0VttG+RV4oKr3lK60gkUn1yPDaBTFwT7xrdJUsy7Jm0VYgx457HI3VPAOX8szLmy1x2y1QcvB+M8Q==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
       '@jsdevtools/ez-spawn': 3.0.4
+      c12: 1.2.0
       cac: 6.7.14
       fast-glob: 3.2.12
       prompts: 2.4.2
       semver: 7.3.8
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /c12/1.2.0:
