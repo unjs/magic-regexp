@@ -9,7 +9,9 @@ import {
   charIn,
   not,
   maybe,
+  maybeLazy,
   oneOrMore,
+  oneOrMoreLazy,
   word,
   wordChar,
   wordBoundary,
@@ -62,6 +64,17 @@ describe('inputs', () => {
       MagicRegExp<'/(?<groupName>foo)?/', 'groupName', ['(?<groupName>foo)'], never>
     >()
   })
+  it('maybeLazy', () => {
+    const input = maybeLazy('foo')
+    const regexp = new RegExp(input as any)
+    expect(regexp).toMatchInlineSnapshot('/\\(\\?:foo\\)\\?\\?/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(?:foo)??'>()
+
+    const nestedInputWithGroup = maybeLazy(exactly('foo').groupedAs('groupName'))
+    expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
+      MagicRegExp<'/(?<groupName>foo)??/', 'groupName', ['(?<groupName>foo)'], never>
+    >()
+  })
   it('oneOrMore', () => {
     const input = oneOrMore('foo')
     const regexp = new RegExp(input as any)
@@ -71,6 +84,17 @@ describe('inputs', () => {
     const nestedInputWithGroup = oneOrMore(exactly('foo').groupedAs('groupName'))
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
       MagicRegExp<'/(?<groupName>foo)+/', 'groupName', ['(?<groupName>foo)'], never>
+    >()
+  })
+  it('oneOrMoreLazy', () => {
+    const input = oneOrMoreLazy('foo')
+    const regexp = new RegExp(input as any)
+    expect(regexp).toMatchInlineSnapshot('/\\(\\?:foo\\)\\+\\?/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(?:foo)+?'>()
+
+    const nestedInputWithGroup = oneOrMoreLazy(exactly('foo').groupedAs('groupName'))
+    expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
+      MagicRegExp<'/(?<groupName>foo)+?/', 'groupName', ['(?<groupName>foo)'], never>
     >()
   })
   it('exactly', () => {
@@ -255,6 +279,12 @@ describe('chained inputs', () => {
     expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\*/')
     expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab)*'>()
   })
+  it('times.anyLazy', () => {
+    const val = input.times.anyLazy()
+    const regexp = new RegExp(val as any)
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\*\\?/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?*?'>()
+  })
   it('times.atLeast', () => {
     const val = input.times.atLeast(2)
     const regexp = new RegExp(val as any)
@@ -265,6 +295,12 @@ describe('chained inputs', () => {
     const regexp2 = new RegExp(val2 as any)
     expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\{2,\\}/')
     expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab){2,}'>()
+  })
+  it('times.atLeastLazy', () => {
+    const val = input.times.atLeastLazy(2)
+    const regexp = new RegExp(val as any)
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\{2,\\}\\?/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?{2,}?'>()
   })
   it('times.atMost', () => {
     const val = input.times.atMost(2)
@@ -277,12 +313,33 @@ describe('chained inputs', () => {
     expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\{0,2\\}/')
     expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab){0,2}'>()
   })
+  it('times.atMostLazy', () => {
+    const val = input.times.atMostLazy(2)
+    const regexp = new RegExp(val as any)
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\{0,2\\}\\?/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?{0,2}?'>()
 
+    const val2 = multichar.times.atMost(2)
+    const regexp2 = new RegExp(val2 as any)
+    expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\{0,2\\}/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab){0,2}'>()
+  })
   it('times.between', () => {
     const val = input.times.between(3, 5)
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\{3,5\\}/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?{3,5}'>()
+
+    const val2 = multichar.times.between(3, 5)
+    const regexp2 = new RegExp(val2 as any)
+    expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\{3,5\\}/')
+    expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab){3,5}'>()
+  })
+  it('times.betweenLazy', () => {
+    const val = input.times.betweenLazy(3, 5)
+    const regexp = new RegExp(val as any)
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\{3,5\\}\\?/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?{3,5}?'>()
 
     const val2 = multichar.times.between(3, 5)
     const regexp2 = new RegExp(val2 as any)
@@ -299,6 +356,12 @@ describe('chained inputs', () => {
     const regexp2 = new RegExp(val2 as any)
     expect(regexp2).toMatchInlineSnapshot('/\\(\\?:ab\\)\\?/')
     expectTypeOf(extractRegExp(val2)).toEqualTypeOf<'(?:ab)?'>()
+  })
+  it('optionallyLazy', () => {
+    const val = input.optionallyLazy()
+    const regexp = new RegExp(val as any)
+    expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\?\\?/')
+    expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\???'>()
   })
   it('as', () => {
     const val = input.as('test')
