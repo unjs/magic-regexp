@@ -146,8 +146,8 @@ describe('inputs', () => {
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\r'>()
   })
   it('not', () => {
-    expect(not.word.toString()).toMatchInlineSnapshot('"\\\\b\\\\W+\\\\b"')
-    expectTypeOf(extractRegExp(not.word)).toEqualTypeOf<'\\b\\W+\\b'>()
+    expect(not.word.toString()).toMatchInlineSnapshot('"\\\\W+"')
+    expectTypeOf(extractRegExp(not.word)).toEqualTypeOf<'\\W+'>()
     expect(not.wordChar.toString()).toMatchInlineSnapshot('"\\\\W"')
     expectTypeOf(extractRegExp(not.wordChar)).toEqualTypeOf<'\\W'>()
     expect(not.wordBoundary.toString()).toMatchInlineSnapshot('"\\\\B"')
