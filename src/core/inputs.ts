@@ -67,6 +67,14 @@ export const maybe = <New extends InputSource>(str: New) =>
     GetCapturedGroupsArr<New>
   >
 
+/** Equivalent to `??` - this marks the input as (Lazy) optional */
+export const maybeLazy = <New extends InputSource>(str: New) =>
+  createInput(`${wrap(exactly(str))}??`) as Input<
+    IfUnwrapped<GetValue<New>, `(?:${GetValue<New>})??`, `${GetValue<New>}??`>,
+    GetGroup<New>,
+    GetCapturedGroupsArr<New>
+  >
+
 /** This escapes a string input to match it exactly */
 export const exactly = <New extends InputSource>(
   input: New
@@ -77,6 +85,14 @@ export const exactly = <New extends InputSource>(
 export const oneOrMore = <New extends InputSource>(str: New) =>
   createInput(`${wrap(exactly(str))}+`) as Input<
     IfUnwrapped<GetValue<New>, `(?:${GetValue<New>})+`, `${GetValue<New>}+`>,
+    GetGroup<New>,
+    GetCapturedGroupsArr<New>
+  >
+
+/** Equivalent to `+?` - this marks the input as repeatable, any number of times but at least once (Lazy) */
+export const oneOrMoreLazy = <New extends InputSource>(str: New) =>
+  createInput(`${wrap(exactly(str))}+?`) as Input<
+    IfUnwrapped<GetValue<New>, `(?:${GetValue<New>})+?`, `${GetValue<New>}+?`>,
     GetGroup<New>,
     GetCapturedGroupsArr<New>
   >
