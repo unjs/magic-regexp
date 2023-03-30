@@ -46,6 +46,7 @@ export const linefeed = createInput('\\n')
 export const carriageReturn = createInput('\\r')
 
 export const not = {
+  word: createInput('\\W+'),
   wordChar: createInput('\\W'),
   wordBoundary: createInput('\\B'),
   digit: createInput('\\D'),
