@@ -16,7 +16,11 @@ export const charIn = <T extends string>(chars: T) =>
 export const charNotIn = <T extends string>(chars: T) =>
   createInput(`[^${chars.replace(/[-\\^\]]/g, '\\$&')}]`) as Input<`[^${EscapeChar<T>}]`>
 
-/** This takes an array of inputs and matches any of them */
+/** This takes a variable number of inputs and matches any of them
+ * @example
+ * anyOf('foo', maybe('bar'), 'baz') // => /(?:foo|(?:bar)?|baz)/
+ * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
+ */
 export const anyOf = <Inputs extends InputSource[]>(
   ...inputs: Inputs
 ): Input<`(?:${Join<MapToValues<Inputs>>})`, MapToGroups<Inputs>, MapToCapturedGroupsArr<Inputs>> =>
@@ -50,7 +54,11 @@ export const not = {
   carriageReturn: createInput('[^\\r]'),
 }
 
-/** Equivalent to `?` - this marks the input as optional */
+/** Equivalent to `?` - takes a variable number of inputs and marks them as optional
+ * @example
+ * maybe('foo', excatly('ba?r')) // => /(?:fooba\?r)?/
+ * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
+ */
 export const maybe = <
   Inputs extends InputSource[],
   Value extends string = Join<MapToValues<Inputs>, '', ''>
@@ -62,7 +70,11 @@ export const maybe = <
   MapToCapturedGroupsArr<Inputs>
 > => createInput(`${wrap(exactly(...inputs))}?`)
 
-/** This escapes a string input to match it exactly */
+/** This takes a variable number of inputs and concatenate their patterns, and escapes string inputs to match it exactly
+ * @example
+ * exactly('fo?o', maybe('bar')) // => /fo\?o(?:bar)?/
+ * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
+ */
 export const exactly = <Inputs extends InputSource[]>(
   ...inputs: Inputs
 ): Input<Join<MapToValues<Inputs>, '', ''>, MapToGroups<Inputs>, MapToCapturedGroupsArr<Inputs>> =>
@@ -72,7 +84,11 @@ export const exactly = <Inputs extends InputSource[]>(
       .join('')
   )
 
-/** Equivalent to `+` - this marks the input as repeatable, any number of times but at least once */
+/** Equivalent to `+` - this takes a variable number of inputs and marks them as repeatable, any number of times but at least once
+ * @example
+ * oneOrMore('foo', maybe('bar')) // => /(?:foo(?:bar)?)+/
+ * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
+ */
 export const oneOrMore = <
   Inputs extends InputSource[],
   Value extends string = Join<MapToValues<Inputs>, '', ''>
