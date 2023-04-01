@@ -13,6 +13,8 @@ import {
   MagicRegExp,
   MagicRegExpMatchArray,
   StringCapturedBy,
+  oneOrMore,
+  caseInsensitive,
 } from '../src'
 import { createInput } from '../src/core/internal'
 
@@ -47,6 +49,32 @@ describe('inputs', () => {
   it('type infer group names when nesting createInput', () => {
     expectTypeOf(createRegExp(createInput(exactly('\\s').groupedAs('groupName')))).toEqualTypeOf<
       MagicRegExp<'/(?<groupName>\\s)/', 'groupName', ['(?<groupName>\\s)'], never>
+    >()
+  })
+  it('takes variadic args and flags', () => {
+    const regExp = createRegExp(
+      oneOrMore(digit).as('major'),
+      '.',
+      oneOrMore(digit).as('minor'),
+      maybe('.', oneOrMore(char).groupedAs('patch')),
+      [caseInsensitive]
+    )
+    const result = '3.4.1-beta'.match(regExp)
+    expect(Array.isArray(result)).toBeTruthy()
+    expect(result?.groups).toMatchInlineSnapshot(`
+      {
+        "major": "3",
+        "minor": "4",
+        "patch": "1-beta",
+      }
+    `)
+    expectTypeOf(regExp).toEqualTypeOf<
+      MagicRegExp<
+        '/(?<major>\\d+)\\.(?<minor>\\d+)(?:\\.(?<patch>.+))?/i',
+        'major' | 'minor' | 'patch',
+        ['(?<major>\\d+)', '(?<minor>\\d+)', '(?<patch>.+)'],
+        'i'
+      >
     >()
   })
   it('any', () => {
