@@ -1,6 +1,6 @@
 import { exactly } from './inputs'
-import type { GetValue } from './types/escape'
-import type { GetCapturedGroupsArr, InputSource } from './types/sources'
+import { Join } from './types/join'
+import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
 import { IfUnwrapped, wrap } from './wrap'
 
 const GROUPED_AS_REPLACE_RE = /^(?:\(\?:(.+)\)|(\(?.+\)?))$/
@@ -13,38 +13,34 @@ export interface Input<
 > {
   /** this adds a new pattern to the current input */
   and: {
-    <I extends InputSource>(input: I): Input<
-      `${V}${GetValue<I>}`,
-      G | (I extends Input<any, infer NewGroups> ? NewGroups : never),
-      [...C, ...GetCapturedGroupsArr<I>]
+    <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(...inputs: I): Input<
+      `${V}${Join<MapToValues<I>, '', ''>}`,
+      G | MapToGroups<I>,
+      [...C, ...CG]
     >
     /** this adds a new pattern to the current input, with the pattern reference to a named group. */
     referenceTo: <N extends G>(groupName: N) => Input<`${V}\\k<${N}>`, G, C>
   }
   /** this provides an alternative to the current input */
-  or: <I extends InputSource>(
-    input: I
-  ) => Input<
-    `(?:${V}|${GetValue<I>})`,
-    G | (I extends Input<any, infer NewGroups> ? NewGroups : never),
-    [...C, ...GetCapturedGroupsArr<I>]
-  >
+  or: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
+    ...inputs: I
+  ) => Input<`(?:${V}|${Join<MapToValues<I>, '', ''>})`, G | MapToGroups<I>, [...C, ...CG]>
   /** this is a positive lookbehind. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari) */
-  after: <I extends InputSource>(
-    input: I
-  ) => Input<`(?<=${GetValue<I>})${V}`, G, [...GetCapturedGroupsArr<I>, ...C]>
+  after: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
+    ...inputs: I
+  ) => Input<`(?<=${Join<MapToValues<I>, '', ''>})${V}`, G | MapToGroups<I>, [...CG, ...C]>
   /** this is a positive lookahead */
-  before: <I extends InputSource>(
-    input: I
-  ) => Input<`${V}(?=${GetValue<I>})`, G, [...C, ...GetCapturedGroupsArr<I>]>
+  before: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
+    ...inputs: I
+  ) => Input<`${V}(?=${Join<MapToValues<I>, '', ''>})`, G, [...C, ...CG]>
   /** these is a negative lookbehind. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari) */
-  notAfter: <I extends InputSource>(
-    input: I
-  ) => Input<`(?<!${GetValue<I>})${V}`, G, [...GetCapturedGroupsArr<I, true>, ...C]>
+  notAfter: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I, true>>(
+    ...inputs: I
+  ) => Input<`(?<!${Join<MapToValues<I>, '', ''>})${V}`, G, [...CG, ...C]>
   /** this is a negative lookahead */
-  notBefore: <I extends InputSource>(
-    input: I
-  ) => Input<`${V}(?!${GetValue<I>})`, G, [...C, ...GetCapturedGroupsArr<I, true>]>
+  notBefore: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I, true>>(
+    ...inputs: I
+  ) => Input<`${V}(?!${Join<MapToValues<I>, '', ''>})`, G, [...C, ...CG]>
   /** repeat the previous pattern an exact number of times */
   times: {
     <N extends number>(number: N): Input<IfUnwrapped<V, `(?:${V}){${N}}`, `${V}{${N}}`>, G, C>
@@ -108,21 +104,21 @@ export const createInput = <
 
   return {
     toString: () => s.toString(),
-    and: Object.assign((input: InputSource) => createInput(`${s}${exactly(input)}`), {
+    and: Object.assign((...inputs: InputSource[]) => createInput(`${s}${exactly(...inputs)}`), {
       referenceTo: (groupName: string) => createInput(`${s}\\k<${groupName}>`),
     }),
-    or: input => createInput(`(?:${s}|${exactly(input)})`),
-    after: input => createInput(`(?<=${exactly(input)})${s}`),
-    before: input => createInput(`${s}(?=${exactly(input)})`),
-    notAfter: input => createInput(`(?<!${exactly(input)})${s}`),
-    notBefore: input => createInput(`${s}(?!${exactly(input)})`),
-    times: Object.assign((number: number) => createInput(`${wrap(s)}{${number}}`) as any, {
-      any: () => createInput(`${wrap(s)}*`) as any,
-      atLeast: (min: number) => createInput(`${wrap(s)}{${min},}`) as any,
-      atMost: (max: number) => createInput(`${wrap(s)}{0,${max}}`) as any,
-      between: (min: number, max: number) => createInput(`${wrap(s)}{${min},${max}}`) as any,
+    or: (...inputs) => createInput(`(?:${s}|${exactly(...inputs)})`),
+    after: (...input) => createInput(`(?<=${exactly(...input)})${s}`),
+    before: (...input) => createInput(`${s}(?=${exactly(...input)})`),
+    notAfter: (...input) => createInput(`(?<!${exactly(...input)})${s}`),
+    notBefore: (...input) => createInput(`${s}(?!${exactly(...input)})`),
+    times: Object.assign((number: number) => createInput(`${wrap(s)}{${number}}`), {
+      any: () => createInput(`${wrap(s)}*`),
+      atLeast: (min: number) => createInput(`${wrap(s)}{${min},}`),
+      atMost: (max: number) => createInput(`${wrap(s)}{0,${max}}`),
+      between: (min: number, max: number) => createInput(`${wrap(s)}{${min},${max}}`),
     }),
-    optionally: () => createInput(`${wrap(s)}?`) as any,
+    optionally: () => createInput(`${wrap(s)}?`),
     as: groupedAsFn,
     groupedAs: groupedAsFn,
     grouped: () => createInput(`${s}`.replace(GROUPED_REPLACE_RE, '($1$3)$2')),
