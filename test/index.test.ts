@@ -27,8 +27,11 @@ describe('magic-regexp', () => {
     expectTypeOf(regExp).not.toEqualTypeOf(RegExp)
   })
   it('collects flag type', () => {
-    const re = createRegExp('.', [global, multiline])
-    expectTypeOf(re).toEqualTypeOf<MagicRegExp<'/\\./gm', never, [], 'g' | 'm'>>()
+    const re_array_flag = createRegExp('.', [global, multiline])
+    expectTypeOf(re_array_flag).toEqualTypeOf<MagicRegExp<'/\\./gm', never, [], 'g' | 'm'>>()
+
+    const re_set_flag = createRegExp('.', new Set([global] as const))
+    expectTypeOf(re_set_flag).toEqualTypeOf<MagicRegExp<'/\\./g', never, [], 'g'>>()
   })
   it('sanitize string input', () => {
     const escapeChars = '.*+?^${}()[]/'
