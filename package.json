@@ -36,12 +36,10 @@
     "lint:eslint": "eslint --fix",
     "lint:prettier": "prettier --write --loglevel warn",
     "prepare": "husky install && pnpm build",
-    "prepublishOnly": "pnpm lint && pnpm test && pinst --disable",
+    "prepublishOnly": "pnpm lint && pnpm test",
     "release": "bumpp && npm publish",
     "test": "vitest run",
-    "test:types": "tsc --noEmit",
-    "postinstall": "husky install",
-    "postpublish": "pinst --enable"
+    "test:types": "tsc --noEmit"
   },
   "dependencies": {
     "estree-walker": "^3.0.1",
@@ -66,7 +64,6 @@
     "expect-type": "0.15.0",
     "husky": "latest",
     "lint-staged": "latest",
-    "pinst": "latest",
     "prettier": "latest",
     "rollup": "3.20.2",
     "typescript": "4.8.4",
