@@ -84,6 +84,15 @@ describe('inputs', () => {
     expect(pattern.toString()).toMatchInlineSnapshot('"test\\\\/thing"')
     expect(createRegExp(pattern).test('test/thing')).toBeTruthy()
   })
+  it('between', () => {
+    const letterBetween = exactly('').between('c', 'g')
+    expect(letterBetween.toString()).toMatchInlineSnapshot('"[c-g]"')
+    expect(createRegExp(letterBetween).test('abcdefghi')).toBeTruthy()
+
+    const digitBetween = exactly('').between(2, 4)
+    expect(digitBetween.toString()).toMatchInlineSnapshot('"[2-4]"')
+    expect(createRegExp(digitBetween).test('1234567')).toBeTruthy()
+  })
   it('times', () => {
     expect(exactly('test').times.between(1, 3).toString()).toMatchInlineSnapshot('"(?:test){1,3}"')
     expect(exactly('test').times.atLeast(3).toString()).toMatchInlineSnapshot('"(?:test){3,}"')
