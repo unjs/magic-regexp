@@ -50,19 +50,34 @@ export interface Input<
     <N extends number>(number: N): Input<IfUnwrapped<V, `(?:${V}){${N}}`, `${V}{${N}}`>, G, C>
     /** specify that the expression can repeat any number of times, _including none_ */
     any: () => Input<IfUnwrapped<V, `(?:${V})*`, `${V}*`>, G, C>
+    /** (Lazy Mode) specify that the expression can repeat any number of times, _including none_ */
+    anyLazy: () => Input<IfUnwrapped<V, `(?:${V})*?`, `${V}*?`>, G, C>
     /** specify that the expression must occur at least `N` times */
     atLeast: <N extends number>(
       number: N
     ) => Input<IfUnwrapped<V, `(?:${V}){${N},}`, `${V}{${N},}`>, G, C>
+    /** (Lazy Mode) specify that the expression must occur at least `N` times */
+    atLeastLazy: <N extends number>(
+      number: N
+    ) => Input<IfUnwrapped<V, `(?:${V}){${N},}?`, `${V}{${N},}?`>, G, C>
     /** specify that the expression must occur at most `N` times */
     atMost: <N extends number>(
       number: N
     ) => Input<IfUnwrapped<V, `(?:${V}){0,${N}}`, `${V}{0,${N}}`>, G, C>
+    /** (Lazy Mode) specify that the expression must occur at most `N` times */
+    atMostLazy: <N extends number>(
+      number: N
+    ) => Input<IfUnwrapped<V, `(?:${V}){0,${N}}?`, `${V}{0,${N}}?`>, G, C>
     /** specify a range of times to repeat the previous pattern */
     between: <Min extends number, Max extends number>(
       min: Min,
       max: Max
     ) => Input<IfUnwrapped<V, `(?:${V}){${Min},${Max}}`, `${V}{${Min},${Max}}`>, G, C>
+    /** (Lazy Mode) specify a range of times to repeat the previous pattern */
+    betweenLazy: <Min extends number, Max extends number>(
+      min: Min,
+      max: Max
+    ) => Input<IfUnwrapped<V, `(?:${V}){${Min},${Max}}?`, `${V}{${Min},${Max}}?`>, G, C>
   }
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()`. Alias for `groupedAs` */
   as: <K extends string>(
@@ -93,6 +108,7 @@ export interface Input<
   }
   /** this allows you to mark the input so far as optional */
   optionally: () => Input<IfUnwrapped<V, `(?:${V})?`, `${V}?`>, G, C>
+  optionallyLazy: () => Input<IfUnwrapped<V, `(?:${V})??`, `${V}??`>, G, C>
   toString: () => string
 }
 
@@ -117,12 +133,17 @@ export const createInput = <
     notAfter: input => createInput(`(?<!${exactly(input)})${s}`),
     notBefore: input => createInput(`${s}(?!${exactly(input)})`),
     times: Object.assign((number: number) => createInput(`${wrap(s)}{${number}}`) as any, {
-      any: () => createInput(`${wrap(s)}*`) as any,
-      atLeast: (min: number) => createInput(`${wrap(s)}{${min},}`) as any,
-      atMost: (max: number) => createInput(`${wrap(s)}{0,${max}}`) as any,
-      between: (min: number, max: number) => createInput(`${wrap(s)}{${min},${max}}`) as any,
+      any: () => createInput(`${wrap(s)}*`),
+      anyLazy: () => createInput(`${wrap(s)}*?`),
+      atLeast: (min: number) => createInput(`${wrap(s)}{${min},}`),
+      atLeastLazy: (min: number) => createInput(`${wrap(s)}{${min},}?`),
+      atMost: (max: number) => createInput(`${wrap(s)}{0,${max}}`),
+      atMostLazy: (max: number) => createInput(`${wrap(s)}{0,${max}}?`),
+      between: (min: number, max: number) => createInput(`${wrap(s)}{${min},${max}}`),
+      betweenLazy: (min: number, max: number) => createInput(`${wrap(s)}{${min},${max}}?`),
     }),
     optionally: () => createInput(`${wrap(s)}?`) as any,
+    optionallyLazy: () => createInput(`${wrap(s)}??`) as any,
     as: groupedAsFn,
     groupedAs: groupedAsFn,
     grouped: () => createInput(`${s}`.replace(GROUPED_REPLACE_RE, '($1$3)$2')),
