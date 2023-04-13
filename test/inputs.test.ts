@@ -61,6 +61,13 @@ describe('inputs', () => {
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
       MagicRegExp<'/(?<groupName>foo)?/', 'groupName', ['(?<groupName>foo)'], never>
     >()
+
+    const multi = maybe('foo', input.groupedAs('groupName'), 'bar')
+    const regexp2 = new RegExp(multi as any)
+    expect(regexp2).toMatchInlineSnapshot(
+      '/\\(\\?:foo\\(\\?<groupName>\\(\\?:foo\\)\\?\\)bar\\)\\?/'
+    )
+    expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'(?:foo(?<groupName>(?:foo)?)bar)?'>()
   })
   it('oneOrMore', () => {
     const input = oneOrMore('foo')
@@ -72,6 +79,13 @@ describe('inputs', () => {
     expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
       MagicRegExp<'/(?<groupName>foo)+/', 'groupName', ['(?<groupName>foo)'], never>
     >()
+
+    const multi = oneOrMore('foo', input.groupedAs('groupName'), 'bar')
+    const regexp2 = new RegExp(multi as any)
+    expect(regexp2).toMatchInlineSnapshot(
+      '/\\(\\?:foo\\(\\?<groupName>\\(\\?:foo\\)\\+\\)bar\\)\\+/'
+    )
+    expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'(?:foo(?<groupName>(?:foo)+)bar)+'>()
   })
   it('exactly', () => {
     const input = exactly('fo?[a-z]{2}/o?')
@@ -89,6 +103,15 @@ describe('inputs', () => {
         never
       >
     >()
+
+    const multi = exactly('foo', input.groupedAs('groupName'), 'bar')
+    const regexp2 = new RegExp(multi as any)
+    expect(regexp2).toMatchInlineSnapshot(
+      '/foo\\(\\?<groupName>fo\\\\\\?\\\\\\[a-z\\\\\\]\\\\\\{2\\\\\\}\\\\/o\\\\\\?\\)bar/'
+    )
+    expectTypeOf(
+      extractRegExp(multi)
+    ).toEqualTypeOf<'foo(?<groupName>fo\\?\\[a-z\\]\\{2\\}\\/o\\?)bar'>()
   })
   it('word', () => {
     const input = word
@@ -195,6 +218,11 @@ describe('chained inputs', () => {
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\\\\\?test\\\\\\.js/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?test\\.js'>()
+
+    const multi = multichar.and('foo', input.groupedAs('groupName'), 'bar')
+    const regexp2 = new RegExp(multi as any)
+    expect(regexp2).toMatchInlineSnapshot('/abfoo\\(\\?<groupName>\\\\\\?\\)bar/')
+    expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'abfoo(?<groupName>\\?)bar'>()
   })
   it('and.referenceTo', () => {
     const val = input.groupedAs('namedGroup').and(exactly('any')).and.referenceTo('namedGroup')
@@ -210,30 +238,59 @@ describe('chained inputs', () => {
     expect(regexp.test(test)).toBeTruthy()
     expect(regexp.exec(test)?.[1]).toBeUndefined()
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?:\\?|test\\.js)'>()
+
+    const multi = multichar.or('foo', input.groupedAs('groupName'), exactly('bar').or(test))
+    const regexp2 = new RegExp(multi as any)
+    expect(regexp2).toMatchInlineSnapshot(
+      '/\\(\\?:ab\\|foo\\(\\?<groupName>\\\\\\?\\)\\(\\?:bar\\|test\\\\\\.js\\)\\)/'
+    )
+    expectTypeOf(
+      extractRegExp(multi)
+    ).toEqualTypeOf<'(?:ab|foo(?<groupName>\\?)(?:bar|test\\.js))'>()
   })
   it('after', () => {
     const val = input.after('test.js')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<=test\\\\\\.js\\)\\\\\\?/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<=test\\.js)\\?'>()
+
+    const multi = multichar.after('foo', input.groupedAs('groupName'), 'bar')
+    const regexp2 = new RegExp(multi as any)
+    expect(regexp2).toMatchInlineSnapshot('/\\(\\?<=foo\\(\\?<groupName>\\\\\\?\\)bar\\)ab/')
+    expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'(?<=foo(?<groupName>\\?)bar)ab'>()
   })
   it('before', () => {
     const val = input.before('test.js')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\(\\?=test\\\\\\.js\\)/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?(?=test\\.js)'>()
+
+    const multi = multichar.before('foo', input.groupedAs('groupName'), 'bar')
+    const regexp2 = new RegExp(multi as any)
+    expect(regexp2).toMatchInlineSnapshot('/ab\\(\\?=foo\\(\\?<groupName>\\\\\\?\\)bar\\)/')
+    expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'ab(?=foo(?<groupName>\\?)bar)'>()
   })
   it('notAfter', () => {
     const val = input.notAfter('test.js')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<!test\\\\\\.js\\)\\\\\\?/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<!test\\.js)\\?'>()
+
+    const multi = multichar.notAfter('foo', input.groupedAs('groupName'), 'bar')
+    const regexp2 = new RegExp(multi as any)
+    expect(regexp2).toMatchInlineSnapshot('/\\(\\?<!foo\\(\\?<groupName>\\\\\\?\\)bar\\)ab/')
+    expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'(?<!foo(?<groupName>\\?)bar)ab'>()
   })
   it('notBefore', () => {
     const val = input.notBefore('test.js')
     const regexp = new RegExp(val as any)
     expect(regexp).toMatchInlineSnapshot('/\\\\\\?\\(\\?!test\\\\\\.js\\)/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'\\?(?!test\\.js)'>()
+
+    const multi = multichar.notBefore('foo', input.groupedAs('groupName'), 'bar')
+    const regexp2 = new RegExp(multi as any)
+    expect(regexp2).toMatchInlineSnapshot('/ab\\(\\?!foo\\(\\?<groupName>\\\\\\?\\)bar\\)/')
+    expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'ab(?!foo(?<groupName>\\?)bar)'>()
   })
   it('times', () => {
     const val = input.times(500)

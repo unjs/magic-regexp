@@ -1,33 +1,46 @@
 import type { Flag } from './core/flags'
-import { Input, exactly } from './core/inputs'
-import type { Join } from './core/types/join'
+import { exactly } from './core/inputs'
+import type { Join, UnionToTuple } from './core/types/join'
 import type { MagicRegExp, MagicRegExpMatchArray } from './core/types/magic-regexp'
 
-import type { Escape, ExactEscapeChar } from './core/types/escape'
+import { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './core/types/sources'
 
 export const createRegExp: {
-  /** Create Magic RegExp from Input helper */
-  <
-    Value extends string,
-    NamedGroups extends string = never,
-    CapturedGroupsArr extends (string | undefined)[] = [],
-    Flags extends Flag[] = never[]
-  >(
-    raw: Input<Value, NamedGroups, CapturedGroupsArr>,
-    flags?: [...Flags] | string | Set<Flag>
-  ): MagicRegExp<`/${Value}/${Join<Flags, '', ''>}`, NamedGroups, CapturedGroupsArr, Flags[number]>
-  /** Create Magic RegExp from string, string will be sanitized */
-  <Value extends string, Flags extends Flag[] = never[]>(
-    raw: Value,
-    flags?: [...Flags] | string | Set<Flag>
+  /** Create Magic RegExp from Input helpers and strin (string will be sanitized) */
+  <Inputs extends InputSource[]>(...inputs: Inputs): MagicRegExp<
+    `/${Join<MapToValues<Inputs>, '', ''>}/`,
+    MapToGroups<Inputs>,
+    MapToCapturedGroupsArr<Inputs>,
+    never
+  >
+  <Inputs extends InputSource[], Flags extends Flag[] = never[]>(
+    ...inputs: [...Inputs, [...Flags]]
   ): MagicRegExp<
-    `/${Escape<Value, ExactEscapeChar>}/${Join<Flags, '', ''>}`,
-    never,
-    [],
+    `/${Join<MapToValues<Inputs>, '', ''>}/${Join<Flags, '', ''>}`,
+    MapToGroups<Inputs>,
+    MapToCapturedGroupsArr<Inputs>,
     Flags[number]
   >
-} = (raw: any, flags?: any) =>
-  new RegExp(exactly(raw).toString(), [...(flags || '')].join('')) as any
+  <
+    Inputs extends InputSource[],
+    FlagUnion extends Flag = never,
+    Flags extends Flag[] = UnionToTuple<FlagUnion> extends infer F extends Flag[] ? F : never
+  >(
+    ...inputs: [...Inputs, Set<FlagUnion>]
+  ): MagicRegExp<
+    `/${Join<MapToValues<Inputs>, '', ''>}/${Join<Flags, '', ''>}`,
+    MapToGroups<Inputs>,
+    MapToCapturedGroupsArr<Inputs>,
+    Flags[number]
+  >
+} = (...inputs: any[]) => {
+  const flags =
+    inputs.length > 1 &&
+    (Array.isArray(inputs[inputs.length - 1]) || inputs[inputs.length - 1] instanceof Set)
+      ? inputs.pop()
+      : undefined
+  return new RegExp(exactly(...inputs).toString(), [...(flags || '')].join('')) as any
+}
 
 export * from './core/flags'
 export * from './core/inputs'
