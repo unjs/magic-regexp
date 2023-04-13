@@ -79,8 +79,8 @@ importers:
         specifier: 4.8.4
         version: 4.8.4
       unbuild:
-        specifier: 1.2.0
-        version: 1.2.0
+        specifier: 1.2.1
+        version: 1.2.1
       vite:
         specifier: 4.2.1
         version: 4.2.1(@types/node@18.15.11)
@@ -1164,7 +1164,7 @@ packages:
       c12: 1.2.0
       consola: 2.15.3
       defu: 6.1.2
-      globby: 13.1.3
+      globby: 13.1.4
       hash-sum: 2.0.0
       ignore: 5.2.4
       jiti: 1.18.2
@@ -1310,7 +1310,7 @@ packages:
       '@nuxt/kit': 3.4.0(rollup@3.20.2)
       chalk: 5.2.0
       ci-info: 3.8.0
-      consola: 3.0.1
+      consola: 3.0.2
       create-require: 1.1.1
       defu: 6.1.2
       destr: 1.2.2
@@ -1487,19 +1487,6 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /@rollup/plugin-alias@4.0.3(rollup@3.20.2):
-    resolution: {integrity: sha512-ZuDWE1q4PQDhvm/zc5Prun8sBpLJy41DMptYrS6MhAy9s9kL/doN1613BWfEchGVfKxzliJ3BjbOPizXX38DbQ==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-    dependencies:
-      rollup: 3.20.2
-      slash: 4.0.0
-    dev: true
-
   /@rollup/plugin-alias@5.0.0(rollup@3.20.2):
     resolution: {integrity: sha512-l9hY5chSCjuFRPsnRm16twWBiSApl2uYFLsepQYwtBuAxNMQ/1dJqADld40P0Jkqm65GRTLy/AC6hnpVebtLsA==}
     engines: {node: '>=14.0.0'}
@@ -1513,8 +1500,8 @@ packages:
       slash: 4.0.0
     dev: true
 
-  /@rollup/plugin-commonjs@24.0.1(rollup@3.20.2):
-    resolution: {integrity: sha512-15LsiWRZk4eOGqvrJyu3z3DaBu5BhXIMeWnijSRvd8irrrg9SHpQ1pH+BUK4H6Z9wL9yOxZJMTLU+Au86XHxow==}
+  /@rollup/plugin-commonjs@24.1.0(rollup@3.20.2):
+    resolution: {integrity: sha512-eSL45hjhCWI0jCCXcNtLVqM5N1JlBGvlFfY0m6oOYnLCJ6N0qEXoZql4sY2MOUArzhH4SA/qBpTxvvZp2Sc+DQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^2.68.0||^3.0.0
@@ -1556,24 +1543,6 @@ packages:
         optional: true
     dependencies:
       '@rollup/pluginutils': 5.0.2(rollup@3.20.2)
-      rollup: 3.20.2
-    dev: true
-
-  /@rollup/plugin-node-resolve@15.0.1(rollup@3.20.2):
-    resolution: {integrity: sha512-ReY88T7JhJjeRVbfCyNj+NXAG3IIsVMsX9b5/9jC98dRP8/yxlZdz7mHZbHk5zHr24wZZICS5AcXsFZAXYUQEg==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^2.78.0||^3.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-    dependencies:
-      '@rollup/pluginutils': 5.0.2(rollup@3.20.2)
-      '@types/resolve': 1.20.2
-      deepmerge: 4.3.1
-      is-builtin-module: 3.2.1
-      is-module: 1.0.0
-      resolve: 1.22.1
       rollup: 3.20.2
     dev: true
 
@@ -3003,6 +2972,10 @@ packages:
     resolution: {integrity: sha512-08E7bC2N6gaFdzPU/qtBi4ulVvJitYnfrDdxEiwElC3jSNICbOvkcE+8N56EfIrBoxp37O9Qnn5ZZPElov83UQ==}
     dev: true
 
+  /consola@3.0.2:
+    resolution: {integrity: sha512-o/Wau2FmZKiQgyp3c3IULgN6J5yc0lwYMnoyiZdEpdGxKGBtt2ACbkulBZ6BUsHy1HlSJqoP4YOyPIJLgRJyKQ==}
+    dev: true
+
   /console-control-strings@1.1.0:
     resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
     dev: true
@@ -3695,7 +3668,7 @@ packages:
       eslint: 8.38.0
       eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.56.0)(eslint-import-resolver-typescript@3.5.3)(eslint@8.38.0)
       get-tsconfig: 4.4.0
-      globby: 13.1.3
+      globby: 13.1.4
       is-core-module: 2.11.0
       is-glob: 4.0.3
       synckit: 0.8.5
@@ -4481,6 +4454,17 @@ packages:
 
   /globby@13.1.3:
     resolution: {integrity: sha512-8krCNHXvlCgHDpegPzleMq07yMYTO2sXKASmZmquEYWEmCx6J5UTRbp5RwMJkTJGtcQ44YpiUYUiN0b9mzy8Bw==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      dir-glob: 3.0.1
+      fast-glob: 3.2.12
+      ignore: 5.2.4
+      merge2: 1.4.1
+      slash: 4.0.0
+    dev: true
+
+  /globby@13.1.4:
+    resolution: {integrity: sha512-iui/IiiW+QrJ1X1hKH5qwlMQyv34wJAYwH1vrf8b9kBA4sNiif3gKsMHa+BrdnOpEudWjpotfa7LrTzB1ERS/g==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       dir-glob: 3.0.1
@@ -6018,7 +6002,7 @@ packages:
       defu: 6.1.2
       esbuild: 0.17.16
       fs-extra: 11.1.1
-      globby: 13.1.3
+      globby: 13.1.4
       jiti: 1.18.2
       mlly: 1.2.0
       mri: 1.2.0
@@ -6088,7 +6072,7 @@ packages:
       '@cloudflare/kv-asset-handler': 0.3.0
       '@netlify/functions': 1.4.0
       '@rollup/plugin-alias': 5.0.0(rollup@3.20.2)
-      '@rollup/plugin-commonjs': 24.0.1(rollup@3.20.2)
+      '@rollup/plugin-commonjs': 24.1.0(rollup@3.20.2)
       '@rollup/plugin-inject': 5.0.3(rollup@3.20.2)
       '@rollup/plugin-json': 6.0.0(rollup@3.20.2)
       '@rollup/plugin-node-resolve': 15.0.2(rollup@3.20.2)
@@ -6101,7 +6085,7 @@ packages:
       c12: 1.2.0
       chalk: 5.2.0
       chokidar: 3.5.3
-      consola: 3.0.1
+      consola: 3.0.2
       cookie-es: 0.5.0
       defu: 6.1.2
       destr: 1.2.2
@@ -6110,7 +6094,7 @@ packages:
       escape-string-regexp: 5.0.0
       etag: 1.8.1
       fs-extra: 11.1.1
-      globby: 13.1.3
+      globby: 13.1.4
       gzip-size: 7.0.0
       h3: 1.6.4
       hookable: 5.5.3
@@ -6742,7 +6726,7 @@ packages:
       recast: 0.22.0
       scule: 1.0.0
       style-dictionary-esm: 1.3.7
-      unbuild: 1.2.0
+      unbuild: 1.2.1
       unplugin: 1.3.1
     transitivePeerDependencies:
       - postcss
@@ -8297,21 +8281,21 @@ packages:
       which-boxed-primitive: 1.0.2
     dev: true
 
-  /unbuild@1.2.0:
-    resolution: {integrity: sha512-GcolNMBatav7FbRdLDR8BMbnYWMoKfxXdJIHibpBtx3GERN4GbbUD5h4RfGIFi+mjWPz4AphSz5gIg9FWNWw3Q==}
+  /unbuild@1.2.1:
+    resolution: {integrity: sha512-J4efk69Aye43tWcBPCsLK7TIRppGrEN4pAlDzRKo3HSE6MgTSTBxSEuE3ccx7ixc62JvGQ/CoFXYqqF2AHozow==}
     hasBin: true
     dependencies:
-      '@rollup/plugin-alias': 4.0.3(rollup@3.20.2)
-      '@rollup/plugin-commonjs': 24.0.1(rollup@3.20.2)
+      '@rollup/plugin-alias': 5.0.0(rollup@3.20.2)
+      '@rollup/plugin-commonjs': 24.1.0(rollup@3.20.2)
       '@rollup/plugin-json': 6.0.0(rollup@3.20.2)
-      '@rollup/plugin-node-resolve': 15.0.1(rollup@3.20.2)
+      '@rollup/plugin-node-resolve': 15.0.2(rollup@3.20.2)
       '@rollup/plugin-replace': 5.0.2(rollup@3.20.2)
       '@rollup/pluginutils': 5.0.2(rollup@3.20.2)
       chalk: 5.2.0
-      consola: 2.15.3
+      consola: 3.0.2
       defu: 6.1.2
-      esbuild: 0.17.14
-      globby: 13.1.3
+      esbuild: 0.17.16
+      globby: 13.1.4
       hookable: 5.5.3
       jiti: 1.18.2
       magic-string: 0.30.0
