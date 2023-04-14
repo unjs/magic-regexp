@@ -5,10 +5,27 @@ import {
   exactly,
   wordChar,
   spreadRegExpIterator,
+  spreadRegExpMatchArray,
   caseInsensitive,
   oneOrMore,
   digit,
+  global,
+  MagicRegExp,
 } from '../src/type-level-regexp'
+
+describe('magic-regexp', () => {
+  it('works as a normal regexp', () => {
+    const regExp = createRegExp('in', [global])
+    expect('thing'.match(regExp)?.[0]).toMatchInlineSnapshot('"in"')
+    expect(regExp.test('thing')).toBeTruthy()
+    expect(regExp.lastIndex).toMatchInlineSnapshot('4')
+    expectTypeOf(regExp).not.toEqualTypeOf(RegExp)
+
+    const regExp2 = createRegExp(exactly('foo'))
+    expect(regExp2).toMatchInlineSnapshot()
+    expectTypeOf(regExp2).toEqualTypeOf<MagicRegExp<'/foo/', never, never[]>>()
+  })
+})
 
 describe('Experimental: type-level RegExp match for type safe match results', () => {
   it('`<string literal>..match` returns type-safe match array, index, length and groups with string literal', () => {
@@ -20,7 +37,22 @@ describe('Experimental: type-level RegExp match for type safe match results', ()
       new Set([caseInsensitive])
     )
 
+    expect(regExp).toMatchInlineSnapshot('/\\(\\?<g1>bar\\|baz\\)\\(\\?<g2>qux\\\\d\\{2\\}\\)/i')
+    expectTypeOf(regExp).toEqualTypeOf<
+      MagicRegExp<'/(?<g1>bar|baz)(?<g2>qux\\d{2})/i', 'g1' | 'g2', ['i']>
+    >()
+
     const matchResult = 'prefix_babAzqUx42_suffix'.match(regExp)
+
+    const spreadedResult = spreadRegExpMatchArray(matchResult)
+    expect(spreadedResult).toMatchInlineSnapshot(`
+      [
+        "bAzqUx42",
+        "bAz",
+        "qUx42",
+      ]
+    `)
+    expectTypeOf(spreadedResult).toEqualTypeOf<['bAzqUx42', 'bAz', 'qUx42']>()
 
     expect(matchResult[0]).toMatchInlineSnapshot('"bAzqUx42"')
     expectTypeOf(matchResult[0]).toEqualTypeOf<'bAzqUx42'>()
