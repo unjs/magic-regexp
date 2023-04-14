@@ -22,7 +22,7 @@ describe('magic-regexp', () => {
     expectTypeOf(regExp).not.toEqualTypeOf(RegExp)
 
     const regExp2 = createRegExp(exactly('foo'))
-    expect(regExp2).toMatchInlineSnapshot()
+    expect(regExp2).toMatchInlineSnapshot('/foo/')
     expectTypeOf(regExp2).toEqualTypeOf<MagicRegExp<'/foo/', never, never[]>>()
   })
 })
