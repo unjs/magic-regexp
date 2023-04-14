@@ -14,8 +14,5 @@ export default defineNuxtConfig({
       fields: ['exact'],
     },
   },
-  modules: ['@nuxtjs/plausible'],
-  plausible: {
-    domain: 'regexp.dev',
-  },
+  modules: ['nuxt-vercel-analytics'],
 })
