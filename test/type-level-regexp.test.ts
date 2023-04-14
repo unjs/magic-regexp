@@ -1,15 +1,16 @@
 import { describe, expect, expectTypeOf, it } from 'vitest'
 import {
   createRegExp,
-  anyOf,
   exactly,
-  wordChar,
-  spreadRegExpIterator,
-  spreadRegExpMatchArray,
-  caseInsensitive,
+  maybe,
+  anyOf,
   oneOrMore,
+  wordChar,
   digit,
   global,
+  caseInsensitive,
+  spreadRegExpIterator,
+  spreadRegExpMatchArray,
   MagicRegExp,
 } from '../src/type-level-regexp'
 
@@ -23,18 +24,16 @@ describe('magic-regexp', () => {
 
     const regExp2 = createRegExp(exactly('foo'))
     expect(regExp2).toMatchInlineSnapshot('/foo/')
-    expectTypeOf(regExp2).toEqualTypeOf<MagicRegExp<'/foo/', never, never[]>>()
+    expectTypeOf(regExp2).toEqualTypeOf<MagicRegExp<'/foo/', never, []>>()
   })
 })
 
 describe('Experimental: type-level RegExp match for type safe match results', () => {
   it('`<string literal>..match` returns type-safe match array, index, length and groups with string literal', () => {
     const regExp = createRegExp(
-      exactly('bar')
-        .or('baz')
-        .groupedAs('g1')
-        .and(exactly('qux').and(digit.times(2)).groupedAs('g2')),
-      new Set([caseInsensitive])
+      exactly('bar').or('baz').groupedAs('g1'),
+      exactly('qux', digit.times(2)).groupedAs('g2'),
+      new Set([caseInsensitive] as const)
     )
 
     expect(regExp).toMatchInlineSnapshot('/\\(\\?<g1>bar\\|baz\\)\\(\\?<g2>qux\\\\d\\{2\\}\\)/i')
@@ -86,11 +85,9 @@ describe('Experimental: type-level RegExp match for type safe match results', ()
 
   it('`<string literal>.replace()` with literal string as second arg returns exact replaced string literal', () => {
     const regExp = createRegExp(
-      exactly('bar')
-        .or('baz')
-        .groupedAs('g1')
-        .and(exactly('qux').and(digit.times(2)).groupedAs('g2')),
-      new Set([caseInsensitive])
+      exactly('bar').or('baz').groupedAs('g1'),
+      exactly('qux', digit.times(2)).groupedAs('g2'),
+      new Set([caseInsensitive] as const)
     )
 
     const replaceResult = 'prefix_babAzqUx42_suffix'.replace(regExp, '_g2:$<g2>_c1:$1_all:$&')
@@ -100,11 +97,9 @@ describe('Experimental: type-level RegExp match for type safe match results', ()
 
   it('`<string literal>.replace()` with type-safe function as second arg returns exact replaced string literal', () => {
     const regExp = createRegExp(
-      exactly('bar')
-        .or('baz')
-        .groupedAs('g1')
-        .and(exactly('qux').and(digit.times(2)).groupedAs('g2')),
-      new Set([caseInsensitive])
+      exactly('bar').or('baz').groupedAs('g1'),
+      exactly('qux', digit.times(2)).groupedAs('g2'),
+      new Set([caseInsensitive] as const)
     )
 
     const replaceFunctionResult = 'prefix_babAzqUx42_suffix'.replace(
@@ -122,15 +117,10 @@ describe('Experimental: type-level RegExp match for type safe match results', ()
 
   it('`<string literal>.matchAll()` returns typed iterableIterator, spread with `spreadRegExpIterator` to get type-safe match results', () => {
     const semverRegExp = createRegExp(
-      oneOrMore(digit)
-        .as('major')
-        .and('.')
-        .and(oneOrMore(digit).as('minor'))
-        .and(
-          exactly('.')
-            .and(oneOrMore(anyOf(wordChar, '.')).groupedAs('patch'))
-            .optionally()
-        ),
+      oneOrMore(digit).as('major'),
+      '.',
+      oneOrMore(digit).as('minor'),
+      maybe('.', oneOrMore(anyOf(wordChar, '.')).groupedAs('patch')),
       ['g']
     )
     const semversIterator =

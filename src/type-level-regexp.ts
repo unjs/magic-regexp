@@ -1,16 +1,15 @@
 import type { Flag } from './core/flags'
-import type { Input } from './core/inputs'
 import type { Join, UnionToTuple } from './core/types/join'
-import type { Escape, ExactEscapeChar } from './core/types/escape'
-
-import { exactly } from './core/inputs'
-import {
+import type { InputSource, MapToGroups, MapToValues } from './core/types/sources'
+import type {
   MatchRegExp,
   MatchAllRegExp,
   ParseRegExp,
   RegExpMatchResult,
   ReplaceWithRegExp,
 } from 'type-level-regexp/regexp'
+
+import { exactly } from './core/inputs'
 
 const NamedGroupsS = Symbol('NamedGroupsType')
 const ValueS = Symbol('Value')
@@ -27,38 +26,36 @@ export type MagicRegExp<
 }
 
 export const createRegExp: {
-  /** Create Magic RegExp from Input helper */
+  /** Create Magic RegExp from Input helpers and string (string will be sanitized) */
+  <Inputs extends InputSource[]>(...inputs: Inputs): MagicRegExp<
+    `/${Join<MapToValues<Inputs>, '', ''>}/`,
+    MapToGroups<Inputs>,
+    []
+  >
   <
-    Value extends string,
-    NamedGroups extends string = never,
-    CapturedGroupsArr extends (string | undefined)[] = [],
+    Inputs extends InputSource[],
     FlagUnion extends Flag | undefined = undefined,
     CloneFlagUnion extends Flag | undefined = FlagUnion,
     Flags extends Flag[] = CloneFlagUnion extends undefined
-      ? never[]
+      ? []
       : UnionToTuple<FlagUnion> extends infer F extends Flag[]
       ? F
       : never
   >(
-    raw: Input<Value, NamedGroups, CapturedGroupsArr>,
-    flags?: [...Flags] | string | Set<FlagUnion>
-  ): MagicRegExp<`/${Value}/${Join<Flags, '', ''>}`, NamedGroups, Flags>
-  /** Create Magic RegExp from string, string will be sanitized */
-  <
-    Value extends string,
-    FlagUnion extends Flag | undefined = undefined,
-    CloneFlagUnion extends Flag | undefined = FlagUnion,
-    Flags extends Flag[] = CloneFlagUnion extends undefined
-      ? never[]
-      : UnionToTuple<FlagUnion> extends infer F extends Flag[]
-      ? F
-      : never
-  >(
-    raw: Value,
-    flags?: [...Flags] | string | Set<FlagUnion>
-  ): MagicRegExp<`/${Escape<Value, ExactEscapeChar>}/${Join<Flags, '', ''>}`, never, Flags>
-} = (raw: any, flags?: any) =>
-  new RegExp(exactly(raw).toString(), [...(flags || '')].join('')) as any
+    ...inputs: [...Inputs, [...Flags] | string | Set<FlagUnion>]
+  ): MagicRegExp<
+    `/${Join<MapToValues<Inputs>, '', ''>}/${Join<Flags, '', ''>}`,
+    MapToGroups<Inputs>,
+    Flags
+  >
+} = (...inputs: any[]) => {
+  const flags =
+    inputs.length > 1 &&
+    (Array.isArray(inputs[inputs.length - 1]) || inputs[inputs.length - 1] instanceof Set)
+      ? inputs.pop()
+      : undefined
+  return new RegExp(exactly(...inputs).toString(), [...(flags || '')].join('')) as any
+}
 
 export * from './core/flags'
 export * from './core/inputs'
