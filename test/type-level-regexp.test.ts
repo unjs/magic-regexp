@@ -172,4 +172,53 @@ describe('Experimental: type-level RegExp match for type safe match results', ()
       patch: undefined
     }>()
   })
+
+  it('`<dynamic string>.match` returns type-safe match array, index, length and groups with union of possible string literals', () => {
+    const regExp = createRegExp(
+      exactly('bar').or('baz').groupedAs('g1').and(exactly('qux')).groupedAs('g2')
+    )
+    // eslint-disable-next-line prefer-const, @typescript-eslint/no-unused-vars
+    let dynamicString = '_barqux_'
+
+    const matchResult = dynamicString.match(regExp)
+
+    expect(matchResult).toMatchInlineSnapshot(`
+      [
+        "barqux",
+        "barqux",
+        "bar",
+      ]
+    `)
+    expectTypeOf(matchResult?.['_matchArray']).toEqualTypeOf<
+      ['bazqux', 'bazqux', 'baz'] | ['barqux', 'barqux', 'bar'] | undefined
+    >()
+
+    expect(matchResult?.[0]).toMatchInlineSnapshot('"barqux"')
+    expectTypeOf(matchResult?.[0]).toEqualTypeOf<'bazqux' | 'barqux' | undefined>()
+
+    expect(matchResult?.[1]).toMatchInlineSnapshot('"barqux"')
+    expectTypeOf(matchResult?.[1]).toEqualTypeOf<'bazqux' | 'barqux' | undefined>()
+
+    expect(matchResult?.[2]).toMatchInlineSnapshot('"bar"')
+    expectTypeOf(matchResult?.[2]).toEqualTypeOf<'bar' | 'baz' | undefined>()
+
+    // @ts-expect-error - Element implicitly has an 'any' type because expression of type '3' can't be used to index
+    expect(matchResult?.[3]).toMatchInlineSnapshot('undefined')
+
+    expect(matchResult?.index).toMatchInlineSnapshot('1')
+    expectTypeOf(matchResult?.index).toEqualTypeOf<number | undefined>()
+
+    expect(matchResult?.length).toMatchInlineSnapshot('3')
+    expectTypeOf(matchResult?.length).toEqualTypeOf<3 | undefined>()
+
+    expect(matchResult?.groups).toMatchInlineSnapshot(`
+      {
+        "g1": "bar",
+        "g2": "barqux",
+      }
+    `)
+    expectTypeOf(matchResult?.groups).toEqualTypeOf<
+      { g1: 'bar' | 'baz'; g2: 'bazqux' | 'barqux' } | undefined
+    >()
+  })
 })
