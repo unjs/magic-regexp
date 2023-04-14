@@ -16,6 +16,11 @@
       "require": "./dist/transform.cjs",
       "types": "./dist/transform.d.ts"
     },
+    "./type-level-regexp": {
+      "import": "./dist/type-level-regexp.mjs",
+      "require": "./dist/type-level-regexp.cjs",
+      "types": "./dist/type-level-regexp.d.ts"
+    },
     "./nuxt": "./nuxt.mjs"
   },
   "main": "./dist/index.cjs",
@@ -24,7 +29,8 @@
   "files": [
     "dist",
     "nuxt.mjs",
-    "transform.d.ts"
+    "transform.d.ts",
+    "type-level-regexp.d.ts"
   ],
   "scripts": {
     "build": "unbuild",
