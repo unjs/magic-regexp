@@ -1,5 +1,10 @@
 import assert from 'node:assert'
-import { createRegExp, exactly, digit, oneOrMore, char, wordChar } from 'magic-regexp'
+import { createRegExp, exactly, maybe, digit, oneOrMore, char, wordChar } from 'magic-regexp'
+/**
+ * change to
+ * import {...} from 'magic-regexp/type-level-regexp'
+ * to try type level RegExp match results (experimental)
+ */
 
 // Typed capture groups
 const ID_RE = createRegExp(exactly('id-').and(digit.times(5).groupedAs('id')))
@@ -8,11 +13,10 @@ console.log(ID_RE, groups?.id)
 
 // Quick-and-dirty semver
 const SEMVER_RE = createRegExp(
-  oneOrMore(digit)
-    .groupedAs('major')
-    .and('.')
-    .and(oneOrMore(digit).groupedAs('minor'))
-    .and(exactly('.').and(oneOrMore(char).groupedAs('patch')).optionally())
+  oneOrMore(digit).groupedAs('major'),
+  '.',
+  oneOrMore(digit).groupedAs('minor'),
+  maybe('.', oneOrMore(char).groupedAs('patch'))
 )
 console.log(SEMVER_RE)
 
@@ -20,10 +24,7 @@ assert.equal(createRegExp(exactly('foo/test.js').after('bar/')).test('bar/foo/te
 
 // References to previously captured groups using the group name
 const TENET_RE = createRegExp(
-  wordChar
-    .groupedAs('firstChar')
-    .and(wordChar.groupedAs('secondChar'))
-    .and(oneOrMore(char))
+  exactly(wordChar.groupedAs('firstChar'), wordChar.groupedAs('secondChar'), oneOrMore(char))
     .and.referenceTo('secondChar')
     .and.referenceTo('firstChar')
 )
