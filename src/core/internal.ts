@@ -7,7 +7,7 @@ const GROUPED_AS_REPLACE_RE = /^(?:\(\?:(.+)\)|(\(?.+\)?))$/
 const GROUPED_REPLACE_RE = /^(?:\(\?:(.+)\)([?+*]|{[\d,]+})?|(.+))$/
 
 export interface Input<
-  in V extends string,
+  V extends string,
   G extends string = never,
   C extends (string | undefined)[] = []
 > {
@@ -67,22 +67,34 @@ export interface Input<
   ) => Input<`${V}(?!${Join<MapToValues<I>, '', ''>})`, G, [...C, ...CG]>
   /** repeat the previous pattern an exact number of times */
   times: {
-    <N extends number>(number: N): Input<IfUnwrapped<V, `(?:${V}){${N}}`, `${V}{${N}}`>, G, C>
+    <N extends number, NV extends string = IfUnwrapped<V, `(?:${V}){${N}}`, `${V}{${N}}`>>(
+      number: N
+    ): Input<NV, G, C>
     /** specify that the expression can repeat any number of times, _including none_ */
-    any: () => Input<IfUnwrapped<V, `(?:${V})*`, `${V}*`>, G, C>
+    any: <NV extends string = IfUnwrapped<V, `(?:${V})*`, `${V}*`>>() => Input<NV, G, C>
     /** specify that the expression must occur at least `N` times */
-    atLeast: <N extends number>(
+    atLeast: <
+      N extends number,
+      NV extends string = IfUnwrapped<V, `(?:${V}){${N},}`, `${V}{${N},}`>
+    >(
       number: N
-    ) => Input<IfUnwrapped<V, `(?:${V}){${N},}`, `${V}{${N},}`>, G, C>
+    ) => Input<NV, G, C>
     /** specify that the expression must occur at most `N` times */
-    atMost: <N extends number>(
+    atMost: <
+      N extends number,
+      NV extends string = IfUnwrapped<V, `(?:${V}){0,${N}}`, `${V}{0,${N}}`>
+    >(
       number: N
-    ) => Input<IfUnwrapped<V, `(?:${V}){0,${N}}`, `${V}{0,${N}}`>, G, C>
+    ) => Input<NV, G, C>
     /** specify a range of times to repeat the previous pattern */
-    between: <Min extends number, Max extends number>(
+    between: <
+      Min extends number,
+      Max extends number,
+      NV extends string = IfUnwrapped<V, `(?:${V}){${Min},${Max}}`, `${V}{${Min},${Max}}`>
+    >(
       min: Min,
       max: Max
-    ) => Input<IfUnwrapped<V, `(?:${V}){${Min},${Max}}`, `${V}{${Min},${Max}}`>, G, C>
+    ) => Input<NV, G, C>
   }
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()`. Alias for `groupedAs` */
   as: <K extends string>(
@@ -112,7 +124,8 @@ export interface Input<
     lineEnd: () => Input<`${V}$`, G, C>
   }
   /** this allows you to mark the input so far as optional */
-  optionally: () => Input<IfUnwrapped<V, `(?:${V})?`, `${V}?`>, G, C>
+  optionally: <NV extends string = IfUnwrapped<V, `(?:${V})?`, `${V}?`>>() => Input<NV, G, C>
+
   toString: () => string
 }
 
