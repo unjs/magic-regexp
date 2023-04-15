@@ -12,7 +12,7 @@ import {
   spreadRegExpIterator,
   spreadRegExpMatchArray,
   MagicRegExp,
-} from '../src/type-level-regexp'
+} from '../src/further-magic'
 
 describe('magic-regexp', () => {
   it('works as a normal regexp', () => {

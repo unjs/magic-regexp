@@ -2,7 +2,7 @@ import assert from 'node:assert'
 import { createRegExp, exactly, maybe, digit, oneOrMore, char, wordChar } from 'magic-regexp'
 /**
  * change to
- * import {...} from 'magic-regexp/type-level-regexp'
+ * import {...} from 'magic-regexp/further-magic'
  * to try type level RegExp match results (experimental)
  */
 

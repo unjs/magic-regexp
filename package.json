@@ -16,10 +16,10 @@
       "require": "./dist/transform.cjs",
       "types": "./dist/transform.d.ts"
     },
-    "./type-level-regexp": {
-      "import": "./dist/type-level-regexp.mjs",
-      "require": "./dist/type-level-regexp.cjs",
-      "types": "./dist/type-level-regexp.d.ts"
+    "./further-magic": {
+      "import": "./dist/further-magic.mjs",
+      "require": "./dist/further-magic.cjs",
+      "types": "./dist/further-magic.d.ts"
     },
     "./nuxt": "./nuxt.mjs"
   },
@@ -30,7 +30,7 @@
     "dist",
     "nuxt.mjs",
     "transform.d.ts",
-    "type-level-regexp.d.ts"
+    "further-magic.d.ts"
   ],
   "scripts": {
     "build": "unbuild",
