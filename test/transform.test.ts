@@ -3,9 +3,12 @@ import { parse } from 'acorn'
 
 import { MagicRegExpTransformPlugin } from '../src/transform'
 
-describe('transformer', () => {
+describe.each([
+  { importSpecifier: 'magic-regexp' },
+  { importSpecifier: 'magic-regexp/further-magic' },
+])('transformer', ({ importSpecifier }) => {
   const couldTransform = [
-    "import { createRegExp, exactly, anyOf } from 'magic-regexp'",
+    `import { createRegExp, exactly, anyOf } from '${importSpecifier}'`,
     "const re1 = createRegExp(exactly('bar').notBefore('foo'))",
   ]
 
@@ -19,15 +22,15 @@ describe('transformer', () => {
     expect(transform(couldTransform, 'test.vue?type=template')).toBeUndefined()
   })
 
-  it('ignores code without imports from magic-regexp', () => {
+  it(`ignores code without imports from ${importSpecifier}`, () => {
     expect(transform(couldTransform[1])).toBeUndefined()
-    expect(transform(['// magic-regexp', couldTransform[1]])).toBeUndefined()
+    expect(transform([`// ${importSpecifier}`, couldTransform[1]])).toBeUndefined()
   })
 
   it('preserves context for dynamic regexps', () => {
     expect(
       transform([
-        "import { createRegExp } from 'magic-regexp'",
+        `import { createRegExp } from '${importSpecifier}'`,
         `console.log(createRegExp(anyOf(keys)))`,
       ])
     ).not.toBeDefined()
@@ -36,7 +39,7 @@ describe('transformer', () => {
   it('statically replaces regexps where possible', () => {
     const code = transform([
       "import { something } from 'other-module'",
-      "import { createRegExp, exactly, anyOf } from 'magic-regexp'",
+      `import { createRegExp, exactly, anyOf } from '${importSpecifier}'`,
       '//', // this lets us tree-shake the import for use in our test-suite
       "const re1 = createRegExp(exactly('bar').notBefore('foo'))",
       "const re2 = createRegExp(anyOf(exactly('bar'), 'foo'))",
@@ -46,7 +49,7 @@ describe('transformer', () => {
     ])
     expect(code).toMatchInlineSnapshot(`
       "import { something } from 'other-module'
-      import { createRegExp, exactly, anyOf } from 'magic-regexp'
+      import { createRegExp, exactly, anyOf } from '${importSpecifier}'
       //
       const re1 = /bar(?!foo)/
       const re2 = /(?:bar|foo)/
@@ -59,17 +62,17 @@ describe('transformer', () => {
 
   it('respects how users import library', () => {
     const code = transform([
-      "import { createRegExp as cRE } from 'magic-regexp'",
-      'import { exactly as ext, createRegExp } from "magic-regexp"',
-      'import * as magicRE from "magic-regexp"',
+      `import { createRegExp as cRE } from '${importSpecifier}'`,
+      `import { exactly as ext, createRegExp } from '${importSpecifier}'`,
+      `import * as magicRE from '${importSpecifier}'`,
       "const re1 = cRE(ext('bar').notBefore('foo'))",
       "const re2 = magicRE.createRegExp(magicRE.anyOf('bar', 'foo'))",
       "const re3 = createRegExp('test/value')",
     ])
     expect(code).toMatchInlineSnapshot(`
-      "import { createRegExp as cRE } from 'magic-regexp'
-      import { exactly as ext, createRegExp } from \\"magic-regexp\\"
-      import * as magicRE from \\"magic-regexp\\"
+      "import { createRegExp as cRE } from '${importSpecifier}'
+      import { exactly as ext, createRegExp } from '${importSpecifier}'
+      import * as magicRE from '${importSpecifier}'
       const re1 = /bar(?!foo)/
       const re2 = /(?:bar|foo)/
       const re3 = /test\\\\/value/"
