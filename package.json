@@ -16,6 +16,11 @@
       "require": "./dist/transform.cjs",
       "types": "./dist/transform.d.ts"
     },
+    "./further-magic": {
+      "import": "./dist/further-magic.mjs",
+      "require": "./dist/further-magic.cjs",
+      "types": "./dist/further-magic.d.ts"
+    },
     "./nuxt": "./nuxt.mjs"
   },
   "main": "./dist/index.cjs",
@@ -24,7 +29,8 @@
   "files": [
     "dist",
     "nuxt.mjs",
-    "transform.d.ts"
+    "transform.d.ts",
+    "further-magic.d.ts"
   ],
   "scripts": {
     "build": "unbuild",
@@ -45,6 +51,7 @@
     "estree-walker": "^3.0.1",
     "magic-string": "^0.30.0",
     "mlly": "^1.0.0",
+    "type-level-regexp": "~0.1.16",
     "ufo": "^1.0.0",
     "unplugin": "^1.0.0"
   },

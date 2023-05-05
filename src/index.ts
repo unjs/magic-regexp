@@ -6,7 +6,7 @@ import type { MagicRegExp, MagicRegExpMatchArray } from './core/types/magic-rege
 import { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './core/types/sources'
 
 export const createRegExp: {
-  /** Create Magic RegExp from Input helpers and strin (string will be sanitized) */
+  /** Create Magic RegExp from Input helpers and string (string will be sanitized) */
   <Inputs extends InputSource[]>(...inputs: Inputs): MagicRegExp<
     `/${Join<MapToValues<Inputs>, '', ''>}/`,
     MapToGroups<Inputs>,

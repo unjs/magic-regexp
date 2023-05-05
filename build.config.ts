@@ -2,6 +2,6 @@ import { defineBuildConfig } from 'unbuild'
 export default defineBuildConfig({
   declaration: true,
   rollup: { emitCJS: true },
-  entries: ['./src/index', './src/transform'],
-  externals: ['magic-regexp'],
+  entries: ['./src/index', './src/transform', './src/further-magic'],
+  externals: ['magic-regexp', 'type-level-regexp'],
 })

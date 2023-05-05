@@ -8,8 +8,9 @@
     "skipLibCheck": true,
     "paths": {
       "magic-regexp/transform": ["./src/transform"],
+      "magic-regexp/further-magic": ["./src/further-magic"],
       "magic-regexp": ["./src/index"]
     }
   },
-  "exclude": ["docs"]
+  "exclude": ["docs", "dist"]
 }

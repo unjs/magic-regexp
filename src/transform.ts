@@ -34,7 +34,9 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
     transform(code, id) {
       if (!code.includes('magic-regexp')) return
 
-      const statements = findStaticImports(code).filter(i => i.specifier === 'magic-regexp')
+      const statements = findStaticImports(code).filter(
+        i => i.specifier === 'magic-regexp' || i.specifier === 'magic-regexp/further-magic'
+      )
       if (!statements.length) return
 
       const contextMap: Context = { ...magicRegExp }
