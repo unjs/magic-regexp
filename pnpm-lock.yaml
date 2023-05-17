@@ -100,8 +100,8 @@ importers:
         version: 0.2.0(react@18.2.0)(rollup@3.21.8)
     devDependencies:
       '@nuxt-themes/docus':
-        specifier: 1.11.1
-        version: 1.11.1(nuxt@3.4.3)(postcss@8.4.23)(rollup@3.21.8)(vue@3.2.47)
+        specifier: 1.12.0
+        version: 1.12.0(nuxt@3.4.3)(postcss@8.4.23)(rollup@3.21.8)(vue@3.2.47)
       '@nuxtjs/plausible':
         specifier: 0.2.1
         version: 0.2.1(rollup@3.21.8)
@@ -1005,14 +1005,14 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
 
-  /@nuxt-themes/docus@1.11.1(nuxt@3.4.3)(postcss@8.4.23)(rollup@3.21.8)(vue@3.2.47):
-    resolution: {integrity: sha512-i/7TBkNmJm9TMt2q+PLIFRdKnOFIspRKFAKWznrh0+rhm32u55OhtYE1+Vs/83bPN7pY9ErxnQEdcTGSXo+aGw==}
+  /@nuxt-themes/docus@1.12.0(nuxt@3.4.3)(postcss@8.4.23)(rollup@3.21.8)(vue@3.2.47):
+    resolution: {integrity: sha512-/YAlsKbyyjxIflFOIO3bKdM/QNsWLNRBXK11CTXod8zBlJe7lL/XqtNmbtqoNyQ+WumnkfVRA4UyKnu4W/Ya9w==}
     dependencies:
       '@nuxt-themes/elements': 0.9.4(postcss@8.4.23)(rollup@3.21.8)(vue@3.2.47)
       '@nuxt-themes/tokens': 1.9.1(postcss@8.4.23)(rollup@3.21.8)(vue@3.2.47)
       '@nuxt-themes/typography': 0.11.0(postcss@8.4.23)(rollup@3.21.8)(vue@3.2.47)
       '@nuxt/content': 2.6.0(rollup@3.21.8)
-      '@nuxthq/studio': 0.11.0(rollup@3.21.8)
+      '@nuxthq/studio': 0.12.1(rollup@3.21.8)
       '@vueuse/nuxt': 10.1.2(nuxt@3.4.3)(rollup@3.21.8)(vue@3.2.47)
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -1368,13 +1368,13 @@ packages:
       - vue-tsc
     dev: true
 
-  /@nuxthq/studio@0.11.0(rollup@3.21.8):
-    resolution: {integrity: sha512-9cIJSguUWvtiFs6/dlZB6f/xQ588HGqWXzRU9logl5THig6X5lYwV4hfleaY4tYoitve3j5OUCXzfFhUQqCxGA==}
+  /@nuxthq/studio@0.12.1(rollup@3.21.8):
+    resolution: {integrity: sha512-g9GV8JkQqqYLtP+gsNtPr4fh49jc3eIdAB2ZfiudZKkFdW0BxtT/xPx8RjNYQwyInKssDDB26zzYrRYH9hhHCQ==}
     dependencies:
       '@nuxt/kit': 3.4.3(rollup@3.21.8)
       defu: 6.1.2
       nuxt-component-meta: 0.5.1(rollup@3.21.8)
-      nuxt-config-schema: 0.4.5(rollup@3.21.8)
+      nuxt-config-schema: 0.4.6(rollup@3.21.8)
       socket.io-client: 4.6.1
       ufo: 1.1.1
     transitivePeerDependencies:
@@ -6256,12 +6256,25 @@ packages:
       - supports-color
     dev: true
 
+  /nuxt-config-schema@0.4.6(rollup@3.21.8):
+    resolution: {integrity: sha512-kHLWJFynj5QrxVZ1MjY2xmDaTSN1BCMLGExA+hMMLoCb3wn9TJlDVqnE/nSdUJPMRkNn/NQ5WP9NLA9vlAXRUw==}
+    dependencies:
+      '@nuxt/kit': 3.4.3(rollup@3.21.8)
+      defu: 6.1.2
+      jiti: 1.18.2
+      pathe: 1.1.0
+      untyped: 1.3.2
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+    dev: true
+
   /nuxt-icon@0.3.3(rollup@3.21.8)(vue@3.2.47):
     resolution: {integrity: sha512-KdhJAigBGTP8/YIFZ3orwetk40AgLq6VQ5HRYuDLmv5hiDptor9Ro+WIdZggHw7nciRxZvDdQkEwi9B5G/jrkQ==}
     dependencies:
       '@iconify/vue': 4.1.0(vue@3.2.47)
       '@nuxt/kit': 3.4.3(rollup@3.21.8)
-      nuxt-config-schema: 0.4.5(rollup@3.21.8)
+      nuxt-config-schema: 0.4.6(rollup@3.21.8)
     transitivePeerDependencies:
       - rollup
       - supports-color
