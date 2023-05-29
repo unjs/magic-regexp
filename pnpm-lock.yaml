@@ -67,8 +67,8 @@ importers:
         specifier: latest
         version: 4.2.1(eslint-config-prettier@8.8.0)(eslint@8.41.0)(prettier@2.8.8)
       expect-type:
-        specifier: 0.15.0
-        version: 0.15.0
+        specifier: 0.16.0
+        version: 0.16.0
       husky:
         specifier: latest
         version: 8.0.3
@@ -3895,8 +3895,9 @@ packages:
       strip-final-newline: 3.0.0
     dev: true
 
-  /expect-type@0.15.0:
-    resolution: {integrity: sha512-yWnriYB4e8G54M5/fAFj7rCIBiKs1HAACaY13kCz6Ku0dezjS9aMcfcdVK2X8Tv2tEV1BPz/wKfQ7WA4S/d8aA==}
+  /expect-type@0.16.0:
+    resolution: {integrity: sha512-wCpFeVBiAPGiYkQZzaqvGuuBnNCHbtnowMOBpBGY8a27XbG8VAit3lklWph1r8VmgsH61mOZqI3NuGm8bZnUlw==}
+    engines: {node: '>=12.0.0'}
     dev: true
 
   /extend@3.0.2:
