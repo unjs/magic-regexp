@@ -14,5 +14,9 @@ export default defineNuxtConfig({
       fields: ['exact'],
     },
   },
-  modules: ['nuxt-vercel-analytics'],
+  modules: ['@nuxtjs/plausible'],
+  plausible: {
+    domain: 'roe.dev',
+    apiHost: 'https://v.roe.dev',
+  },
 })
