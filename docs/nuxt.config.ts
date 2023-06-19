@@ -16,7 +16,7 @@ export default defineNuxtConfig({
   },
   modules: ['@nuxtjs/plausible'],
   plausible: {
-    domain: 'roe.dev',
+    domain: 'regexp.dev',
     apiHost: 'https://v.roe.dev',
   },
 })
