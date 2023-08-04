@@ -1,0 +1,24 @@
+name: Check TypeScript Performance
+
+on:
+  pull_request:
+
+jobs:
+  check-performance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: corepack enable
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "pnpm"
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: TSC diagnostics diff
+        uses: beerose/tsc-diff-action@v0.0.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          leave-comment: true
