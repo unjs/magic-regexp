@@ -62,7 +62,7 @@ export const not = {
  */
 export const maybe = <
   Inputs extends InputSource[],
-  Value extends string = Join<MapToValues<Inputs>, '', ''>
+  Value extends string = Join<MapToValues<Inputs>, '', ''>,
 >(
   ...inputs: Inputs
 ): Input<
@@ -92,7 +92,7 @@ export const exactly = <Inputs extends InputSource[]>(
  */
 export const oneOrMore = <
   Inputs extends InputSource[],
-  Value extends string = Join<MapToValues<Inputs>, '', ''>
+  Value extends string = Join<MapToValues<Inputs>, '', ''>,
 >(
   ...inputs: Inputs
 ): Input<

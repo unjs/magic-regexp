@@ -7,7 +7,9 @@ import { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from '.
 
 export const createRegExp: {
   /** Create Magic RegExp from Input helpers and string (string will be sanitized) */
-  <Inputs extends InputSource[]>(...inputs: Inputs): MagicRegExp<
+  <Inputs extends InputSource[]>(
+    ...inputs: Inputs
+  ): MagicRegExp<
     `/${Join<MapToValues<Inputs>, '', ''>}/`,
     MapToGroups<Inputs>,
     MapToCapturedGroupsArr<Inputs>,
@@ -24,7 +26,7 @@ export const createRegExp: {
   <
     Inputs extends InputSource[],
     FlagUnion extends Flag = never,
-    Flags extends Flag[] = UnionToTuple<FlagUnion> extends infer F extends Flag[] ? F : never
+    Flags extends Flag[] = UnionToTuple<FlagUnion> extends infer F extends Flag[] ? F : never,
   >(
     ...inputs: [...Inputs, Set<FlagUnion>]
   ): MagicRegExp<

@@ -7,7 +7,7 @@ export type MagicRegExp<
   Value extends string,
   NamedGroups extends string | never = never,
   CapturedGroupsArr extends (string | undefined)[] = [],
-  Flags extends string | never = never
+  Flags extends string | never = never,
 > = RegExp & {
   [NamedGroupsS]: NamedGroups
   [CapturedGroupsArrS]: CapturedGroupsArr

@@ -9,7 +9,7 @@ const GROUPED_REPLACE_RE = /^(?:\(\?:(.+)\)([?+*]|{[\d,]+})?|(.+))$/
 export interface Input<
   V extends string,
   G extends string = never,
-  C extends (string | undefined)[] = []
+  C extends (string | undefined)[] = [],
 > {
   /** this  takes a variable number of inputs and adds them as new pattern to the current input, or you can use `and.referenceTo(groupName)` to adds a new pattern referencing to a named group
    * @example
@@ -17,11 +17,9 @@ export interface Input<
    * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
    */
   and: {
-    <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(...inputs: I): Input<
-      `${V}${Join<MapToValues<I>, '', ''>}`,
-      G | MapToGroups<I>,
-      [...C, ...CG]
-    >
+    <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
+      ...inputs: I
+    ): Input<`${V}${Join<MapToValues<I>, '', ''>}`, G | MapToGroups<I>, [...C, ...CG]>
     /** this adds a new pattern to the current input, with the pattern reference to a named group. */
     referenceTo: <N extends G>(groupName: N) => Input<`${V}\\k<${N}>`, G, C>
   }
@@ -75,14 +73,14 @@ export interface Input<
     /** specify that the expression must occur at least `N` times */
     atLeast: <
       N extends number,
-      NV extends string = IfUnwrapped<V, `(?:${V}){${N},}`, `${V}{${N},}`>
+      NV extends string = IfUnwrapped<V, `(?:${V}){${N},}`, `${V}{${N},}`>,
     >(
       number: N
     ) => Input<NV, G, C>
     /** specify that the expression must occur at most `N` times */
     atMost: <
       N extends number,
-      NV extends string = IfUnwrapped<V, `(?:${V}){0,${N}}`, `${V}{0,${N}}`>
+      NV extends string = IfUnwrapped<V, `(?:${V}){0,${N}}`, `${V}{0,${N}}`>,
     >(
       number: N
     ) => Input<NV, G, C>
@@ -90,7 +88,7 @@ export interface Input<
     between: <
       Min extends number,
       Max extends number,
-      NV extends string = IfUnwrapped<V, `(?:${V}){${Min},${Max}}`, `${V}{${Min},${Max}}`>
+      NV extends string = IfUnwrapped<V, `(?:${V}){${Min},${Max}}`, `${V}{${Min},${Max}}`>,
     >(
       min: Min,
       max: Max
@@ -132,7 +130,7 @@ export interface Input<
 export const createInput = <
   Value extends string,
   Groups extends string = never,
-  CaptureGroupsArr extends (string | undefined)[] = []
+  CaptureGroupsArr extends (string | undefined)[] = [],
 >(
   s: Value | Input<Value, Groups, CaptureGroupsArr>
 ): Input<Value, Groups, CaptureGroupsArr> => {
