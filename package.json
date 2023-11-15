@@ -8,18 +8,15 @@
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs"
     },
     "./transform": {
       "import": "./dist/transform.mjs",
-      "require": "./dist/transform.cjs",
-      "types": "./dist/transform.d.ts"
+      "require": "./dist/transform.cjs"
     },
     "./further-magic": {
       "import": "./dist/further-magic.mjs",
-      "require": "./dist/further-magic.cjs",
-      "types": "./dist/further-magic.d.ts"
+      "require": "./dist/further-magic.cjs"
     },
     "./nuxt": "./nuxt.mjs"
   },
