@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     highlight: {
       theme: {
         light: 'github-light',
-        default: 'material-palenight',
+        default: 'material-theme-palenight',
       },
     },
     navigation: {
