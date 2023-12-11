@@ -97,8 +97,8 @@ importers:
         specifier: 1.15.0
         version: 1.15.0(nuxt@3.8.1)(postcss@8.4.31)(rollup@3.28.1)(vue@3.3.8)
       '@nuxtjs/plausible':
-        specifier: 0.2.3
-        version: 0.2.3(rollup@3.28.1)
+        specifier: 0.2.4
+        version: 0.2.4(rollup@3.28.1)
       '@nuxtjs/web-vitals':
         specifier: ^0.2.6
         version: 0.2.6(rollup@3.28.1)
@@ -317,6 +317,7 @@ packages:
   /@babel/highlight@7.23.4:
     resolution: {integrity: sha512-acGdbYSfp2WheJoJm/EBBBLh/ID8KDc64ISZ9DYtBmC8/Q204PZJLHyzeB5qMzJ5trcOkybd78M4x2KWsUq++A==}
     engines: {node: '>=6.9.0'}
+    requiresBuild: true
     dependencies:
       '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
@@ -1456,8 +1457,8 @@ packages:
       nuxt: ^3.8.1
       vite: '*'
     dependencies:
-      '@nuxt/kit': 3.8.1(rollup@3.28.1)
-      '@nuxt/schema': 3.8.1(rollup@3.28.1)
+      '@nuxt/kit': 3.8.2(rollup@3.28.1)
+      '@nuxt/schema': 3.8.2(rollup@3.28.1)
       execa: 7.2.0
       nuxt: 3.8.1(@types/node@20.10.3)(eslint@8.55.0)(rollup@3.28.1)(typescript@5.1.6)(vite@4.4.11)
       vite: 4.4.11(@types/node@20.10.3)
@@ -1492,7 +1493,7 @@ packages:
       '@antfu/utils': 0.7.6
       '@nuxt/devtools-kit': 1.0.3(nuxt@3.8.1)(rollup@3.28.1)(vite@4.4.11)
       '@nuxt/devtools-wizard': 1.0.3
-      '@nuxt/kit': 3.8.1(rollup@3.28.1)
+      '@nuxt/kit': 3.8.2(rollup@3.28.1)
       birpc: 0.2.14
       consola: 3.2.3
       destr: 2.0.2
@@ -1524,7 +1525,7 @@ packages:
       sirv: 2.0.3
       unimport: 3.5.0(rollup@3.28.1)
       vite: 4.4.11(@types/node@20.10.3)
-      vite-plugin-inspect: 0.7.42(@nuxt/kit@3.8.1)(rollup@3.28.1)(vite@4.4.11)
+      vite-plugin-inspect: 0.7.42(@nuxt/kit@3.8.2)(rollup@3.28.1)(vite@4.4.11)
       vite-plugin-vue-inspector: 4.0.0(vite@4.4.11)
       which: 3.0.1
       ws: 8.14.2
@@ -1689,7 +1690,7 @@ packages:
     resolution: {integrity: sha512-kZ+rWq/5MZonMhp8KGFI5zMaR2VsiWpnlkOLJIuIX2WoJl0DkHvtxCtuFq2erAqMVruWLpKU+tgMC+1cno/QmA==}
     hasBin: true
     dependencies:
-      '@nuxt/kit': 3.8.1(rollup@3.28.1)
+      '@nuxt/kit': 3.8.2(rollup@3.28.1)
       ci-info: 3.9.0
       consola: 3.2.3
       create-require: 1.1.1
@@ -1840,8 +1841,8 @@ packages:
       - supports-color
     dev: false
 
-  /@nuxtjs/plausible@0.2.3(rollup@3.28.1):
-    resolution: {integrity: sha512-HGZA70ad6IgaP0bN2N3sEsBxURZfUb8HMMxQ7s/Iqw1U8snBsByAEaIxD0eafWLOvwNckHMTYzCIl+Xs6ZiXSA==}
+  /@nuxtjs/plausible@0.2.4(rollup@3.28.1):
+    resolution: {integrity: sha512-9HrSl9ZGKS/7bULAt8uzAGo9BJyIZebzRSLQD8ZhiODaGyRdEQlgcJBw5JgUzjcC5n4T0ZlX3FC6C3Wyp7opgA==}
     dependencies:
       '@nuxt/kit': 3.8.2(rollup@3.28.1)
       defu: 6.1.3
@@ -3647,6 +3648,7 @@ packages:
   /chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
     engines: {node: '>=4'}
+    requiresBuild: true
     dependencies:
       ansi-styles: 3.2.1
       escape-string-regexp: 1.0.5
@@ -9700,7 +9702,7 @@ packages:
       vscode-uri: 3.0.8
     dev: false
 
-  /vite-plugin-inspect@0.7.42(@nuxt/kit@3.8.1)(rollup@3.28.1)(vite@4.4.11):
+  /vite-plugin-inspect@0.7.42(@nuxt/kit@3.8.2)(rollup@3.28.1)(vite@4.4.11):
     resolution: {integrity: sha512-JCyX86wr3siQc+p9Kd0t8VkFHAJag0RaQVIpdFGSv5FEaePEVB6+V/RGtz2dQkkGSXQzRWrPs4cU3dRKg32bXw==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -9711,7 +9713,7 @@ packages:
         optional: true
     dependencies:
       '@antfu/utils': 0.7.6
-      '@nuxt/kit': 3.8.1(rollup@3.28.1)
+      '@nuxt/kit': 3.8.2(rollup@3.28.1)
       '@rollup/pluginutils': 5.0.5(rollup@3.28.1)
       debug: 4.3.4
       error-stack-parser-es: 0.1.1
