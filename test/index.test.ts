@@ -36,9 +36,7 @@ describe('magic-regexp', () => {
   it('sanitize string input', () => {
     const escapeChars = '.*+?^${}()[]/'
     const re = createRegExp(escapeChars)
-    expect(String(re)).toMatchInlineSnapshot(
-      '"/\\\\.\\\\*\\\\+\\\\?\\\\^\\\\$\\\\{\\\\}\\\\(\\\\)\\\\[\\\\]\\\\//"'
-    )
+    expect(String(re)).toMatchInlineSnapshot(`"/\\.\\*\\+\\?\\^\\$\\{\\}\\(\\)\\[\\]\\//"`)
     expectTypeOf(re).toEqualTypeOf<
       MagicRegExp<'/\\.\\*\\+\\?\\^\\$\\{\\}\\(\\)\\[\\]\\//', never, []>
     >()
@@ -112,7 +110,7 @@ describe('inputs', () => {
   })
   it('exactly', () => {
     const pattern = exactly('test/thing')
-    expect(pattern.toString()).toMatchInlineSnapshot('"test\\\\/thing"')
+    expect(pattern.toString()).toMatchInlineSnapshot(`"test\\/thing"`)
     expect(createRegExp(pattern).test('test/thing')).toBeTruthy()
   })
   it('times', () => {
