@@ -32,7 +32,7 @@ importers:
     devDependencies:
       '@codspeed/vitest-plugin':
         specifier: ^2.3.1
-        version: 2.3.1(vite@5.0.8)(vitest@0.34.6)
+        version: 2.3.1(vite@5.0.8)(vitest@1.1.0)
       '@nuxt/kit':
         specifier: 3.6.5
         version: 3.6.5(rollup@4.8.0)
@@ -463,7 +463,7 @@ packages:
       node-gyp-build: 4.7.0
     dev: true
 
-  /@codspeed/vitest-plugin@2.3.1(vite@5.0.8)(vitest@0.34.6):
+  /@codspeed/vitest-plugin@2.3.1(vite@5.0.8)(vitest@1.1.0):
     resolution: {integrity: sha512-/e4G2B/onX/hG/EjUU/NpDxnIryeTDamVRTBeWfgQDoex3g7GDzTwoQktaU5l/Asw3ZjEErQg+oQVToQ6jYZlA==}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0
@@ -471,7 +471,7 @@ packages:
     dependencies:
       '@codspeed/core': 2.3.1
       vite: 5.0.8(@types/node@20.10.3)
-      vitest: 0.34.6
+      vitest: 1.1.0(@types/node@20.10.3)
     dev: true
 
   /@csstools/cascade-layer-name-parser@1.0.5(@csstools/css-parser-algorithms@2.3.2)(@csstools/css-tokenizer@2.2.1):
@@ -7505,6 +7505,13 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yocto-queue: 0.1.0
+
+  /p-limit@4.0.0:
+    resolution: {integrity: sha512-5b0R4txpzjPWVw/cXXUResoD4hb6U/x9BH08L7nw+GN1sezDzPdxeRvpc9c433fZhBan/wusjbCsqwqm4EIBIQ==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      yocto-queue: 1.0.0
+    dev: true
 
   /p-limit@5.0.0:
     resolution: {integrity: sha512-/Eaoq+QyLSiXQ4lyYV23f14mZRQcXnxfHrN0vCai+ak9G0pp9iEQukIIZq5NccEvwRB8PUnZT0KsOoDCINS1qQ==}
