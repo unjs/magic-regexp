@@ -4,7 +4,10 @@
   "packageManager": "pnpm@8.15.4",
   "description": "A compiled-away, type-safe, readable RegExp alternative",
   "license": "MIT",
-  "repository": "unjs/magic-regexp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unjs/magic-regexp.git"
+  },
   "sideEffects": false,
   "exports": {
     ".": {
