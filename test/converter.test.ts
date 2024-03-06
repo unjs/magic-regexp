@@ -100,6 +100,12 @@ describe('basic', () => {
     )
   })
 
+  it('unsupported meta characters', () => {
+    expect(() => convert(/\f/)).toThrowErrorMatchingInlineSnapshot(
+      `[Error: Unsupported Meta Char: \\f]`
+    )
+  })
+
   it('oneOrMore', () => {
     expect(convert(/a+/)).toMatchInlineSnapshot(`"oneOrMore('a')"`)
     expect(convert(/ab+/)).toMatchInlineSnapshot(`"'a', oneOrMore('b')"`)

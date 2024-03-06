@@ -61,6 +61,7 @@ function build(node: Expression | null): string {
         case 'Lookahead':
           return chain('', `${node.negative ? 'notBefore' : 'before'}(${build(node.assertion)})`)
 
+        /* v8 ignore next 2 */
         default:
           throw new TypeError(`Unknown Assertion kind: ${(node as any).kind}`)
       }
@@ -101,42 +102,42 @@ function build(node: Expression | null): string {
         return `'${char}'`
       }
 
-    case 'Repetition':
-      {
-        const quantifier = node.quantifier
-        const expr = build(node.expression)
+    case 'Repetition': {
+      const quantifier = node.quantifier
+      const expr = build(node.expression)
 
-        // TODO: support lazy quantifier
-        const lazy = !quantifier.greedy
-        if (lazy) throw new Error('Unsupported for lazy quantifier')
+      // TODO: support lazy quantifier
+      const lazy = !quantifier.greedy
+      if (lazy) throw new Error('Unsupported for lazy quantifier')
 
-        switch (quantifier.kind) {
-          case '+':
-            return `oneOrMore(${expr})`
-          case '?':
-            return `maybe(${expr})`
-          case '*':
-            return chain(expr, 'times.any()')
-          case 'Range':
-            // {1}
-            if (quantifier.from === quantifier.to) {
-              return chain(expr, `times(${quantifier.from})`)
-            }
-            // {1,}
-            else if (!quantifier.to) {
-              return chain(expr, `times.atLeast(${quantifier.from})`)
-            }
-            // {0,3}
-            else if (quantifier.from === 0) {
-              return chain(expr, `times.atMost(${quantifier.to})`)
-            }
-            // {1,3}
-            else {
-              return chain(expr, `times.between(${quantifier.from}, ${quantifier.to})`)
-            }
-        }
+      switch (quantifier.kind) {
+        case '+':
+          return `oneOrMore(${expr})`
+        case '?':
+          return `maybe(${expr})`
+        case '*':
+          return chain(expr, 'times.any()')
+        case 'Range':
+          // {1}
+          if (quantifier.from === quantifier.to) {
+            return chain(expr, `times(${quantifier.from})`)
+          }
+          // {1,}
+          else if (!quantifier.to) {
+            return chain(expr, `times.atLeast(${quantifier.from})`)
+          }
+          // {0,3}
+          else if (quantifier.from === 0) {
+            return chain(expr, `times.atMost(${quantifier.to})`)
+          }
+          // {1,3}
+          return chain(expr, `times.between(${quantifier.from}, ${quantifier.to})`)
+
+        /* v8 ignore next 2 */
+        default:
+          return '' as never
       }
-      break
+    }
 
     case 'Alternative': {
       const alts = combineContinuousSimpleChars(node.expressions)
@@ -208,6 +209,7 @@ function build(node: Expression | null): string {
         return chain(build(node.expression), node.name ? `as('${node.name}')` : 'grouped()')
       else return chain(build(node.expression))
 
+    /* v8 ignore next 2 */
     case 'Backreference':
       return chain('', `and.referenceTo('${node.reference}')`)
   }
