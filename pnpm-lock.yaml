@@ -20,6 +20,9 @@ importers:
       mlly:
         specifier: ^1.4.2
         version: 1.4.2
+      regexp-tree:
+        specifier: ^0.1.27
+        version: 0.1.27
       type-level-regexp:
         specifier: ~0.1.17
         version: 0.1.17
@@ -8233,6 +8236,11 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       redis-errors: 1.2.0
+    dev: false
+
+  /regexp-tree@0.1.27:
+    resolution: {integrity: sha512-iETxpjK6YoRWJG5o6hXLwvjYAoW+FEZn9os0PD/b6AP6xQwsa/Y7lCVgIixBbUPMfhu+i2LtdeAqVTgGlQarfA==}
+    hasBin: true
     dev: false
 
   /rehype-external-links@3.0.0:

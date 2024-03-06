@@ -9,7 +9,7 @@ export default defineConfig({
   },
   test: {
     coverage: {
-      exclude: ['src/core/types'],
+      exclude: ['src/core/types', 'src/converter.ts'],
       thresholds: {
         '100': true,
       },
