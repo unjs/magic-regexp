@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { convert as _convert } from '.'
+import { convert as _convert } from '../src/converter'
 
 const convert = (regex: RegExp) => _convert(regex, { argsOnly: true })
 

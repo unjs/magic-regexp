@@ -20,6 +20,9 @@ importers:
       mlly:
         specifier: ^1.4.2
         version: 1.4.2
+      regexp-tree:
+        specifier: ^0.1.27
+        version: 0.1.27
       type-level-regexp:
         specifier: ~0.1.17
         version: 0.1.17
@@ -90,15 +93,6 @@ importers:
       vitest:
         specifier: 1.1.0
         version: 1.1.0(@types/node@20.11.24)
-
-  converter:
-    dependencies:
-      magic-regexp:
-        specifier: link:..
-        version: link:..
-      regexp-tree:
-        specifier: ^0.1.27
-        version: 0.1.27
 
   docs:
     dependencies:
