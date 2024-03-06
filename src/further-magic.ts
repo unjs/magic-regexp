@@ -18,7 +18,7 @@ const FlagsS = Symbol('Flags')
 export type MagicRegExp<
   Value extends string,
   NamedGroups extends string | never = never,
-  Flags extends Flag[] | never = never
+  Flags extends Flag[] | never = never,
 > = RegExp & {
   [NamedGroupsS]: NamedGroups
   [ValueS]: Value
@@ -27,11 +27,9 @@ export type MagicRegExp<
 
 export const createRegExp: {
   /** Create Magic RegExp from Input helpers and string (string will be sanitized) */
-  <Inputs extends InputSource[]>(...inputs: Inputs): MagicRegExp<
-    `/${Join<MapToValues<Inputs>, '', ''>}/`,
-    MapToGroups<Inputs>,
-    []
-  >
+  <Inputs extends InputSource[]>(
+    ...inputs: Inputs
+  ): MagicRegExp<`/${Join<MapToValues<Inputs>, '', ''>}/`, MapToGroups<Inputs>, []>
   <
     Inputs extends InputSource[],
     FlagUnion extends Flag | undefined = undefined,
@@ -39,8 +37,8 @@ export const createRegExp: {
     Flags extends Flag[] = CloneFlagUnion extends undefined
       ? []
       : UnionToTuple<FlagUnion> extends infer F extends Flag[]
-      ? F
-      : never
+        ? F
+        : never,
   >(
     ...inputs: [...Inputs, [...Flags] | string | Set<FlagUnion>]
   ): MagicRegExp<
@@ -113,7 +111,7 @@ declare global {
         }
       >
         ? [...MatchArray, Index, Input, Groups]
-        : never
+        : never,
     >(
       this: InputString,
       regexp: MagicRegExp<`/${RegExpPattern}/${Join<Flags, '', ''>}`, string, Flags>,

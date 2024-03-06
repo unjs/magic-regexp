@@ -46,14 +46,14 @@ for (const importSpecifier of ['magic-regexp', 'magic-regexp/further-magic']) {
         "re3.test('/foo/bar')",
       ])
       expect(code).toMatchInlineSnapshot(`
-      "import { something } from 'other-module'
-      import { createRegExp, exactly, anyOf } from '${importSpecifier}'
-      //
-      const re1 = /bar(?!foo)/
-      const re2 = /(?:bar|foo)/
-      const re3 = /\\\\/foo\\\\/bar/
-      re3.test('/foo/bar')"
-    `)
+        "import { something } from 'other-module'
+        import { createRegExp, exactly, anyOf } from '${importSpecifier}'
+        //
+        const re1 = /bar(?!foo)/
+        const re2 = /(?:bar|foo)/
+        const re3 = /\\/foo\\/bar/
+        re3.test('/foo/bar')"
+      `)
       // ... but we test it here.
       expect(eval(code.split('//').pop())).toMatchInlineSnapshot('true')
     })
@@ -68,13 +68,13 @@ for (const importSpecifier of ['magic-regexp', 'magic-regexp/further-magic']) {
         "const re3 = createRegExp('test/value')",
       ])
       expect(code).toMatchInlineSnapshot(`
-      "import { createRegExp as cRE } from '${importSpecifier}'
-      import { exactly as ext, createRegExp } from '${importSpecifier}'
-      import * as magicRE from '${importSpecifier}'
-      const re1 = /bar(?!foo)/
-      const re2 = /(?:bar|foo)/
-      const re3 = /test\\\\/value/"
-    `)
+        "import { createRegExp as cRE } from '${importSpecifier}'
+        import { exactly as ext, createRegExp } from '${importSpecifier}'
+        import * as magicRE from '${importSpecifier}'
+        const re1 = /bar(?!foo)/
+        const re2 = /(?:bar|foo)/
+        const re3 = /test\\/value/"
+      `)
     })
   })
 }

@@ -169,15 +169,15 @@ describe('inputs', () => {
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'\\r'>()
   })
   it('not', () => {
-    expect(not.word.toString()).toMatchInlineSnapshot('"\\\\W+"')
+    expect(not.word.toString()).toMatchInlineSnapshot(`"\\W+"`)
     expectTypeOf(extractRegExp(not.word)).toEqualTypeOf<'\\W+'>()
-    expect(not.wordChar.toString()).toMatchInlineSnapshot('"\\\\W"')
+    expect(not.wordChar.toString()).toMatchInlineSnapshot(`"\\W"`)
     expectTypeOf(extractRegExp(not.wordChar)).toEqualTypeOf<'\\W'>()
-    expect(not.wordBoundary.toString()).toMatchInlineSnapshot('"\\\\B"')
+    expect(not.wordBoundary.toString()).toMatchInlineSnapshot(`"\\B"`)
     expectTypeOf(extractRegExp(not.wordBoundary)).toEqualTypeOf<'\\B'>()
-    expect(not.digit.toString()).toMatchInlineSnapshot('"\\\\D"')
+    expect(not.digit.toString()).toMatchInlineSnapshot(`"\\D"`)
     expectTypeOf(extractRegExp(not.digit)).toEqualTypeOf<'\\D'>()
-    expect(not.whitespace.toString()).toMatchInlineSnapshot('"\\\\S"')
+    expect(not.whitespace.toString()).toMatchInlineSnapshot(`"\\S"`)
     expectTypeOf(extractRegExp(not.whitespace)).toEqualTypeOf<'\\S'>()
     expect(not.letter.toString()).toMatchInlineSnapshot('"[^a-zA-Z]"')
     expectTypeOf(extractRegExp(not.letter)).toEqualTypeOf<'[^a-zA-Z]'>()
@@ -185,11 +185,11 @@ describe('inputs', () => {
     expectTypeOf(extractRegExp(not.letter.lowercase)).toEqualTypeOf<'[^a-z]'>()
     expect(not.letter.uppercase.toString()).toMatchInlineSnapshot('"[^A-Z]"')
     expectTypeOf(extractRegExp(not.letter.uppercase)).toEqualTypeOf<'[^A-Z]'>()
-    expect(not.tab.toString()).toMatchInlineSnapshot('"[^\\\\t]"')
+    expect(not.tab.toString()).toMatchInlineSnapshot(`"[^\\t]"`)
     expectTypeOf(extractRegExp(not.tab)).toEqualTypeOf<'[^\\t]'>()
-    expect(not.linefeed.toString()).toMatchInlineSnapshot('"[^\\\\n]"')
+    expect(not.linefeed.toString()).toMatchInlineSnapshot(`"[^\\n]"`)
     expectTypeOf(extractRegExp(not.linefeed)).toEqualTypeOf<'[^\\n]'>()
-    expect(not.carriageReturn.toString()).toMatchInlineSnapshot('"[^\\\\r]"')
+    expect(not.carriageReturn.toString()).toMatchInlineSnapshot(`"[^\\r]"`)
     expectTypeOf(extractRegExp(not.carriageReturn)).toEqualTypeOf<'[^\\r]'>()
   })
   it('no extra wrap by ()', () => {
@@ -365,11 +365,11 @@ describe('chained inputs', () => {
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<test>\\\\\\?\\)/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<test>\\?)'>()
 
-    const retentEssentailWrap = oneOrMore('foo').as('groupName')
-    expect(createRegExp(retentEssentailWrap)).toMatchInlineSnapshot(
+    const retentEssentialWrap = oneOrMore('foo').as('groupName')
+    expect(createRegExp(retentEssentialWrap)).toMatchInlineSnapshot(
       '/\\(\\?<groupName>\\(\\?:foo\\)\\+\\)/'
     )
-    expectTypeOf(extractRegExp(retentEssentailWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
+    expectTypeOf(extractRegExp(retentEssentialWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
 
     const removeExtraWrap = anyOf('foo', 'bar', 'baz').as('groupName')
     expect(createRegExp(removeExtraWrap)).toMatchInlineSnapshot(
@@ -383,11 +383,11 @@ describe('chained inputs', () => {
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<test>\\\\\\?\\)/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<test>\\?)'>()
 
-    const retentEssentailWrap = oneOrMore('foo').groupedAs('groupName')
-    expect(createRegExp(retentEssentailWrap)).toMatchInlineSnapshot(
+    const retentEssentialWrap = oneOrMore('foo').groupedAs('groupName')
+    expect(createRegExp(retentEssentialWrap)).toMatchInlineSnapshot(
       '/\\(\\?<groupName>\\(\\?:foo\\)\\+\\)/'
     )
-    expectTypeOf(extractRegExp(retentEssentailWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
+    expectTypeOf(extractRegExp(retentEssentialWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
 
     const removeExtraWrap = anyOf('foo', 'bar', 'baz').groupedAs('groupName')
     expect(createRegExp(removeExtraWrap)).toMatchInlineSnapshot(

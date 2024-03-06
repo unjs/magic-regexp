@@ -57,12 +57,12 @@ export const not = {
 
 /** Equivalent to `?` - takes a variable number of inputs and marks them as optional
  * @example
- * maybe('foo', excatly('ba?r')) // => /(?:fooba\?r)?/
+ * maybe('foo', exactly('ba?r')) // => /(?:fooba\?r)?/
  * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
  */
 export const maybe = <
   Inputs extends InputSource[],
-  Value extends string = Join<MapToValues<Inputs>, '', ''>
+  Value extends string = Join<MapToValues<Inputs>, '', ''>,
 >(
   ...inputs: Inputs
 ): Input<
@@ -92,7 +92,7 @@ export const exactly = <Inputs extends InputSource[]>(
  */
 export const oneOrMore = <
   Inputs extends InputSource[],
-  Value extends string = Join<MapToValues<Inputs>, '', ''>
+  Value extends string = Join<MapToValues<Inputs>, '', ''>,
 >(
   ...inputs: Inputs
 ): Input<
