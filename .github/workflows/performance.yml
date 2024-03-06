@@ -18,7 +18,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: TSC diagnostics diff
-        uses: beerose/tsc-diff-action@v0.0.1
+        uses: beerose/tsc-diagnostics-diff-action@49bf67cb35cae2ba688d1e7dffe5f14acbb62406
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           leave-comment: true
