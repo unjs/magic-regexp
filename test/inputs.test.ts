@@ -365,11 +365,11 @@ describe('chained inputs', () => {
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<test>\\\\\\?\\)/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<test>\\?)'>()
 
-    const retentEssentailWrap = oneOrMore('foo').as('groupName')
-    expect(createRegExp(retentEssentailWrap)).toMatchInlineSnapshot(
+    const retentEssentialWrap = oneOrMore('foo').as('groupName')
+    expect(createRegExp(retentEssentialWrap)).toMatchInlineSnapshot(
       '/\\(\\?<groupName>\\(\\?:foo\\)\\+\\)/'
     )
-    expectTypeOf(extractRegExp(retentEssentailWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
+    expectTypeOf(extractRegExp(retentEssentialWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
 
     const removeExtraWrap = anyOf('foo', 'bar', 'baz').as('groupName')
     expect(createRegExp(removeExtraWrap)).toMatchInlineSnapshot(
@@ -383,11 +383,11 @@ describe('chained inputs', () => {
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<test>\\\\\\?\\)/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<test>\\?)'>()
 
-    const retentEssentailWrap = oneOrMore('foo').groupedAs('groupName')
-    expect(createRegExp(retentEssentailWrap)).toMatchInlineSnapshot(
+    const retentEssentialWrap = oneOrMore('foo').groupedAs('groupName')
+    expect(createRegExp(retentEssentialWrap)).toMatchInlineSnapshot(
       '/\\(\\?<groupName>\\(\\?:foo\\)\\+\\)/'
     )
-    expectTypeOf(extractRegExp(retentEssentailWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
+    expectTypeOf(extractRegExp(retentEssentialWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
 
     const removeExtraWrap = anyOf('foo', 'bar', 'baz').groupedAs('groupName')
     expect(createRegExp(removeExtraWrap)).toMatchInlineSnapshot(
