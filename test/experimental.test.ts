@@ -181,26 +181,26 @@ describe('experimental: type-level RegExp match for type safe match results', ()
       ]
     `)
     expectTypeOf(matchResult?._matchArray).toEqualTypeOf<
-      ['bazqux', 'bazqux', 'baz'] | ['barqux', 'barqux', 'bar'] | undefined
+      ['barqux', 'barqux', 'bar']
     >()
 
     expect(matchResult?.[0]).toMatchInlineSnapshot('"barqux"')
-    expectTypeOf(matchResult?.[0]).toEqualTypeOf<'bazqux' | 'barqux' | undefined>()
+    expectTypeOf(matchResult?.[0]).toEqualTypeOf<'barqux'>()
 
     expect(matchResult?.[1]).toMatchInlineSnapshot('"barqux"')
-    expectTypeOf(matchResult?.[1]).toEqualTypeOf<'bazqux' | 'barqux' | undefined>()
+    expectTypeOf(matchResult?.[1]).toEqualTypeOf<'barqux'>()
 
     expect(matchResult?.[2]).toMatchInlineSnapshot('"bar"')
-    expectTypeOf(matchResult?.[2]).toEqualTypeOf<'bar' | 'baz' | undefined>()
+    expectTypeOf(matchResult?.[2]).toEqualTypeOf<'bar'>()
 
     // @ts-expect-error - Element implicitly has an 'any' type because expression of type '3' can't be used to index
     expect(matchResult?.[3]).toMatchInlineSnapshot('undefined')
 
     expect(matchResult?.index).toMatchInlineSnapshot('1')
-    expectTypeOf(matchResult?.index).toEqualTypeOf<number | undefined>()
+    expectTypeOf(matchResult?.index).toEqualTypeOf<1>()
 
     expect(matchResult?.length).toMatchInlineSnapshot('3')
-    expectTypeOf(matchResult?.length).toEqualTypeOf<3 | undefined>()
+    expectTypeOf(matchResult?.length).toEqualTypeOf<3>()
 
     expect(matchResult?.groups).toMatchInlineSnapshot(`
       {
@@ -209,7 +209,7 @@ describe('experimental: type-level RegExp match for type safe match results', ()
       }
     `)
     expectTypeOf(matchResult?.groups).toEqualTypeOf<
-      { g1: 'bar' | 'baz', g2: 'bazqux' | 'barqux' } | undefined
+      { g1: 'bar', g2: 'barqux' }
     >()
   })
 })
