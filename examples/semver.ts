@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { anyOf, createRegExp, digit, letter, maybe, oneOrMore } from 'magic-regexp'
 
 // https://semver.org/
@@ -19,7 +20,7 @@ const semver = createRegExp(
   maybe('-'),
   maybe(prerelease),
   maybe('+'),
-  maybe(build)
+  maybe(build),
 )
 
 /**

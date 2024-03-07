@@ -1,9 +1,10 @@
-import { expect, it, describe } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { expectTypeOf } from 'expect-type'
 
-import { createRegExp, global, MagicRegExpMatchArray, MagicRegExp, char } from '../src'
+import type { MagicRegExp, MagicRegExpMatchArray } from '../src'
+import { char, createRegExp, global } from '../src'
 
-describe('String', () => {
+describe('string', () => {
   it('.match non-global', () => {
     const result = 'test'.match(createRegExp(char.groupedAs('foo')))
     expect(Array.isArray(result)).toBeTruthy()
@@ -15,7 +16,7 @@ describe('String', () => {
   it('.match global', () => {
     const result = 'test'.match(createRegExp(char.groupedAs('foo'), [global]))
     expect(Array.isArray(result)).toBeTruthy()
-    // @ts-expect-error
+    // @ts-expect-error there are no groups within the result
     expect(result?.groups).toBeUndefined()
     expectTypeOf(result).toEqualTypeOf<null | string[]>()
   })
@@ -40,7 +41,7 @@ describe('String', () => {
     // should be deprecated
     expectTypeOf('test'.replaceAll(createRegExp(char.groupedAs('foo')), '')).toEqualTypeOf<never>()
     expectTypeOf(
-      'test'.replaceAll(createRegExp(char.groupedAs('foo'), ['m']), '')
+      'test'.replaceAll(createRegExp(char.groupedAs('foo'), ['m']), ''),
     ).toEqualTypeOf<never>()
   })
 })

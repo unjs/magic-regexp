@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { anyOf, createRegExp, digit, letter, oneOrMore } from 'magic-regexp'
 
 const email = createRegExp(
@@ -8,7 +9,7 @@ const email = createRegExp(
   oneOrMore(anyOf(letter, digit, '-', '.')).groupedAs('domain'),
   '.',
   // TLD
-  oneOrMore(letter).groupedAs('tld')
+  oneOrMore(letter).groupedAs('tld'),
 )
 
 /**

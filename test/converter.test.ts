@@ -7,20 +7,20 @@ describe('basic', () => {
   it('charIn', () => {
     expect(convert(/[abc]/)).toMatchInlineSnapshot(`"charIn('abc')"`)
     expect(() => convert(/[abc\d]/)).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Unsupported for Complex charactor class]`
+      `[Error: Unsupported for Complex charactor class]`,
     )
     expect(() => convert(/[0-9]/)).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Unsupported for Complex charactor class]`
+      `[Error: Unsupported for Complex charactor class]`,
     )
   })
 
   it('charNotIn', () => {
     expect(convert(/[^abc]/)).toMatchInlineSnapshot(`"charNotIn('abc')"`)
     expect(() => convert(/[^abc\d]/)).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Unsupported for Complex charactor class]`
+      `[Error: Unsupported for Complex charactor class]`,
     )
     expect(() => convert(/[^0-9]/)).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Unsupported for Complex charactor class]`
+      `[Error: Unsupported for Complex charactor class]`,
     )
   })
 
@@ -30,27 +30,27 @@ describe('basic', () => {
     expect(convert(/aba|abb|abc/)).toMatchInlineSnapshot(`"exactly('aba').or('abb').or('abc')"`)
     expect(convert(/[abc]|abb|abc/)).toMatchInlineSnapshot(`"charIn('abc').or('abb').or('abc')"`)
     expect(convert(/(a|b)|abb|abc/)).toMatchInlineSnapshot(
-      `"exactly('a').or('b').grouped().or('abb').or('abc')"`
+      `"exactly('a').or('b').grouped().or('abb').or('abc')"`,
     )
     expect(convert(/(?:a[b]c|d)/)).toMatchInlineSnapshot(`"exactly('a', charIn('b'), 'c').or('d')"`)
     expect(convert(/(?:a[b]c|d[d])/)).toMatchInlineSnapshot(
-      `"exactly('a', charIn('b'), 'c').or('d', charIn('d'))"`
+      `"exactly('a', charIn('b'), 'c').or('d', charIn('d'))"`,
     )
   })
 
   it('and.referenceTo', () => {
     expect(convert(/(?<group>abc)bcd\k<group>efg/)).toMatchInlineSnapshot(
-      `"exactly(exactly('abc').as('group'), 'bcd').and.referenceTo('group'), 'efg'"`
+      `"exactly(exactly('abc').as('group'), 'bcd').and.referenceTo('group'), 'efg'"`,
     )
     expect(() => convert(/(?<group>)1\1/)).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Unsupport for number reference]`
+      `[Error: Unsupport for number reference]`,
     )
   })
 
   it('regex helpers', () => {
     expect(convert(/\w/)).toMatchInlineSnapshot(`"wordChar"`)
     expect(convert(/\w\b\d\s\t\n\r/)).toMatchInlineSnapshot(
-      `"wordChar, wordBoundary, digit, whitespace, tab, linefeed, carriageReturn"`
+      `"wordChar, wordBoundary, digit, whitespace, tab, linefeed, carriageReturn"`,
     )
     expect(convert(/[A-Z]/)).toMatchInlineSnapshot(`"letter.uppercase"`)
     expect(convert(/[a-z]/)).toMatchInlineSnapshot(`"letter.lowercase"`)
@@ -60,13 +60,13 @@ describe('basic', () => {
 
     // TODO: expected: "word"
     expect(convert(/\b\w+\b/)).toMatchInlineSnapshot(
-      `"wordBoundary, oneOrMore(wordChar), wordBoundary"`
+      `"wordBoundary, oneOrMore(wordChar), wordBoundary"`,
     )
   })
 
   it('regex helpers (not)', () => {
     expect(convert(/\W\B\D\S/)).toMatchInlineSnapshot(
-      `"not.wordChar, not.wordBoundary, not.digit, not.whitespace"`
+      `"not.wordChar, not.wordBoundary, not.digit, not.whitespace"`,
     )
     expect(convert(/[^\t]/)).toMatchInlineSnapshot(`"not.tab"`)
     expect(convert(/[^\n]/)).toMatchInlineSnapshot(`"not.linefeed"`)
@@ -96,13 +96,13 @@ describe('basic', () => {
 
   it('lazy', () => {
     expect(() => convert(/a+?/)).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Unsupported for lazy quantifier]`
+      `[Error: Unsupported for lazy quantifier]`,
     )
   })
 
   it('unsupported meta characters', () => {
     expect(() => convert(/\f/)).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Unsupported Meta Char: \\f]`
+      `[Error: Unsupported Meta Char: \\f]`,
     )
   })
 
@@ -116,16 +116,16 @@ describe('basic', () => {
   it('multiple inputs (alternative, and)', () => {
     expect(convert(/abc/)).toMatchInlineSnapshot(`"'abc'"`)
     expect(convert(/a+bc+de+/)).toMatchInlineSnapshot(
-      `"oneOrMore('a'), 'b', oneOrMore('c'), 'd', oneOrMore('e')"`
+      `"oneOrMore('a'), 'b', oneOrMore('c'), 'd', oneOrMore('e')"`,
     )
     expect(convert(/aaa+bbb+ccc+/)).toMatchInlineSnapshot(
-      `"'aa', oneOrMore('a'), 'bb', oneOrMore('b'), 'cc', oneOrMore('c')"`
+      `"'aa', oneOrMore('a'), 'bb', oneOrMore('b'), 'cc', oneOrMore('c')"`,
     )
     expect(convert(/a|bcd|a+bbb+ccc+/)).toMatchInlineSnapshot(
-      `"exactly('a').or('bcd').or(oneOrMore('a'), 'bb', oneOrMore('b'), 'cc', oneOrMore('c'))"`
+      `"exactly('a').or('bcd').or(oneOrMore('a'), 'bb', oneOrMore('b'), 'cc', oneOrMore('c'))"`,
     )
     expect(convert(/a(?:b[cd]ef)ghi/)).toMatchInlineSnapshot(
-      `"'a', exactly('b', charIn('cd'), 'ef'), 'ghi'"`
+      `"'a', exactly('b', charIn('cd'), 'ef'), 'ghi'"`,
     )
   })
 
@@ -139,7 +139,7 @@ describe('basic', () => {
     expect(convert(/^abc$/)).toMatchInlineSnapshot(`"exactly('abc').at.lineStart().at.lineEnd()"`)
     expect(convert(/^abbc$/)).toMatchInlineSnapshot(`"exactly('abbc').at.lineStart().at.lineEnd()"`)
     expect(convert(/^a[b]c$/)).toMatchInlineSnapshot(
-      `"exactly('a').at.lineStart(), charIn('b'), exactly('c').at.lineEnd()"`
+      `"exactly('a').at.lineStart(), charIn('b'), exactly('c').at.lineEnd()"`,
     )
     expect(convert(/^\b$/)).toMatchInlineSnapshot(`"wordBoundary.at.lineStart().at.lineEnd()"`)
 
@@ -164,22 +164,22 @@ describe('basic', () => {
   it('after, notAfter, before, notBefore', () => {
     expect(convert(/(?<=a)b/)).toMatchInlineSnapshot(`"exactly('b').after('a')"`)
     expect(convert(/(?<=a[a]bc)b/)).toMatchInlineSnapshot(
-      `"exactly('b').after('a', charIn('a'), 'bc')"`
+      `"exactly('b').after('a', charIn('a'), 'bc')"`,
     )
 
     expect(convert(/(?<!a)b/)).toMatchInlineSnapshot(`"exactly('b').notAfter('a')"`)
     expect(convert(/(?<!a[a]bc)b/)).toMatchInlineSnapshot(
-      `"exactly('b').notAfter('a', charIn('a'), 'bc')"`
+      `"exactly('b').notAfter('a', charIn('a'), 'bc')"`,
     )
 
     expect(convert(/a(?=b)/)).toMatchInlineSnapshot(`"exactly('a').before('b')"`)
     expect(convert(/a(?=a[a]bc)/)).toMatchInlineSnapshot(
-      `"exactly('a').before('a', charIn('a'), 'bc')"`
+      `"exactly('a').before('a', charIn('a'), 'bc')"`,
     )
 
     expect(convert(/a(?!b)/)).toMatchInlineSnapshot(`"exactly('a').notBefore('b')"`)
     expect(convert(/a(?!a[a]bc)/)).toMatchInlineSnapshot(
-      `"exactly('a').notBefore('a', charIn('a'), 'bc')"`
+      `"exactly('a').notBefore('a', charIn('a'), 'bc')"`,
     )
 
     // edge cases
@@ -193,13 +193,13 @@ describe('basic', () => {
     expect(convert(/(abc)/)).toMatchInlineSnapshot(`"exactly('abc').grouped()"`)
     expect(convert(/(?:abc)/)).toMatchInlineSnapshot(`"exactly('abc')"`)
     expect(convert(/(abc[c]abc)/)).toMatchInlineSnapshot(
-      `"exactly('abc', charIn('c'), 'abc').grouped()"`
+      `"exactly('abc', charIn('c'), 'abc').grouped()"`,
     )
     expect(convert(/1(abc[c]abc|a)2/)).toMatchInlineSnapshot(
-      `"'1', exactly('abc', charIn('c'), 'abc').or('a').grouped(), '2'"`
+      `"'1', exactly('abc', charIn('c'), 'abc').or('a').grouped(), '2'"`,
     )
     expect(convert(/((?:abc[bcd]cde)|(?:bcdd))/)).toMatchInlineSnapshot(
-      `"exactly('abc', charIn('bcd'), 'cde').or(exactly('bcdd')).grouped()"`
+      `"exactly('abc', charIn('bcd'), 'cde').or(exactly('bcdd')).grouped()"`,
     )
   })
 

@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import assert from 'node:assert'
-import { createRegExp, exactly, maybe, digit, oneOrMore, char, wordChar } from 'magic-regexp'
+import { char, createRegExp, digit, exactly, maybe, oneOrMore, wordChar } from 'magic-regexp'
+
 /**
  * change to
  * import {...} from 'magic-regexp/further-magic'
@@ -16,7 +18,7 @@ const SEMVER_RE = createRegExp(
   oneOrMore(digit).groupedAs('major'),
   '.',
   oneOrMore(digit).groupedAs('minor'),
-  maybe('.', oneOrMore(char).groupedAs('patch'))
+  maybe('.', oneOrMore(char).groupedAs('patch')),
 )
 console.log(SEMVER_RE)
 
@@ -26,7 +28,7 @@ assert.equal(createRegExp(exactly('foo/test.js').after('bar/')).test('bar/foo/te
 const TENET_RE = createRegExp(
   exactly(wordChar.groupedAs('firstChar'), wordChar.groupedAs('secondChar'), oneOrMore(char))
     .and.referenceTo('secondChar')
-    .and.referenceTo('firstChar')
+    .and.referenceTo('firstChar'),
 )
 
 assert.equal(TENET_RE.test('TEN<==O==>NET'), true)

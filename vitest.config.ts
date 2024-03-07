@@ -11,7 +11,7 @@ export default defineConfig({
     coverage: {
       exclude: ['src/core/types', 'src/converter.ts'],
       thresholds: {
-        '100': true,
+        100: true,
       },
       include: ['src'],
       reporter: ['text', 'json', 'html'],

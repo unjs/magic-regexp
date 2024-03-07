@@ -1,8 +1,9 @@
 import regexpTree from 'regexp-tree'
-import type { Expression, Char, ClassRange } from 'regexp-tree/ast'
+import type { Char, ClassRange, Expression } from 'regexp-tree/ast'
 
 function build(node: Expression | null): string {
-  if (node === null) return ''
+  if (node === null)
+    return ''
 
   switch (node.type) {
     case 'CharacterClass': {
@@ -13,25 +14,29 @@ function build(node: Expression | null): string {
         const first = exprs[0]
         if (typeof first === 'string') {
           return node.negative ? `charNotIn(${first})` : `charIn(${first})`
-        } else if (first.type === 'Char' && first.kind === 'meta' && node.negative) {
-          if (first.value === '\\t') return `not.tab`
-          if (first.value === '\\n') return `not.linefeed`
-          if (first.value === '\\r') return `not.carriageReturn`
-        } else {
-          const range = normalizeClassRange(first)
-          if (range === 'A-Z') {
-            return node.negative ? `not.letter.uppercase` : `letter.uppercase`
-          } else if (range === 'a-z') {
-            return node.negative ? `not.letter.lowercase` : `letter.lowercase`
-          }
         }
-      } else if (exprs.length === 2) {
+        else if (first.type === 'Char' && first.kind === 'meta' && node.negative) {
+          if (first.value === '\\t')
+            return `not.tab`
+          if (first.value === '\\n')
+            return `not.linefeed`
+          if (first.value === '\\r')
+            return `not.carriageReturn`
+        }
+        else {
+          const range = normalizeClassRange(first)
+          if (range === 'A-Z')
+            return node.negative ? `not.letter.uppercase` : `letter.uppercase`
+          else if (range === 'a-z')
+            return node.negative ? `not.letter.lowercase` : `letter.lowercase`
+        }
+      }
+      else if (exprs.length === 2) {
         if (typeof exprs[0] !== 'string' && typeof exprs[1] !== 'string') {
           const range1 = normalizeClassRange(exprs[0])
           const range2 = normalizeClassRange(exprs[1])
-          if ((range1 === 'A-Z' && range2 === 'a-z') || (range1 === 'a-z' && range2 === 'A-Z')) {
+          if ((range1 === 'A-Z' && range2 === 'a-z') || (range1 === 'a-z' && range2 === 'A-Z'))
             return node.negative ? `not.letter` : `letter`
-          }
         }
       }
 
@@ -96,9 +101,11 @@ function build(node: Expression | null): string {
           default:
             throw new Error(`Unsupported Meta Char: ${node.value}`)
         }
-      } else {
+      }
+      else {
         const char = getChar(node)
-        if (char === null) throw new Error(`Unknown Char: ${node.value}`)
+        if (char === null)
+          throw new Error(`Unknown Char: ${node.value}`)
         return `'${char}'`
       }
 
@@ -108,7 +115,8 @@ function build(node: Expression | null): string {
 
       // TODO: support lazy quantifier
       const lazy = !quantifier.greedy
-      if (lazy) throw new Error('Unsupported for lazy quantifier')
+      if (lazy)
+        throw new Error('Unsupported for lazy quantifier')
 
       switch (quantifier.kind) {
         case '+':
@@ -119,17 +127,17 @@ function build(node: Expression | null): string {
           return chain(expr, 'times.any()')
         case 'Range':
           // {1}
-          if (quantifier.from === quantifier.to) {
+          if (quantifier.from === quantifier.to)
             return chain(expr, `times(${quantifier.from})`)
-          }
+
           // {1,}
-          else if (!quantifier.to) {
+          else if (!quantifier.to)
             return chain(expr, `times.atLeast(${quantifier.from})`)
-          }
+
           // {0,3}
-          else if (quantifier.from === 0) {
+          else if (quantifier.from === 0)
             return chain(expr, `times.atMost(${quantifier.to})`)
-          }
+
           // {1,3}
           return chain(expr, `times.between(${quantifier.from}, ${quantifier.to})`)
 
@@ -191,7 +199,8 @@ function build(node: Expression | null): string {
 
         // TODO: currenly not support backreference for cross group
         if (alt.type === 'Backreference') {
-          if (alt.kind !== 'name') throw new Error(`Unsupport for number reference`)
+          if (alt.kind !== 'name')
+            throw new Error(`Unsupport for number reference`)
 
           const ref = chain(`exactly(${exprs.join(', ')})`, `and.referenceTo('${alt.reference}')`)
           exprs.length = 0
@@ -216,11 +225,12 @@ function build(node: Expression | null): string {
 }
 
 function normalizeClassRange(node: Char | ClassRange): string | undefined {
-  if (node.type === 'ClassRange') return node.from.value + '-' + node.to.value
+  if (node.type === 'ClassRange')
+    return `${node.from.value}-${node.to.value}`
 }
 
 function combineContinuousSimpleChars<T extends (Char | ClassRange) | Expression>(
-  expressions: T[]
+  expressions: T[],
 ): (T | string)[] {
   let simpleChars = ''
   const exprs = expressions.reduce(
@@ -228,7 +238,8 @@ function combineContinuousSimpleChars<T extends (Char | ClassRange) | Expression
       const char = expr.type === 'Char' ? getChar(expr) : null
       if (char !== null) {
         simpleChars += char
-      } else {
+      }
+      else {
         if (simpleChars) {
           acc.push(`'${simpleChars}'`)
           simpleChars = ''
@@ -237,13 +248,12 @@ function combineContinuousSimpleChars<T extends (Char | ClassRange) | Expression
       }
       return acc
     },
-    [] as Array<T | string>
+    [] as Array<T | string>,
   )
 
   // Add the last accumulated string if it exists
-  if (simpleChars) {
+  if (simpleChars)
     exprs.push(`'${simpleChars}'`)
-  }
 
   return exprs
 }
@@ -251,7 +261,7 @@ function combineContinuousSimpleChars<T extends (Char | ClassRange) | Expression
 function getChar(char: Char): string | null {
   function escapeSimpleChar(char: string): string {
     // for generator only because we will output createRegExp('...')
-    return char === "'" ? "\\'" : char
+    return char === '\'' ? '\\\'' : char
   }
 
   switch (char.kind) {
@@ -262,7 +272,8 @@ function getChar(char: Char): string | null {
     case 'decimal':
     case 'hex':
     case 'unicode':
-      if ('symbol' in char) return escapeSimpleChar((char as any).symbol)
+      if ('symbol' in char)
+        return escapeSimpleChar((char as any).symbol)
   }
 
   return null
@@ -271,18 +282,21 @@ function getChar(char: Char): string | null {
 function chain(expr: Expression | string, helper?: string): string {
   let _expr = ''
   if (typeof expr === 'string') {
-    if (expr === '') _expr = "exactly('')"
-    else _expr = expr.startsWith("'") && expr.endsWith("'") ? `exactly(${expr})` : expr
-  } else {
+    if (expr === '')
+      _expr = 'exactly(\'\')'
+    else _expr = expr.startsWith('\'') && expr.endsWith('\'') ? `exactly(${expr})` : expr
+  }
+  else {
     _expr = build(expr)
   }
   return helper ? `${_expr}.${helper}` : _expr
 }
 
 function buildFlags(flags: string) {
-  if (!flags) return ''
+  if (!flags)
+    return ''
 
-  const readableFlags = flags.split('').map(flag => {
+  const readableFlags = flags.split('').map((flag) => {
     return (
       {
         d: 'withIndices',
@@ -296,13 +310,14 @@ function buildFlags(flags: string) {
     )
   })
 
-  return '[' + readableFlags.join(', ') + ']'
+  return `[${readableFlags.join(', ')}]`
 }
 
 export function convert(regex: RegExp, { argsOnly = false } = {}) {
   const ast = regexpTree.parse(regex)
 
-  if (ast.type !== 'RegExp') throw new TypeError(`Unexpected RegExp AST: ${ast.type}`)
+  if (ast.type !== 'RegExp')
+    throw new TypeError(`Unexpected RegExp AST: ${ast.type}`)
 
   const flags = buildFlags(ast.flags)
   const args = build(ast.body) + (flags ? `, ${flags}` : '')

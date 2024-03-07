@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { anyOf, createRegExp, digit, exactly, letter, maybe, oneOrMore } from 'magic-regexp'
 
 // Inspired by https://www.rfc-editor.org/rfc/rfc3986#section-3 but not fully compliant.
@@ -6,7 +7,7 @@ const schema = exactly(letter)
   .groupedAs('schema')
 
 const userinfo = oneOrMore(
-  anyOf(letter, digit, '-', '.', '_', '~', '!', '$', '&', '"', '*', '+', ',', ';', '=', ':', '%')
+  anyOf(letter, digit, '-', '.', '_', '~', '!', '$', '&', '"', '*', '+', ',', ';', '=', ':', '%'),
 ).groupedAs('userinfo')
 const host = oneOrMore(anyOf(letter, digit, '-', '.')).groupedAs('host') // This is simplified from the RFC. We consider using a registered host.
 const port = oneOrMore(digit).groupedAs('port')
@@ -23,7 +24,7 @@ const path = oneOrMore(
     '!',
     '$',
     '&',
-    "'",
+    '\'',
     '(',
     ')',
     '*',
@@ -34,8 +35,8 @@ const path = oneOrMore(
     ':',
     '@',
     '%',
-    '/'
-  )
+    '/',
+  ),
 ).groupedAs('path')
 
 const query = oneOrMore(
@@ -49,7 +50,7 @@ const query = oneOrMore(
     '!',
     '$',
     '&',
-    "'",
+    '\'',
     '(',
     ')',
     '*',
@@ -61,8 +62,8 @@ const query = oneOrMore(
     '@',
     '%',
     '/',
-    '?'
-  )
+    '?',
+  ),
 ).groupedAs('query')
 
 const fragment = oneOrMore(
@@ -76,7 +77,7 @@ const fragment = oneOrMore(
     '!',
     '$',
     '&',
-    "'",
+    '\'',
     '(',
     ')',
     '*',
@@ -88,12 +89,12 @@ const fragment = oneOrMore(
     '@',
     '%',
     '/',
-    '?'
-  )
+    '?',
+  ),
 ).groupedAs('fragment')
 
 const url = createRegExp(
-  schema.and('://').and(authority).and(maybe(path), maybe('?', query), maybe('#', fragment))
+  schema.and('://').and(authority).and(maybe(path), maybe('?', query), maybe('#', fragment)),
 )
 
 console.log(url.exec('https://www.example.com/'))

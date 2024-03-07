@@ -1,20 +1,22 @@
-import { expect, it, describe } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { expectTypeOf } from 'expect-type'
 
-import {
-  anyOf,
-  char,
-  createRegExp,
-  exactly,
-  maybe,
-  global,
-  digit,
-  multiline,
+import type {
   MagicRegExp,
   MagicRegExpMatchArray,
   StringCapturedBy,
-  oneOrMore,
+} from '../src'
+import {
+  anyOf,
   caseInsensitive,
+  char,
+  createRegExp,
+  digit,
+  exactly,
+  global,
+  maybe,
+  multiline,
+  oneOrMore,
 } from '../src'
 import { createInput } from '../src/core/internal'
 
@@ -58,7 +60,7 @@ describe('inputs', () => {
       '.',
       oneOrMore(digit).as('minor'),
       maybe('.', oneOrMore(char).groupedAs('patch')),
-      [caseInsensitive]
+      [caseInsensitive],
     )
     const result = '3.4.1-beta'.match(regExp)
     expect(Array.isArray(result)).toBeTruthy()
@@ -118,7 +120,7 @@ describe('inputs', () => {
     expect(exactly('test').times.atLeast(3).toString()).toMatchInlineSnapshot('"(?:test){3,}"')
     expect(exactly('test').times.atMost(3).toString()).toMatchInlineSnapshot('"(?:test){0,3}"')
     expect(exactly('test').times(4).or('foo').toString()).toMatchInlineSnapshot(
-      '"(?:(?:test){4}|foo)"'
+      '"(?:(?:test){4}|foo)"',
     )
   })
   it('capture groups', () => {
@@ -145,7 +147,7 @@ describe('inputs', () => {
       Record<'test' | 'test2', string | undefined> | undefined
     >()
 
-    // @ts-expect-error
+    // @ts-expect-error there should be no 'other' group
     'fobazzer'.match(createRegExp(pattern))?.groups.other
 
     for (const match of 'fobazzer'.matchAll(createRegExp(pattern, [global]))) {
@@ -161,9 +163,9 @@ describe('inputs', () => {
     ''.match(
       createRegExp(
         anyOf(anyOf('foo', 'bar').groupedAs('test'), exactly('baz').groupedAs('test2')).and(
-          digit.times(5).groupedAs('id').optionally()
-        )
-      )
+          digit.times(5).groupedAs('id').optionally(),
+        ),
+      ),
     )?.groups?.id
   })
   it('named backreference to capture groups', () => {
@@ -183,7 +185,7 @@ describe('inputs', () => {
       ]
     `)
     expectTypeOf(pattern.and.referenceTo).toBeCallableWith('barGroup')
-    // @ts-expect-error
+    // @ts-expect-error there is no 'bazgroup' capture group
     pattern.and.referenceTo('bazgroup')
   })
   it('can type-safe access matched array with hint for corresponding capture group', () => {
@@ -196,23 +198,24 @@ describe('inputs', () => {
         exactly('b').and(maybe('c|d?')).times.any(),
         exactly('1')
           .and(maybe(exactly('2').and(maybe('3')).and('2')))
-          .and('1')
-      ).grouped()
+          .and('1'),
+      ).grouped(),
     ).grouped()
 
     const match = 'booboo'.match(createRegExp(pattern))
 
-    if (!match) return expect(match).toBeTruthy()
+    if (!match)
+      return expect(match).toBeTruthy()
     expectTypeOf(match.length).toEqualTypeOf<7>()
     expectTypeOf(match[0]).toEqualTypeOf<string | undefined>()
     expectTypeOf(match[1]).toEqualTypeOf<
       | StringCapturedBy<'((foo\\|\\?)|(?<groupName>bar(baz)?)|(boo){2}|(a{3}|(?:b(?:c\\|d\\?)?)*|1(?:23?2)?1))'>
       | undefined
     >()
-    //@ts-expect-error
+    // @ts-expect-error match result array marked as readonly and shouldn't be assigned to
     match[1] = 'match result array marked as readonly'
     let typedVar: string | undefined
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
+    // eslint-disable-next-line unused-imports/no-unused-vars, prefer-const
     typedVar = match[1] // can be assign to typed variable
     expectTypeOf(match[2]).toEqualTypeOf<StringCapturedBy<'(foo\\|\\?)'> | undefined>()
     expectTypeOf(match[2]?.concat(match[3] || '')).toEqualTypeOf<string | undefined>()

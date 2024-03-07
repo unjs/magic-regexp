@@ -1,13 +1,13 @@
-import type { Flag } from './core/flags'
-import type { Join, UnionToTuple } from './core/types/join'
-import type { InputSource, MapToGroups, MapToValues } from './core/types/sources'
 import type {
-  MatchRegExp,
   MatchAllRegExp,
+  MatchRegExp,
   ParseRegExp,
   RegExpMatchResult,
   ReplaceWithRegExp,
 } from 'type-level-regexp/regexp'
+import type { Flag } from './core/flags'
+import type { Join, UnionToTuple } from './core/types/join'
+import type { InputSource, MapToGroups, MapToValues } from './core/types/sources'
 
 import { exactly } from './core/inputs'
 
@@ -47,9 +47,9 @@ export const createRegExp: {
     Flags
   >
 } = (...inputs: any[]) => {
-  const flags =
-    inputs.length > 1 &&
-    (Array.isArray(inputs[inputs.length - 1]) || inputs[inputs.length - 1] instanceof Set)
+  const flags
+    = inputs.length > 1
+    && (Array.isArray(inputs[inputs.length - 1]) || inputs[inputs.length - 1] instanceof Set)
       ? inputs.pop()
       : undefined
   return new RegExp(exactly(...inputs).toString(), [...(flags || '')].join('')) as any

@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
 import { anyOf, createRegExp, digit, exactly } from 'magic-regexp'
 
 const hour = anyOf(exactly('0').and(digit), exactly('1').and(anyOf('0', '1', '2'))).groupedAs(
-  'hour'
+  'hour',
 )
 
 const minute = anyOf(
@@ -10,7 +11,7 @@ const minute = anyOf(
   exactly('2').and(digit),
   exactly('3').and(digit),
   exactly('4').and(digit),
-  exactly('5').and(digit)
+  exactly('5').and(digit),
 ).groupedAs('minute')
 
 const dayPart = anyOf(exactly('AM'), exactly('PM')).groupedAs('dayPart')

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { anyOf, createRegExp, digit, exactly } from 'magic-regexp'
 
 // YYYY-MM-DD
@@ -9,7 +10,7 @@ const day = anyOf(
   exactly('1').and(digit),
   exactly('2').and(digit),
   '30',
-  '31'
+  '31',
 ).groupedAs('day')
 
 const date = createRegExp(exactly(year, '-', month, '-', day))

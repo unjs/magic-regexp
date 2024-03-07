@@ -7,7 +7,7 @@ for (const importSpecifier of ['magic-regexp', 'magic-regexp/further-magic']) {
   describe(`transformer: ${importSpecifier}`, () => {
     const couldTransform = [
       `import { createRegExp, exactly, anyOf } from '${importSpecifier}'`,
-      "const re1 = createRegExp(exactly('bar').notBefore('foo'))",
+      'const re1 = createRegExp(exactly(\'bar\').notBefore(\'foo\'))',
     ]
 
     it('ignores non-JS files', () => {
@@ -30,20 +30,20 @@ for (const importSpecifier of ['magic-regexp', 'magic-regexp/further-magic']) {
         transform([
           `import { createRegExp } from '${importSpecifier}'`,
           `console.log(createRegExp(anyOf(keys)))`,
-        ])
+        ]),
       ).not.toBeDefined()
     })
 
     it('statically replaces regexps where possible', () => {
       const code = transform([
-        "import { something } from 'other-module'",
+        'import { something } from \'other-module\'',
         `import { createRegExp, exactly, anyOf } from '${importSpecifier}'`,
         '//', // this lets us tree-shake the import for use in our test-suite
-        "const re1 = createRegExp(exactly('bar').notBefore('foo'))",
-        "const re2 = createRegExp(anyOf(exactly('bar'), 'foo'))",
-        "const re3 = createRegExp('/foo/bar')",
+        'const re1 = createRegExp(exactly(\'bar\').notBefore(\'foo\'))',
+        'const re2 = createRegExp(anyOf(exactly(\'bar\'), \'foo\'))',
+        'const re3 = createRegExp(\'/foo/bar\')',
         // This line will be double-escaped in the snapshot
-        "re3.test('/foo/bar')",
+        're3.test(\'/foo/bar\')',
       ])
       expect(code).toMatchInlineSnapshot(`
         "import { something } from 'other-module'
@@ -55,6 +55,7 @@ for (const importSpecifier of ['magic-regexp', 'magic-regexp/further-magic']) {
         re3.test('/foo/bar')"
       `)
       // ... but we test it here.
+      // eslint-disable-next-line no-eval
       expect(eval(code.split('//').pop())).toMatchInlineSnapshot('true')
     })
 
@@ -63,9 +64,9 @@ for (const importSpecifier of ['magic-regexp', 'magic-regexp/further-magic']) {
         `import { createRegExp as cRE } from '${importSpecifier}'`,
         `import { exactly as ext, createRegExp } from '${importSpecifier}'`,
         `import * as magicRE from '${importSpecifier}'`,
-        "const re1 = cRE(ext('bar').notBefore('foo'))",
-        "const re2 = magicRE.createRegExp(magicRE.anyOf('bar', 'foo'))",
-        "const re3 = createRegExp('test/value')",
+        'const re1 = cRE(ext(\'bar\').notBefore(\'foo\'))',
+        'const re2 = magicRE.createRegExp(magicRE.anyOf(\'bar\', \'foo\'))',
+        'const re3 = createRegExp(\'test/value\')',
       ])
       expect(code).toMatchInlineSnapshot(`
         "import { createRegExp as cRE } from '${importSpecifier}'
@@ -79,11 +80,11 @@ for (const importSpecifier of ['magic-regexp', 'magic-regexp/further-magic']) {
   })
 }
 
-const transform = (code: string | string[], id = 'some-id.js') => {
+function transform(code: string | string[], id = 'some-id.js') {
   const plugin = MagicRegExpTransformPlugin.vite() as any
   return plugin.transform.call(
     { parse: (code: string) => parse(code, { ecmaVersion: 2022, sourceType: 'module' }) },
     Array.isArray(code) ? code.join('\n') : code,
-    id
+    id,
   )?.code
 }
