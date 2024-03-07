@@ -1,81 +1,11 @@
 {
-  "name": "magic-regexp",
-  "version": "0.8.0",
-  "packageManager": "pnpm@8.15.4",
-  "description": "A compiled-away, type-safe, readable RegExp alternative",
-  "license": "MIT",
-  "repository": "unjs/magic-regexp",
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    },
-    "./converter": {
-      "import": "./dist/converter.mjs",
-      "require": "./dist/converter.cjs"
-    },
-    "./transform": {
-      "import": "./dist/transform.mjs",
-      "require": "./dist/transform.cjs"
-    },
-    "./further-magic": {
-      "import": "./dist/further-magic.mjs",
-      "require": "./dist/further-magic.cjs"
-    },
-    "./nuxt": "./nuxt.mjs"
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist",
-    "further-magic.d.ts",
-    "nuxt.mjs",
-    "transform.d.ts"
-  ],
+  "private": true,
+  "name": "docs",
   "scripts": {
-    "build": "unbuild",
-    "dev": "vitest dev",
-    "docs:generate": "nuxi generate docs",
-    "lint": "eslint --fix .",
-    "prepare": "npx simple-git-hooks && pnpm build",
-    "prepublishOnly": "pnpm lint && pnpm test",
-    "release": "bumpp && npm publish",
-    "test": "vitest run",
-    "test:types": "tsc --noEmit"
-  },
-  "dependencies": {
-    "estree-walker": "^3.0.3",
-    "magic-string": "^0.30.8",
-    "mlly": "^1.6.1",
-    "regexp-tree": "^0.1.27",
-    "type-level-regexp": "~0.1.17",
-    "ufo": "^1.4.0",
-    "unplugin": "^1.8.3"
+    "dev": "undocs dev",
+    "build": "undocs build"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.8.0",
-    "@nuxt/kit": "3.10.3",
-    "@types/estree": "1.0.5",
-    "@types/node": "20.11.25",
-    "@vitest/coverage-v8": "1.3.1",
-    "acorn": "8.11.3",
-    "bumpp": "9.4.0",
-    "eslint": "8.57.0",
-    "expect-type": "0.18.0",
-    "lint-staged": "latest",
-    "rollup": "4.12.1",
-    "simple-git-hooks": "^2.10.0",
-    "typescript": "5.4.2",
-    "unbuild": "2.0.0",
-    "vite": "5.1.5",
-    "vitest": "1.3.1"
-  },
-  "resolutions": {
-    "magic-regexp": "link:."
-  },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
+    "undocs": "latest"
   }
 }
