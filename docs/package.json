@@ -1,19 +1,11 @@
 {
-  "name": "magic-regexp-docs",
-  "version": "1.0.0",
-  "description": "A compiled-away, type-safe, readable RegExp alternative",
-  "license": "MIT",
-  "homepage": "https://regexp.dev/",
+  "name": "docs",
+  "private": true,
   "scripts": {
-    "dev": "nuxi dev",
-    "build": "nuxi build",
-    "generate": "nuxi generate",
-    "preview": "nuxi preview"
+    "dev": "undocs dev",
+    "build": "undocs build"
   },
-  "dependencies": {
-    "@nuxt-themes/docus": "1.15.0",
-    "@nuxtjs/plausible": "0.2.4",
-    "@nuxtjs/web-vitals": "^0.2.6",
-    "nuxt": "3.10.3"
+  "devDependencies": {
+    "undocs": "latest"
   }
 }
