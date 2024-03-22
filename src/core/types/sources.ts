@@ -30,15 +30,15 @@ export type MapToCapturedGroupsArr<
   ? CapturedGroupsArr
   : Inputs[Count['length']] extends Input<any, any, infer CaptureGroups>
     ? [CaptureGroups] extends [never]
-      ? MapToCapturedGroupsArr<Inputs, MapToUndefined, [...CapturedGroupsArr], [...Count, '']>
-      : MapToUndefined extends true
-        ? MapToCapturedGroupsArr<
+        ? MapToCapturedGroupsArr<Inputs, MapToUndefined, [...CapturedGroupsArr], [...Count, '']>
+        : MapToUndefined extends true
+          ? MapToCapturedGroupsArr<
             Inputs,
             MapToUndefined,
             [...CapturedGroupsArr, undefined],
             [...Count, '']
           >
-        : MapToCapturedGroupsArr<
+          : MapToCapturedGroupsArr<
             Inputs,
             MapToUndefined,
             [...CapturedGroupsArr, ...CaptureGroups],

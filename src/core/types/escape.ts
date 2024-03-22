@@ -1,5 +1,5 @@
 import type { Input } from '../inputs'
-import { InputSource } from './sources'
+import type { InputSource } from './sources'
 
 export type Escape<
   T extends string,

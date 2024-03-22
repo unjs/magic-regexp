@@ -1,27 +1,28 @@
-import { expect, it, describe } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { expectTypeOf } from 'expect-type'
-import { extractRegExp } from './utils'
 
 import {
   anyOf,
-  char,
-  exactly,
-  charIn,
-  not,
-  maybe,
-  oneOrMore,
-  word,
-  wordChar,
-  wordBoundary,
-  digit,
-  whitespace,
-  letter,
-  tab,
-  linefeed,
   carriageReturn,
+  char,
+  charIn,
   charNotIn,
+  digit,
+  exactly,
+  letter,
+  linefeed,
+  maybe,
+  not,
+  oneOrMore,
+  tab,
+  whitespace,
+  word,
+  wordBoundary,
+  wordChar,
 } from '../src/core/inputs'
-import { createRegExp, MagicRegExp } from '../src'
+import type { MagicRegExp } from '../src'
+import { createRegExp } from '../src'
+import { extractRegExp } from './utils'
 
 describe('inputs', () => {
   it('charIn', () => {
@@ -65,7 +66,7 @@ describe('inputs', () => {
     const multi = maybe('foo', input.groupedAs('groupName'), 'bar')
     const regexp2 = new RegExp(multi as any)
     expect(regexp2).toMatchInlineSnapshot(
-      '/\\(\\?:foo\\(\\?<groupName>\\(\\?:foo\\)\\?\\)bar\\)\\?/'
+      '/\\(\\?:foo\\(\\?<groupName>\\(\\?:foo\\)\\?\\)bar\\)\\?/',
     )
     expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'(?:foo(?<groupName>(?:foo)?)bar)?'>()
   })
@@ -83,14 +84,14 @@ describe('inputs', () => {
     const multi = oneOrMore('foo', input.groupedAs('groupName'), 'bar')
     const regexp2 = new RegExp(multi as any)
     expect(regexp2).toMatchInlineSnapshot(
-      '/\\(\\?:foo\\(\\?<groupName>\\(\\?:foo\\)\\+\\)bar\\)\\+/'
+      '/\\(\\?:foo\\(\\?<groupName>\\(\\?:foo\\)\\+\\)bar\\)\\+/',
     )
     expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'(?:foo(?<groupName>(?:foo)+)bar)+'>()
   })
   it('exactly', () => {
     const input = exactly('fo?[a-z]{2}/o?')
     expect(new RegExp(input as any)).toMatchInlineSnapshot(
-      '/fo\\\\\\?\\\\\\[a-z\\\\\\]\\\\\\{2\\\\\\}\\\\/o\\\\\\?/'
+      '/fo\\\\\\?\\\\\\[a-z\\\\\\]\\\\\\{2\\\\\\}\\\\/o\\\\\\?/',
     )
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'fo\\?\\[a-z\\]\\{2\\}\\/o\\?'>()
 
@@ -107,10 +108,10 @@ describe('inputs', () => {
     const multi = exactly('foo', input.groupedAs('groupName'), 'bar')
     const regexp2 = new RegExp(multi as any)
     expect(regexp2).toMatchInlineSnapshot(
-      '/foo\\(\\?<groupName>fo\\\\\\?\\\\\\[a-z\\\\\\]\\\\\\{2\\\\\\}\\\\/o\\\\\\?\\)bar/'
+      '/foo\\(\\?<groupName>fo\\\\\\?\\\\\\[a-z\\\\\\]\\\\\\{2\\\\\\}\\\\/o\\\\\\?\\)bar/',
     )
     expectTypeOf(
-      extractRegExp(multi)
+      extractRegExp(multi),
     ).toEqualTypeOf<'foo(?<groupName>fo\\?\\[a-z\\]\\{2\\}\\/o\\?)bar'>()
   })
   it('word', () => {
@@ -197,15 +198,15 @@ describe('inputs', () => {
       anyOf(
         anyOf('foo', '?').grouped().times(2),
         exactly('bar').groupedAs('groupName').times.between(3, 4),
-        exactly('baz').or('boo').grouped().times.atLeast(5)
-      ).grouped()
+        exactly('baz').or('boo').grouped().times.atLeast(5),
+      ).grouped(),
     )
     const regexp = new RegExp(input as any)
     expect(regexp).toMatchInlineSnapshot(
-      '/\\(\\(foo\\|\\\\\\?\\)\\{2\\}\\|\\(\\?<groupName>bar\\)\\{3,4\\}\\|\\(baz\\|boo\\)\\{5,\\}\\)\\+/'
+      '/\\(\\(foo\\|\\\\\\?\\)\\{2\\}\\|\\(\\?<groupName>bar\\)\\{3,4\\}\\|\\(baz\\|boo\\)\\{5,\\}\\)\\+/',
     )
     expectTypeOf(
-      extractRegExp(input)
+      extractRegExp(input),
     ).toEqualTypeOf<'((foo|\\?){2}|(?<groupName>bar){3,4}|(baz|boo){5,})+'>()
   })
 })
@@ -242,10 +243,10 @@ describe('chained inputs', () => {
     const multi = multichar.or('foo', input.groupedAs('groupName'), exactly('bar').or(test))
     const regexp2 = new RegExp(multi as any)
     expect(regexp2).toMatchInlineSnapshot(
-      '/\\(\\?:ab\\|foo\\(\\?<groupName>\\\\\\?\\)\\(\\?:bar\\|test\\\\\\.js\\)\\)/'
+      '/\\(\\?:ab\\|foo\\(\\?<groupName>\\\\\\?\\)\\(\\?:bar\\|test\\\\\\.js\\)\\)/',
     )
     expectTypeOf(
-      extractRegExp(multi)
+      extractRegExp(multi),
     ).toEqualTypeOf<'(?:ab|foo(?<groupName>\\?)(?:bar|test\\.js))'>()
   })
   it('after', () => {
@@ -365,15 +366,15 @@ describe('chained inputs', () => {
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<test>\\\\\\?\\)/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<test>\\?)'>()
 
-    const retentEssentailWrap = oneOrMore('foo').as('groupName')
-    expect(createRegExp(retentEssentailWrap)).toMatchInlineSnapshot(
-      '/\\(\\?<groupName>\\(\\?:foo\\)\\+\\)/'
+    const retentEssentialWrap = oneOrMore('foo').as('groupName')
+    expect(createRegExp(retentEssentialWrap)).toMatchInlineSnapshot(
+      '/\\(\\?<groupName>\\(\\?:foo\\)\\+\\)/',
     )
-    expectTypeOf(extractRegExp(retentEssentailWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
+    expectTypeOf(extractRegExp(retentEssentialWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
 
     const removeExtraWrap = anyOf('foo', 'bar', 'baz').as('groupName')
     expect(createRegExp(removeExtraWrap)).toMatchInlineSnapshot(
-      '/\\(\\?<groupName>foo\\|bar\\|baz\\)/'
+      '/\\(\\?<groupName>foo\\|bar\\|baz\\)/',
     )
     expectTypeOf(extractRegExp(removeExtraWrap)).toEqualTypeOf<'(?<groupName>foo|bar|baz)'>()
   })
@@ -383,15 +384,15 @@ describe('chained inputs', () => {
     expect(regexp).toMatchInlineSnapshot('/\\(\\?<test>\\\\\\?\\)/')
     expectTypeOf(extractRegExp(val)).toEqualTypeOf<'(?<test>\\?)'>()
 
-    const retentEssentailWrap = oneOrMore('foo').groupedAs('groupName')
-    expect(createRegExp(retentEssentailWrap)).toMatchInlineSnapshot(
-      '/\\(\\?<groupName>\\(\\?:foo\\)\\+\\)/'
+    const retentEssentialWrap = oneOrMore('foo').groupedAs('groupName')
+    expect(createRegExp(retentEssentialWrap)).toMatchInlineSnapshot(
+      '/\\(\\?<groupName>\\(\\?:foo\\)\\+\\)/',
     )
-    expectTypeOf(extractRegExp(retentEssentailWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
+    expectTypeOf(extractRegExp(retentEssentialWrap)).toEqualTypeOf<'(?<groupName>(?:foo)+)'>()
 
     const removeExtraWrap = anyOf('foo', 'bar', 'baz').groupedAs('groupName')
     expect(createRegExp(removeExtraWrap)).toMatchInlineSnapshot(
-      '/\\(\\?<groupName>foo\\|bar\\|baz\\)/'
+      '/\\(\\?<groupName>foo\\|bar\\|baz\\)/',
     )
     expectTypeOf(extractRegExp(removeExtraWrap)).toEqualTypeOf<'(?<groupName>foo|bar|baz)'>()
   })
@@ -406,18 +407,18 @@ describe('chained inputs', () => {
       'foo',
       maybe('baz').grouped(),
       exactly('bar').times(2).grouped(),
-      oneOrMore('bar').grouped()
+      oneOrMore('bar').grouped(),
     ).grouped()
     expect(createRegExp(convertToCaptureGroups)).toMatchInlineSnapshot(
-      '/\\(foo\\|\\(baz\\)\\?\\|\\(bar\\)\\{2\\}\\|\\(bar\\)\\+\\)/'
+      '/\\(foo\\|\\(baz\\)\\?\\|\\(bar\\)\\{2\\}\\|\\(bar\\)\\+\\)/',
     )
     expectTypeOf(
-      extractRegExp(convertToCaptureGroups)
+      extractRegExp(convertToCaptureGroups),
     ).toEqualTypeOf<'(foo|(baz)?|(bar){2}|(bar)+)'>()
 
     const dontConvertInnerNonCapture = exactly('foo').and(oneOrMore('bar')).grouped()
     expect(createRegExp(dontConvertInnerNonCapture)).toMatchInlineSnapshot(
-      '/\\(foo\\(\\?:bar\\)\\+\\)/'
+      '/\\(foo\\(\\?:bar\\)\\+\\)/',
     )
     expectTypeOf(extractRegExp(dontConvertInnerNonCapture)).toEqualTypeOf<'(foo(?:bar)+)'>()
   })

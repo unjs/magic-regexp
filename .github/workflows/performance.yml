@@ -1,0 +1,24 @@
+name: performance
+
+on:
+  pull_request:
+
+jobs:
+  check-performance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: pnpm
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: TSC diagnostics diff
+        uses: beerose/tsc-diagnostics-diff-action@49bf67cb35cae2ba688d1e7dffe5f14acbb62406
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          leave-comment: true

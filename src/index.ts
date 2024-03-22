@@ -3,7 +3,7 @@ import { exactly } from './core/inputs'
 import type { Join, UnionToTuple } from './core/types/join'
 import type { MagicRegExp, MagicRegExpMatchArray } from './core/types/magic-regexp'
 
-import { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './core/types/sources'
+import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './core/types/sources'
 
 export const createRegExp: {
   /** Create Magic RegExp from Input helpers and string (string will be sanitized) */
@@ -36,9 +36,9 @@ export const createRegExp: {
     Flags[number]
   >
 } = (...inputs: any[]) => {
-  const flags =
-    inputs.length > 1 &&
-    (Array.isArray(inputs[inputs.length - 1]) || inputs[inputs.length - 1] instanceof Set)
+  const flags
+    = inputs.length > 1
+    && (Array.isArray(inputs[inputs.length - 1]) || inputs[inputs.length - 1] instanceof Set)
       ? inputs.pop()
       : undefined
   return new RegExp(exactly(...inputs).toString(), [...(flags || '')].join('')) as any
