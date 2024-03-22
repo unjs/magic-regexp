@@ -58,8 +58,8 @@
     "unplugin": "^1.8.3"
   },
   "devDependencies": {
-    "@codspeed/vitest-plugin": "^3.1.0",
     "@antfu/eslint-config": "2.8.0",
+    "@codspeed/vitest-plugin": "^3.1.0",
     "@nuxt/kit": "3.10.3",
     "@types/estree": "1.0.5",
     "@types/node": "20.11.30",
@@ -81,5 +81,10 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "undocs@0.2.20": "patches/undocs@0.2.20.patch"
+    }
   }
 }

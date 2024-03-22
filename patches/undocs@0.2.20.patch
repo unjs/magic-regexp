@@ -1,0 +1,52 @@
+diff --git a/app/.unjs/app.config.ts b/app/.unjs/app.config.ts
+index 423d9ad9818bd860edd5f6680b19a8710b5a9ad5..e8d175784e93e5c0cc8536cbee1cd5e1b2cc8dc7 100644
+--- a/app/.unjs/app.config.ts
++++ b/app/.unjs/app.config.ts
+@@ -4,7 +4,8 @@ export default defineAppConfig({
+     logo: '/icon.svg',
+     github: undefined,
+     socials: {
+-      x: 'unjsio',
++      // TODO: raise issue upstream
++      x: 'danielcroe',
+     },
+   },
+ })
+diff --git a/app/tailwind.config.ts b/app/tailwind.config.ts
+index e9c21b6ed0e7c9636014e9d53d891f6a88700cb9..cc13a3c1221b9fc2d56dd7bac0b90fb81ffeeecf 100644
+--- a/app/tailwind.config.ts
++++ b/app/tailwind.config.ts
+@@ -25,22 +25,18 @@ export default <Partial<Config>>{
+   },
+   theme: {
+     extend: {
+-      fontFamily: {
+-        sans: ['Nunito', 'sans-serif', ...defaultTheme.fontFamily.sans],
+-      },
+       colors: {
+-        yellow: {
+-          50: '#FEFDF7',
+-          100: '#FDFCEF',
+-          200: '#FAF6D6',
+-          300: '#F7F1BD',
+-          400: '#F2E78C',
+-          500: '#ECDC5A',
+-          600: '#D4C651',
+-          700: '#8E8436',
+-          800: '#6A6329',
+-          900: '#47421B',
+-          950: '#2F2C12',
++        pink: {
++          50: '#ff46c5',
++          100: '#ff3cbb',
++          200: '#ff32b1',
++          300: '#ff28a7',
++          400: '#ff1e9d',
++          500: '#ff1493',
++          600: '#f50a89',
++          700: '#eb007f',
++          800: '#e10075',
++          900: '#d7006b',
+         },
+       },
+     },
