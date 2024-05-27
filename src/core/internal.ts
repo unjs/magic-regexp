@@ -4,8 +4,8 @@ import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } fr
 import type { IfUnwrapped } from './wrap'
 import { wrap } from './wrap'
 
-const GROUPED_AS_REPLACE_RE = /^(?:\(\?:(.+)\)|(\(?.+\)?))$/
-const GROUPED_REPLACE_RE = /^(?:\(\?:(.+)\)([?+*]|{[\d,]+})?|(.+))$/
+const GROUPED_AS_REPLACE_RE = /^(?:\(\?:(.+)\)|(.+))$/
+const GROUPED_REPLACE_RE = /^(?:\(\?:(.+)\)([?+*]|\{[\d,]+\})?|(.+))$/
 
 export interface Input<
   V extends string,

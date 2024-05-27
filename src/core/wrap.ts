@@ -11,7 +11,7 @@ export type IfUnwrapped<Value extends string, Yes, No> = Value extends `(${strin
         : Yes
     : never
 
-const NO_WRAP_RE = /^(\(.*\)|\\?.)$/
+const NO_WRAP_RE = /^(?:\(.*\)|\\?.)$/
 
 export function wrap(s: string | Input<any>) {
   const v = s.toString()
