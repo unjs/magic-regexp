@@ -1,5 +1,5 @@
 import { exactly } from './inputs'
-import { EscapeChar } from './types/escape'
+import type { EscapeChar } from './types/escape'
 import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
 import type { IfUnwrapped } from './wrap'
