@@ -1,4 +1,4 @@
-import type { Input } from './internal'
+import type { CharInput, Input } from './internal'
 import { createInput } from './internal'
 import type { EscapeChar } from './types/escape'
 import type { Join } from './types/join'
@@ -14,7 +14,7 @@ function createCharInput <T extends string>(raw: T) {
   const input = createInput(`[${raw}]`)
   const from = <From extends string, To extends string>(charFrom: From, charTo: To) => createCharInput(`${raw}${escapeCharInput(charFrom)}-${escapeCharInput(charTo)}`)
   const orChar = Object.assign((<T extends string>(chars: T) => createCharInput(`${raw}${escapeCharInput(chars)}`)), { from })
-  return Object.assign(input, { orChar, from })
+  return Object.assign(input, { orChar, from }) as CharInput<T>
 }
 
 function escapeCharInput <T extends string>(raw: T) {
