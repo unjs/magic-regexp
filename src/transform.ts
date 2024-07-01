@@ -77,8 +77,9 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
             || node.callee.object.name !== namespace
             || node.callee.property.type !== 'Identifier'
             || node.callee.property.name !== 'createRegExp')
-          )
+          ) {
             return
+          }
 
           const { start, end } = node as any as { start: number, end: number }
 
