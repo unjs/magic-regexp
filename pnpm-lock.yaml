@@ -42,8 +42,8 @@ importers:
         specifier: 2.21.3
         version: 2.21.3(@vue/compiler-sfc@3.4.33)(eslint@9.3.0)(typescript@5.4.5)(vitest@1.6.0)
       '@codspeed/vitest-plugin':
-        specifier: 3.1.0
-        version: 3.1.0(vite@5.2.13)(vitest@1.6.0)
+        specifier: 3.1.1
+        version: 3.1.1(vite@5.2.13)(vitest@1.6.0)
       '@nuxt/kit':
         specifier: 3.12.4
         version: 3.12.4(magicast@0.3.3)(rollup@4.12.1)
@@ -966,8 +966,8 @@ packages:
       mime: 3.0.0
     dev: true
 
-  /@codspeed/core@3.1.0:
-    resolution: {integrity: sha512-oYd7X46QhnRkgRbZkqAoX9i3Fwm17FpunK4Ee5RdrvRYR0Xr93ewH8/O5g6uyTPDOOqDEv1v2KRYtWhVgN+2VQ==}
+  /@codspeed/core@3.1.1:
+    resolution: {integrity: sha512-ONhERVDAtkm0nc+FYPivDozoMOlNUP2BWRBFDJYATGA18Iap5Kd2mZ1/Lwz54RB5+g+3YDOpsvotHa4hd3Q+7Q==}
     dependencies:
       axios: 1.6.8
       find-up: 6.3.0
@@ -977,13 +977,13 @@ packages:
       - debug
     dev: true
 
-  /@codspeed/vitest-plugin@3.1.0(vite@5.2.13)(vitest@1.6.0):
-    resolution: {integrity: sha512-ms11tUytiQTgB+idxZRUuCUQfgz4LaKTDJCLYm5VTSpOCUU7D5+QWvJnA8X8B9glPfR5siIK8RxrnZP4yuysKQ==}
+  /@codspeed/vitest-plugin@3.1.1(vite@5.2.13)(vitest@1.6.0):
+    resolution: {integrity: sha512-/PJUgxIfuRqpBSbaD8bgWXtbXxCqgnW89dzr3220fMkx/LA6z6oUb4tJGjeVsOWAzAgu0VBdSA+8hC+7D9BIuQ==}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0
       vitest: '>=1.2.2'
     dependencies:
-      '@codspeed/core': 3.1.0
+      '@codspeed/core': 3.1.1
       vite: 5.2.13(@types/node@20.14.10)
       vitest: 1.6.0(@types/node@20.14.10)
     transitivePeerDependencies:
