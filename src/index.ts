@@ -1,9 +1,9 @@
 import type { Flag } from './core/flags'
-import { exactly } from './core/inputs'
 import type { Join, UnionToTuple } from './core/types/join'
 import type { MagicRegExp, MagicRegExpMatchArray } from './core/types/magic-regexp'
-
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './core/types/sources'
+
+import { exactly } from './core/inputs'
 
 export const createRegExp: {
   /** Create Magic RegExp from Input helpers and string (string will be sanitized) */

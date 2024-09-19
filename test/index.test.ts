@@ -1,25 +1,10 @@
 /* eslint-disable ts/no-unused-expressions */
 
-import { describe, expect, it } from 'vitest'
+import type { MagicRegExp, MagicRegExpMatchArray, StringCapturedBy } from '../src'
 import { expectTypeOf } from 'expect-type'
+import { describe, expect, it } from 'vitest'
 
-import type {
-  MagicRegExp,
-  MagicRegExpMatchArray,
-  StringCapturedBy,
-} from '../src'
-import {
-  anyOf,
-  caseInsensitive,
-  char,
-  createRegExp,
-  digit,
-  exactly,
-  global,
-  maybe,
-  multiline,
-  oneOrMore,
-} from '../src'
+import { anyOf, caseInsensitive, char, createRegExp, digit, exactly, global, maybe, multiline, oneOrMore } from '../src'
 import { createInput } from '../src/core/internal'
 
 describe('magic-regexp', () => {
@@ -175,9 +160,12 @@ describe('inputs', () => {
       .groupedAs('fooGroup')
       .and(exactly('bar').groupedAs('barGroup'))
       .and('baz')
-      .and.referenceTo('barGroup')
-      .and.referenceTo('fooGroup')
-      .and.referenceTo('barGroup')
+      .and
+      .referenceTo('barGroup')
+      .and
+      .referenceTo('fooGroup')
+      .and
+      .referenceTo('barGroup')
 
     expect('foobarbazbarfoobar'.match(createRegExp(pattern))).toMatchInlineSnapshot(`
       [

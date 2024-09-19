@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest'
-import { expectTypeOf } from 'expect-type'
-
 import type { MagicRegExp, MagicRegExpMatchArray } from '../src'
+
+import { expectTypeOf } from 'expect-type'
+import { describe, expect, it } from 'vitest'
+
 import { char, createRegExp, global } from '../src'
 
 describe('string', () => {

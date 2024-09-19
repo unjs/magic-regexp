@@ -1,7 +1,8 @@
-import { exactly } from './inputs'
 import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
 import type { IfUnwrapped } from './wrap'
+
+import { exactly } from './inputs'
 import { wrap } from './wrap'
 
 const GROUPED_AS_REPLACE_RE = /^(?:\(\?:(.+)\)|(.+))$/

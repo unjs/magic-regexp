@@ -1,9 +1,10 @@
 import type { Input } from './internal'
-import { createInput } from './internal'
 import type { EscapeChar } from './types/escape'
 import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
 import type { IfUnwrapped } from './wrap'
+
+import { createInput } from './internal'
 import { wrap } from './wrap'
 
 export type { Input }

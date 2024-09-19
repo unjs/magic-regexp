@@ -1,20 +1,7 @@
+import type { MagicRegExp } from '../src/further-magic'
+
 import { describe, expect, expectTypeOf, it } from 'vitest'
-import type {
-  MagicRegExp,
-} from '../src/further-magic'
-import {
-  anyOf,
-  caseInsensitive,
-  createRegExp,
-  digit,
-  exactly,
-  global,
-  maybe,
-  oneOrMore,
-  spreadRegExpIterator,
-  spreadRegExpMatchArray,
-  wordChar,
-} from '../src/further-magic'
+import { anyOf, caseInsensitive, createRegExp, digit, exactly, global, maybe, oneOrMore, spreadRegExpIterator, spreadRegExpMatchArray, wordChar } from '../src/further-magic'
 
 describe('magic-regexp', () => {
   it('works as a normal regexp', () => {
