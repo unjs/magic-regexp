@@ -1,3 +1,5 @@
+/* eslint-disable ts/no-unused-expressions */
+
 import { describe, expect, it } from 'vitest'
 import { expectTypeOf } from 'expect-type'
 

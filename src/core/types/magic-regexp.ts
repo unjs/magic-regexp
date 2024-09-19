@@ -37,5 +37,5 @@ export type MagicRegExpMatchArray<T extends MagicRegExp<string, string, any[], s
   [index: number | string | symbol]: never
 } & (T extends MagicRegExp<string, string, infer CapturedGroupsArr, string>
   ? readonly [string | undefined, ...MapToStringCapturedBy<CapturedGroupsArr>]
-  // eslint-disable-next-line ts/ban-types
+  // eslint-disable-next-line ts/no-empty-object-type
   : {})
