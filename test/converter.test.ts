@@ -82,7 +82,9 @@ describe('basic', () => {
 
   it('char', () => {
     expect(convert(/\x3B/)).toMatchInlineSnapshot(`"';'"`)
+    // @ts-expect-error testing invalid input
     expect(convert(/\42/)).toMatchInlineSnapshot(`"'*'"`)
+    // @ts-expect-error testing invalid input
     expect(convert(/\073/)).toMatchInlineSnapshot(`"';'"`)
     expect(convert(/\u003B/)).toMatchInlineSnapshot(`"';'"`)
   })
@@ -205,6 +207,7 @@ describe('basic', () => {
 
   it('groupedAs', () => {
     expect(convert(/(?<foo>abc)/)).toMatchInlineSnapshot(`"exactly('abc').as('foo')"`)
+    // @ts-expect-error needs a capturing group name
     expect(convert(/(?<\u{03C0}>x)/u)).toMatchInlineSnapshot(`"exactly('x').as('π'), [unicode]"`)
   })
 })
