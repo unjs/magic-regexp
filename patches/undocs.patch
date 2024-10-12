@@ -47,14 +47,14 @@ index b205c02af0f3e161e7fdb30dedc2e34a20ec3b98..b0e6a337560bd8801d3db3022a7bce02
        },
      },
 diff --git a/cli/main.mjs b/cli/main.mjs
-index d3f5d078a28bf4bf6291ed340434593367413e77..f5f2b6c5dfbb778c1360284aaf86425c10169ae2 100755
+index d3f5d078a28bf4bf6291ed340434593367413e77..e57cb954b47ea5d44f066a17021a5cb05a54f64b 100755
 --- a/cli/main.mjs
 +++ b/cli/main.mjs
-@@ -11,6 +11,7 @@ const cli = createCLI({
+@@ -10,6 +10,7 @@ const cli = createCLI({
+       github: 'unjs',
        themeColor: 'amber',
      },
 +    extends: [process.cwd()],
    },
  })
-
- cli.runMain()
+ 
