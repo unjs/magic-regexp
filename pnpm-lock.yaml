@@ -45,8 +45,8 @@ importers:
         specifier: 3.12.1
         version: 3.12.1(@typescript-eslint/utils@8.18.2(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2))(@vue/compiler-sfc@3.5.13)(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2)(vitest@2.1.8(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))
       '@codspeed/vitest-plugin':
-        specifier: 3.1.1
-        version: 3.1.1(vite@6.0.6(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))(vitest@2.1.8(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))
+        specifier: 4.0.0
+        version: 4.0.0(vite@6.0.6(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))(vitest@2.1.8(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))
       '@nuxt/kit':
         specifier: 3.15.0
         version: 3.15.0(magicast@0.3.5)(rollup@4.29.1)
@@ -336,11 +336,11 @@ packages:
     resolution: {integrity: sha512-YLPHc8yASwjNkmcDMQMY35yiWjoKAKnhUbPRszBRS0YgH+IXtsMp61j+yTcnCE3oO2DgP0U3iejLC8FTtKDC8Q==}
     engines: {node: '>=16.13'}
 
-  '@codspeed/core@3.1.1':
-    resolution: {integrity: sha512-ONhERVDAtkm0nc+FYPivDozoMOlNUP2BWRBFDJYATGA18Iap5Kd2mZ1/Lwz54RB5+g+3YDOpsvotHa4hd3Q+7Q==}
+  '@codspeed/core@4.0.0':
+    resolution: {integrity: sha512-B3zwdwLG8rcV0ORfYKX1wDP6ZCWf9C6ySidSf61q2vm9v5Lj2cWwRvj7vX+w/UyFHWKjp/zSyWTEed/r3Fv4Tg==}
 
-  '@codspeed/vitest-plugin@3.1.1':
-    resolution: {integrity: sha512-/PJUgxIfuRqpBSbaD8bgWXtbXxCqgnW89dzr3220fMkx/LA6z6oUb4tJGjeVsOWAzAgu0VBdSA+8hC+7D9BIuQ==}
+  '@codspeed/vitest-plugin@4.0.0':
+    resolution: {integrity: sha512-L7oCOuVL2xI1/z+HLt56+7Xs/MGzbaf5aaOys6vOMDAs1PmxbmyAz6g1Y0x1TrP1+dvR9LUZQCKM/CsXHCrNxg==}
     peerDependencies:
       vite: 6.0.6
       vitest: '>=1.2.2'
@@ -5681,7 +5681,7 @@ snapshots:
     dependencies:
       mime: 3.0.0
 
-  '@codspeed/core@3.1.1':
+  '@codspeed/core@4.0.0':
     dependencies:
       axios: 1.7.9
       find-up: 6.3.0
@@ -5690,9 +5690,9 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@codspeed/vitest-plugin@3.1.1(vite@6.0.6(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))(vitest@2.1.8(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))':
+  '@codspeed/vitest-plugin@4.0.0(vite@6.0.6(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))(vitest@2.1.8(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))':
     dependencies:
-      '@codspeed/core': 3.1.1
+      '@codspeed/core': 4.0.0
       vite: 6.0.6(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1)
       vitest: 2.1.8(@types/node@22.10.3)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1)
     transitivePeerDependencies:
