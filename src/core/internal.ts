@@ -1,3 +1,4 @@
+import type { EscapeChar } from './types/escape'
 import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
 import type { IfUnwrapped } from './wrap'
@@ -133,6 +134,11 @@ export interface Input<
   optionally: <NV extends string = IfUnwrapped<V, `(?:${V})?`, `${V}?`>>() => Input<NV, G, C>
 
   toString: () => string
+}
+
+export interface CharInput<T extends string> extends Input<`[${T}]`> {
+  orChar: (<Or extends string>(chars: Or) => CharInput<`${T}${EscapeChar<Or>}`>) & CharInput<T>
+  from: <From extends string, To extends string>(charFrom: From, charTo: To) => CharInput<`${T}${EscapeChar<From>}-${EscapeChar<To>}`>
 }
 
 export function createInput<

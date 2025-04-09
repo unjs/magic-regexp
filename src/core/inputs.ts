@@ -1,4 +1,4 @@
-import type { Input } from './internal'
+import type { CharInput, Input } from './internal'
 import type { EscapeChar } from './types/escape'
 import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
@@ -11,15 +11,26 @@ export type { Input }
 
 const ESCAPE_REPLACE_RE = /[.*+?^${}()|[\]\\/]/g
 
-/** This matches any character in the string provided */
-export function charIn<T extends string>(chars: T) {
-  return createInput(`[${chars.replace(/[-\\^\]]/g, '\\$&')}]`) as Input<`[${EscapeChar<T>}]`>
+function createCharInput<T extends string>(raw: T) {
+  const input = createInput(`[${raw}]`)
+  const from = <From extends string, To extends string>(charFrom: From, charTo: To) => createCharInput(`${raw}${escapeCharInput(charFrom)}-${escapeCharInput(charTo)}`)
+  const orChar = Object.assign(<T extends string>(chars: T) => createCharInput(`${raw}${escapeCharInput(chars)}`), { from })
+  return Object.assign(input, { orChar, from }) as CharInput<T>
 }
 
-/** This matches any character that is not in the string provided */
-export function charNotIn<T extends string>(chars: T) {
-  return createInput(`[^${chars.replace(/[-\\^\]]/g, '\\$&')}]`) as Input<`[^${EscapeChar<T>}]`>
+function escapeCharInput<T extends string>(raw: T) {
+  return raw.replace(/[-\\^\]]/g, '\\$&') as EscapeChar<T>
 }
+
+/** This matches any character in the string provided */
+export const charIn = Object.assign(<T extends string>(chars: T) => {
+  return createCharInput(escapeCharInput(chars))
+}, createCharInput(''))
+
+/** This matches any character that is not in the string provided */
+export const charNotIn = Object.assign(<T extends string>(chars: T) => {
+  return createCharInput(`^${escapeCharInput(chars)}`)
+}, createCharInput('^'))
 
 /**
  * This takes a variable number of inputs and matches any of them

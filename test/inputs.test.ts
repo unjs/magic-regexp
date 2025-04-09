@@ -12,10 +12,40 @@ describe('inputs', () => {
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[fo\\\\\\]\\\\\\^\\]/')
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[fo\\]\\^]'>()
   })
+  it('charIn.orChar', () => {
+    const input = charIn('a').orChar('b')
+    expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[ab\\]/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[ab]'>()
+  })
+  it('charIn.orChar.from', () => {
+    const input = charIn('a').orChar.from('a', 'b')
+    expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[aa-b\\]/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[aa-b]'>()
+  })
+  it('charIn.from', () => {
+    const input = charIn.from('a', 'b')
+    expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[a-b\\]/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[a-b]'>()
+  })
   it('charNotIn', () => {
     const input = charNotIn('fo^-')
     expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[\\^fo\\\\\\^\\\\-\\]/')
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[^fo\\^\\-]'>()
+  })
+  it('charNotIn.orChar', () => {
+    const input = charNotIn('a').orChar('b')
+    expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[\\^ab\\]/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[^ab]'>()
+  })
+  it('charNotIn.orChar.from', () => {
+    const input = charNotIn('a').orChar.from('a', 'b')
+    expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[\\^aa-b\\]/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[^aa-b]'>()
+  })
+  it('charNotIn.from', () => {
+    const input = charNotIn.from('a', 'b')
+    expect(new RegExp(input as any)).toMatchInlineSnapshot('/\\[\\^a-b\\]/')
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'[^a-b]'>()
   })
   it('anyOf', () => {
     const values = ['fo/o', 'bar', 'baz', oneOrMore('this')] as const
