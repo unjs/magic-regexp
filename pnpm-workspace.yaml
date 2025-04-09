@@ -1,3 +1,13 @@
 packages:
   - playground
   - docs
+
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+  - shadcn-docs-nuxt
+  - vue-demi
+
+onlyBuiltDependencies:
+  - sharp
+  - simple-git-hooks
