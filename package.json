@@ -41,7 +41,7 @@
     "build": "unbuild",
     "dev": "vitest dev",
     "docs:generate": "nuxi generate docs",
-    "lint": "eslint --fix .",
+    "lint": "eslint .",
     "prepare": "npx simple-git-hooks && pnpm build",
     "prepublishOnly": "pnpm lint && pnpm test",
     "release": "bumpp && npm publish",

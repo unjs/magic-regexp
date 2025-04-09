@@ -49,7 +49,7 @@ export const createRegExp: {
 } = (...inputs: any[]) => {
   const flags
     = inputs.length > 1
-    && (Array.isArray(inputs[inputs.length - 1]) || inputs[inputs.length - 1] instanceof Set)
+      && (Array.isArray(inputs[inputs.length - 1]) || inputs[inputs.length - 1] instanceof Set)
       ? inputs.pop()
       : undefined
   return new RegExp(exactly(...inputs).toString(), [...(flags || '')].join('')) as any

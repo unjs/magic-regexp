@@ -1,11 +1,10 @@
-import { expectTypeOf } from 'expect-type'
-import { describe, it } from 'vitest'
-
-// eslint-disable-next-line import/no-duplicates
 import type * as flags from '../src/core/flags'
 
-// eslint-disable-next-line import/no-duplicates
 import type { Flag } from '../src/core/flags'
+
+import { expectTypeOf } from 'expect-type'
+
+import { describe, it } from 'vitest'
 
 type ValueOf<T> = T[keyof T]
 
