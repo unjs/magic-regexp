@@ -1,17 +1,16 @@
-import type { Context } from 'node:vm'
-import { createContext, runInContext } from 'node:vm'
-import { pathToFileURL } from 'node:url'
-
-import type { Node } from 'estree-walker'
-import { walk } from 'estree-walker'
 import type { SimpleCallExpression } from 'estree'
+import type { Node } from 'estree-walker'
+import type { Context } from 'node:vm'
 import type { SourceMapInput } from 'rollup'
-import { createUnplugin } from 'unplugin'
-import MagicString from 'magic-string'
-import { parseQuery, parseURL } from 'ufo'
-import { findStaticImports, parseStaticImport } from 'mlly'
 
+import { pathToFileURL } from 'node:url'
+import { createContext, runInContext } from 'node:vm'
+import { walk } from 'estree-walker'
 import * as magicRegExp from 'magic-regexp'
+import MagicString from 'magic-string'
+import { findStaticImports, parseStaticImport } from 'mlly'
+import { parseQuery, parseURL } from 'ufo'
+import { createUnplugin } from 'unplugin'
 
 export const MagicRegExpTransformPlugin = createUnplugin(() => {
   return {
@@ -73,12 +72,13 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
             !wrapperNames.includes((node.callee as any).name)
             // Namespaced call
             && (node.callee.type !== 'MemberExpression'
-            || node.callee.object.type !== 'Identifier'
-            || node.callee.object.name !== namespace
-            || node.callee.property.type !== 'Identifier'
-            || node.callee.property.name !== 'createRegExp')
-          )
+              || node.callee.object.type !== 'Identifier'
+              || node.callee.object.name !== namespace
+              || node.callee.property.type !== 'Identifier'
+              || node.callee.property.name !== 'createRegExp')
+          ) {
             return
+          }
 
           const { start, end } = node as any as { start: number, end: number }
 

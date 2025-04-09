@@ -1,4 +1,5 @@
 import { fileURLToPath } from 'node:url'
+
 import codspeedPlugin from '@codspeed/vitest-plugin'
 import { defineConfig } from 'vitest/config'
 

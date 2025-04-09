@@ -1,5 +1,5 @@
-import regexpTree from 'regexp-tree'
 import type { Char, ClassRange, Expression } from 'regexp-tree/ast'
+import regexpTree from 'regexp-tree'
 
 function build(node: Expression | null): string {
   if (node === null)

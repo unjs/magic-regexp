@@ -1,5 +1,5 @@
-import { describe, it } from 'vitest'
 import { expectTypeOf } from 'expect-type'
+import { describe, it } from 'vitest'
 
 // eslint-disable-next-line import/no-duplicates
 import type * as flags from '../src/core/flags'

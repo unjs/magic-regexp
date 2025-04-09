@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
 import { parse } from 'acorn'
+import { describe, expect, it } from 'vitest'
 
 import { MagicRegExpTransformPlugin } from '../src/transform'
 
@@ -45,18 +45,18 @@ for (const importSpecifier of ['magic-regexp', 'magic-regexp/further-magic']) {
         // This line will be double-escaped in the snapshot
         're3.test(\'/foo/bar\')',
       ])
-      expect(code).toMatchInlineSnapshot(`
-        "import { something } from 'other-module'
-        import { createRegExp, exactly, anyOf } from '${importSpecifier}'
-        //
-        const re1 = /bar(?!foo)/
-        const re2 = /(?:bar|foo)/
-        const re3 = /\\/foo\\/bar/
-        re3.test('/foo/bar')"
-      `)
+      expect(code).toBe(
+        `import { something } from 'other-module'
+import { createRegExp, exactly, anyOf } from '${importSpecifier}'
+//
+const re1 = /bar(?!foo)/
+const re2 = /(?:bar|foo)/
+const re3 = /\\/foo\\/bar/
+re3.test('/foo/bar')`,
+      )
       // ... but we test it here.
       // eslint-disable-next-line no-eval
-      expect(eval(code.split('//').pop())).toMatchInlineSnapshot('true')
+      expect(eval(code.split('//').pop())).toBe(true)
     })
 
     it('respects how users import library', () => {
@@ -68,14 +68,14 @@ for (const importSpecifier of ['magic-regexp', 'magic-regexp/further-magic']) {
         'const re2 = magicRE.createRegExp(magicRE.anyOf(\'bar\', \'foo\'))',
         'const re3 = createRegExp(\'test/value\')',
       ])
-      expect(code).toMatchInlineSnapshot(`
-        "import { createRegExp as cRE } from '${importSpecifier}'
-        import { exactly as ext, createRegExp } from '${importSpecifier}'
-        import * as magicRE from '${importSpecifier}'
-        const re1 = /bar(?!foo)/
-        const re2 = /(?:bar|foo)/
-        const re3 = /test\\/value/"
-      `)
+      expect(code).toBe(
+        `import { createRegExp as cRE } from '${importSpecifier}'
+import { exactly as ext, createRegExp } from '${importSpecifier}'
+import * as magicRE from '${importSpecifier}'
+const re1 = /bar(?!foo)/
+const re2 = /(?:bar|foo)/
+const re3 = /test\\/value/`,
+      )
     })
   })
 }

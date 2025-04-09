@@ -1,5 +1,5 @@
-import { bench, describe } from 'vitest'
 import { parse } from 'acorn'
+import { bench, describe } from 'vitest'
 
 import { MagicRegExpTransformPlugin } from '../src/transform'
 

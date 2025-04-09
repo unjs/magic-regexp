@@ -1,27 +1,9 @@
-import { describe, expect, it } from 'vitest'
-import { expectTypeOf } from 'expect-type'
-
-import {
-  anyOf,
-  carriageReturn,
-  char,
-  charIn,
-  charNotIn,
-  digit,
-  exactly,
-  letter,
-  linefeed,
-  maybe,
-  not,
-  oneOrMore,
-  tab,
-  whitespace,
-  word,
-  wordBoundary,
-  wordChar,
-} from '../src/core/inputs'
 import type { MagicRegExp } from '../src'
+
+import { expectTypeOf } from 'expect-type'
+import { describe, expect, it } from 'vitest'
 import { createRegExp } from '../src'
+import { anyOf, carriageReturn, char, charIn, charNotIn, digit, exactly, letter, linefeed, maybe, not, oneOrMore, tab, whitespace, word, wordBoundary, wordChar } from '../src/core/inputs'
 import { extractRegExp } from './utils'
 
 describe('inputs', () => {

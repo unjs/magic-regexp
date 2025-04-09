@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - renovate/*
   pull_request:
   workflow_dispatch:
 
@@ -12,14 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install
       - name: Run benchmarks
-        uses: CodSpeedHQ/action@v2
+        uses: CodSpeedHQ/action@v3
         with:
           run: pnpm vitest bench
           # token retrieved from the CodSpeed app at the previous step

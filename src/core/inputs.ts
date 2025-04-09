@@ -1,23 +1,24 @@
 import type { CharInput, Input } from './internal'
-import { createInput } from './internal'
 import type { EscapeChar } from './types/escape'
 import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
 import type { IfUnwrapped } from './wrap'
+
+import { createInput } from './internal'
 import { wrap } from './wrap'
 
 export type { Input }
 
 const ESCAPE_REPLACE_RE = /[.*+?^${}()|[\]\\/]/g
 
-function createCharInput <T extends string>(raw: T) {
+function createCharInput<T extends string>(raw: T) {
   const input = createInput(`[${raw}]`)
   const from = <From extends string, To extends string>(charFrom: From, charTo: To) => createCharInput(`${raw}${escapeCharInput(charFrom)}-${escapeCharInput(charTo)}`)
-  const orChar = Object.assign((<T extends string>(chars: T) => createCharInput(`${raw}${escapeCharInput(chars)}`)), { from })
+  const orChar = Object.assign(<T extends string>(chars: T) => createCharInput(`${raw}${escapeCharInput(chars)}`), { from })
   return Object.assign(input, { orChar, from }) as CharInput<T>
 }
 
-function escapeCharInput <T extends string>(raw: T) {
+function escapeCharInput<T extends string>(raw: T) {
   return raw.replace(/[-\\^\]]/g, '\\$&') as EscapeChar<T>
 }
 

@@ -1,6 +1,6 @@
-import { MagicRegExpTransformPlugin } from 'magic-regexp/transform'
-import * as magicRegexp from 'magic-regexp'
 import { addImportsSources, addVitePlugin, addWebpackPlugin, defineNuxtModule } from '@nuxt/kit'
+import * as magicRegexp from 'magic-regexp'
+import { MagicRegExpTransformPlugin } from 'magic-regexp/transform'
 
 export default defineNuxtModule({
   setup(_options, nuxt) {
