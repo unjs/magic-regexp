@@ -255,7 +255,7 @@ describe('chained inputs', () => {
     const multi = multichar.or('foo', input.groupedAs('groupName'), exactly('bar').or(test))
     const regexp2 = new RegExp(multi as any)
     expect(regexp2).toMatchInlineSnapshot(
-      '/\\(\\?:ab\\|foo\\(\\?<groupName>\\\\\\?\\)\\(\\?:bar\\|test\\\\\\.js\\)\\)/',
+      '/\\(\\?:ab\\|foo\\|\\(\\?<groupName>\\\\\\?\\)\\|\\(\\?:bar\\|test\\\\\\.js\\)\\)/',
     )
     expectTypeOf(
       extractRegExp(multi),
