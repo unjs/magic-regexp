@@ -7,7 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "cd .. && pnpm build --stub && cd docs && pnpm nuxt prepare"
   },
   "dependencies": {
     "@nuxtjs/plausible": "^1.2.0",
