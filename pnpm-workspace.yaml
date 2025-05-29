@@ -1,13 +1,13 @@
 packages:
   - playground
   - docs
-
 ignoredBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
   - shadcn-docs-nuxt
+  - unrs-resolver
   - vue-demi
-
 onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
   - sharp
   - simple-git-hooks
