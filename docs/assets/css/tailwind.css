@@ -1,7 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
+@config '../../tailwind.config.js';
+@source '../../node_modules/shadcn-docs-nuxt';
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @layer base {
   :root {
@@ -29,7 +39,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border:240 5.9% 10%;
+    --border:240 5.9% 90%;
     --input:240 5.9% 90%;
     --ring:240 5.9% 10%;
     --radius: 0.5rem;
@@ -66,13 +76,10 @@
   }
 }
 
+@utility step {
+  counter-increment: step;
 
-@layer utilities {
-  .step {
-    counter-increment: step;
-  }
-
-  .step:before {
+  &:before {
     @apply absolute w-9 h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 border-background;
     @apply -ml-[50px] -mt-1;
     content: counter(step);
@@ -81,7 +88,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
 
   body {
