@@ -15,8 +15,8 @@ export type MagicRegExp<
   [FlagsS]: Flags
 }
 
-type ExtractGroups<T extends MagicRegExp<string, string, (string | undefined)[], string>> =
-  T extends MagicRegExp<string, infer V, (string | undefined)[], string> ? V : never
+type ExtractGroups<T extends MagicRegExp<string, string, (string | undefined)[], string>>
+  = T extends MagicRegExp<string, infer V, (string | undefined)[], string> ? V : never
 
 type StringWithHint<S extends string> = string & {
   _capturedBy: S
