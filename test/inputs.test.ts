@@ -70,10 +70,9 @@ describe('inputs', () => {
     expect(regexp).toMatchInlineSnapshot('/\\(\\?:foo\\)\\?/')
     expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(?:foo)?'>()
 
-    // const nestedInputWithGroup = maybe(exactly('foo').groupedAs('groupName'))
-    // expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<
-    //   MagicRegExp<'/(?: (?<groupName>foo) )?/', 'groupName', ['(?<groupName>foo)'], never>
-    // >()
+    const nestedInputWithGroup = maybe(exactly('foo').groupedAs('groupName'))
+    expectTypeOf(createRegExp(nestedInputWithGroup)).toEqualTypeOf<MagicRegExp<'/(?:(?<groupName>foo))?/', 'groupName', ['(?<groupName>foo)'], never>
+    >()
 
     const multi = maybe('foo', input.groupedAs('groupName'), 'bar')
     const regexp2 = new RegExp(multi as any)
@@ -93,8 +92,6 @@ describe('inputs', () => {
       ),
     )
     const regexp4 = createRegExp(withCaptureGroup2, ['g', 'i'])
-    // /(?:beta|dev)(?:(?:[\-_.])?(?<number>\d+))?/gi
-    // "/\(\?:beta\|dev\)\(\?:\(\?:\[\\-_\.\]\)\?\(\?<number>\\d\+\)\)\?/gi"
     expect(regexp4).toMatchInlineSnapshot(`/\\(\\?:beta\\|dev\\)\\(\\?:\\(\\?:\\[\\\\-_\\.\\]\\)\\?\\(\\?<number>\\\\d\\+\\)\\)\\?/gi`)
   })
   it('oneOrMore', () => {
