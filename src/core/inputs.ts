@@ -81,11 +81,11 @@ export function maybe<
   Inputs extends InputSource[],
   Value extends string = Join<MapToValues<Inputs>, '', ''>,
 >(...inputs: Inputs): Input<
-  IfUnwrapped<Value, `(?:${Value})?`, `${Value}?`>,
+  `(?:${Value})?`,
   MapToGroups<Inputs>,
   MapToCapturedGroupsArr<Inputs>
 > {
-  return createInput(`${wrap(exactly(...inputs))}?`)
+  return createInput(`(?:${exactly(...inputs)})?`)
 }
 
 /**
