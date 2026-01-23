@@ -5,6 +5,7 @@
 [![Github Actions][github-actions-src]][github-actions-href]
 [![Codecov][codecov-src]][codecov-href]
 [![Bundlephobia][bundlephobia-src]][bundlephobia-href]
+[![nuxt.care health](https://img.shields.io/endpoint?url=https://nuxt.care/api/badge/magic-regexp)](https://nuxt.care/?search=magic-regexp)
 
 > A compiled-away, type-safe, readable RegExp alternative
 
