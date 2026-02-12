@@ -40,8 +40,8 @@ importers:
         specifier: 5.4.1
         version: 5.4.1(@vue/compiler-sfc@3.5.27)(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2))
       '@codspeed/vitest-plugin':
-        specifier: 5.1.0
-        version: 5.1.0(tinybench@2.9.0)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2))(vitest@3.2.4(@types/debug@4.1.12)(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2))
+        specifier: 5.2.0
+        version: 5.2.0(tinybench@2.9.0)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2))(vitest@3.2.4(@types/debug@4.1.12)(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2))
       '@nuxt/kit':
         specifier: 4.3.1
         version: 4.3.1(magicast@0.5.2)
@@ -340,11 +340,11 @@ packages:
     resolution: {integrity: sha512-SIOD2DxrRRwQ+jgzlXCqoEFiKOFqaPjhnNTGKXSRLvp1HiOvapLaFG2kEr9dYQTYe8rKrd9uvDUzmAITeNyaHQ==}
     engines: {node: '>=18.0.0'}
 
-  '@codspeed/core@5.1.0':
-    resolution: {integrity: sha512-DFO8c7/wd42QbabBdTYR7UsO8g77eHWE9Q4Eyr6yUJSoWhb1qaSoXiqX77RtN3Sbw8RGhhXiwaUC+vVr08+OMg==}
+  '@codspeed/core@5.2.0':
+    resolution: {integrity: sha512-CmDhpWjcOJg2iBOQ/BmBnSBq8qxlM3r4h8uvYDkoUaba+EKRT3T73BZtKuml/48jZMsB+4/FG2UbTBinDWtuvw==}
 
-  '@codspeed/vitest-plugin@5.1.0':
-    resolution: {integrity: sha512-rA+8DdsbAYxO7lo49K8ZBJqEk7b14Uztpz47ZKm6k8RJcTijffk7OjpG3kOJVUWWta2BVI1bPVj9ENmdfUwrfA==}
+  '@codspeed/vitest-plugin@5.2.0':
+    resolution: {integrity: sha512-soXKIQBqJzjVQyWRwe2HNfhCaBgxhG25m8+PI3F5zFFsV3FQxMJXHsMECNtrgm+SRiCiWv/OFTcfCMZRy4nKtw==}
     peerDependencies:
       tinybench: '>=2.9.0'
       vite: 7.3.1
@@ -6857,7 +6857,7 @@ snapshots:
 
   '@cloudflare/kv-asset-handler@0.4.2': {}
 
-  '@codspeed/core@5.1.0':
+  '@codspeed/core@5.2.0':
     dependencies:
       axios: 1.12.2
       find-up: 6.3.0
@@ -6866,9 +6866,9 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@codspeed/vitest-plugin@5.1.0(tinybench@2.9.0)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2))(vitest@3.2.4(@types/debug@4.1.12)(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2))':
+  '@codspeed/vitest-plugin@5.2.0(tinybench@2.9.0)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2))(vitest@3.2.4(@types/debug@4.1.12)(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2))':
     dependencies:
-      '@codspeed/core': 5.1.0
+      '@codspeed/core': 5.2.0
       tinybench: 2.9.0
       vite: 7.3.1(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2)
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.46.0)(yaml@2.8.2)
