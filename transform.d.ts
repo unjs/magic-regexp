@@ -1,3 +1,3 @@
 // Legacy stub for previous TS versions
 
-export * from './dist/transform'
+export * from './dist/transform.d.mts'

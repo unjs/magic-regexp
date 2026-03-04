@@ -31,6 +31,8 @@ export default antfu({
 }, {
   files: ['docs/**/*'],
   rules: {
+    'markdown/no-multiple-h1': 'off',
+    'markdown/no-missing-atx-heading-space': 'off',
     'regexp/prefer-character-class': 'off',
   },
 })

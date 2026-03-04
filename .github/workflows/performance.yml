@@ -7,9 +7,9 @@ jobs:
   check-performance:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - run: corepack enable
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
           node-version: 24
           cache: pnpm
@@ -18,7 +18,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: TSC diagnostics diff
-        uses: beerose/tsc-diagnostics-diff-action@49bf67cb35cae2ba688d1e7dffe5f14acbb62406
+        uses: beerose/tsc-diagnostics-diff-action@49bf67cb35cae2ba688d1e7dffe5f14acbb62406 # 49bf67cb35cae2ba688d1e7dffe5f14acbb62406
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           leave-comment: true

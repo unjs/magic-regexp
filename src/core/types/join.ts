@@ -9,7 +9,7 @@ export type Join<
   : ''
 
 type UnionToIntersection<Union> = (Union extends Union ? (a: Union) => any : never) extends (
-  a: infer I
+  a: infer I,
 ) => any
   ? I
   : never
