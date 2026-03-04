@@ -84,14 +84,14 @@ export interface Input<
       N extends number,
       NV extends string = IfUnwrapped<V, `(?:${V}){${N},}`, `${V}{${N},}`>,
     >(
-      number: N
+      number: N,
     ) => Input<NV, G, C>
     /** specify that the expression must occur at most `N` times */
     atMost: <
       N extends number,
       NV extends string = IfUnwrapped<V, `(?:${V}){0,${N}}`, `${V}{0,${N}}`>,
     >(
-      number: N
+      number: N,
     ) => Input<NV, G, C>
     /** specify a range of times to repeat the previous pattern */
     between: <
@@ -100,12 +100,12 @@ export interface Input<
       NV extends string = IfUnwrapped<V, `(?:${V}){${Min},${Max}}`, `${V}{${Min},${Max}}`>,
     >(
       min: Min,
-      max: Max
+      max: Max,
     ) => Input<NV, G, C>
   }
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()`. Alias for `groupedAs` */
   as: <K extends string>(
-    key: K
+    key: K,
   ) => Input<
     V extends `(?:${infer S})` ? `(?<${K}>${S})` : `(?<${K}>${V})`,
     G | K,
@@ -113,7 +113,7 @@ export interface Input<
   >
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()` */
   groupedAs: <K extends string>(
-    key: K
+    key: K,
   ) => Input<
     V extends `(?:${infer S})` ? `(?<${K}>${S})` : `(?<${K}>${V})`,
     G | K,
