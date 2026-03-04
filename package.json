@@ -31,7 +31,7 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "files": [
     "dist",
     "further-magic.d.ts",
@@ -39,7 +39,7 @@
     "transform.d.ts"
   ],
   "scripts": {
-    "build": "unbuild",
+    "build": "tsdown",
     "dev": "vitest dev",
     "docs:generate": "nuxt generate docs",
     "lint": "eslint .",
@@ -69,11 +69,10 @@
     "bumpp": "10.4.1",
     "eslint": "10.0.2",
     "expect-type": "1.3.0",
-    "lint-staged": "latest",
-    "rollup": "4.59.0",
+    "nano-staged": "0.9.0",
     "simple-git-hooks": "2.13.1",
+    "tsdown": "0.20.3",
     "typescript": "5.9.3",
-    "unbuild": "3.6.1",
     "vite": "7.3.1",
     "vitest": "4.0.18"
   },
@@ -84,11 +83,9 @@
     "vue": "3.5.29"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
+    "pre-commit": "pnpm exec nano-staged"
   },
-  "lint-staged": {
-    "*": [
-      "npx eslint --fix"
-    ]
+  "nano-staged": {
+    "*": "pnpm exec eslint --fix"
   }
 }

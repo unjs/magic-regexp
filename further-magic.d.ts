@@ -1,3 +1,3 @@
 // Legacy stub for previous TS versions
 
-export * from './dist/further-magic'
+export * from './dist/further-magic.d.mts'

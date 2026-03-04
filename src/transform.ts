@@ -1,7 +1,6 @@
 import type { SimpleCallExpression } from 'estree'
 import type { Node } from 'estree-walker'
 import type { Context } from 'node:vm'
-import type { SourceMapInput } from 'rollup'
 
 import { pathToFileURL } from 'node:url'
 import { createContext, runInContext } from 'node:vm'
@@ -96,7 +95,7 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
       if (s.hasChanged()) {
         return {
           code: s.toString(),
-          map: s.generateMap({ includeContent: true, source: id }) as SourceMapInput,
+          map: s.generateMap({ includeContent: true, source: id }),
         }
       }
     },
