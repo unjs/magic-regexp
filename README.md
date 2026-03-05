@@ -43,9 +43,9 @@ Published under [MIT License](./LICENCE).
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/magic-regexp?style=flat-square
+[npm-version-src]: https://npmx.dev/api/registry/badge/version/magic-regexp
 [npm-version-href]: https://npmx.dev/package/magic-regexp
-[npm-downloads-src]: https://img.shields.io/npm/dm/magic-regexp?style=flat-square
+[npm-downloads-src]: https://npmx.dev/api/registry/badge/downloads/magic-regexp
 [npm-downloads-href]: https://npmx.dev/package/magic-regexp
 [github-actions-src]: https://img.shields.io/github/actions/workflow/status/danielroe/magic-regexp/ci.yml?branch=main&style=flat-square
 [github-actions-href]: https://github.com/danielroe/magic-regexp/actions?query=workflow%3Aci
