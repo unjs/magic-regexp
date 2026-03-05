@@ -20,8 +20,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run benchmarks
-        uses: CodSpeedHQ/action@76578c2a7ddd928664caa737f0e962e3085d4e7c # v3
+        uses: CodSpeedHQ/action@2ac572851726409c88c02a307f1ea2632a9ea59b # v4
         with:
+          mode: simulation
           run: pnpm vitest bench
           # token retrieved from the CodSpeed app at the previous step
           token: ${{ secrets.CODSPEED_TOKEN }}
