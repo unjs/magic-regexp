@@ -7,6 +7,11 @@ trustPolicyExclude:
 packages:
   - playground
   - docs
+overrides:
+  magic-regexp: 'link:.'
+  nuxt: 4.3.1
+  vite: 7.3.1
+  vue: 3.5.29
 ignoredBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
@@ -17,9 +22,3 @@ onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - sharp
   - simple-git-hooks
-
-overrides:
-  magic-regexp: "link:."
-  nuxt: "4.3.1"
-  vite: "7.3.1"
-  vue: "3.5.29"
