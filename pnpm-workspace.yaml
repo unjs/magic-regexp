@@ -12,13 +12,13 @@ overrides:
   nuxt: 4.3.1
   vite: 7.3.1
   vue: 3.5.29
-ignoredBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - shadcn-docs-nuxt
-  - unrs-resolver
-  - vue-demi
-onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - sharp
-  - simple-git-hooks
+
+allowBuilds:
+  '@parcel/watcher': false
+  '@tailwindcss/oxide': true
+  esbuild: false
+  shadcn-docs-nuxt: false
+  sharp: true
+  simple-git-hooks: true
+  unrs-resolver: false
+  vue-demi: false
