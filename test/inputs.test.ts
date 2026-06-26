@@ -85,6 +85,7 @@ describe('inputs', () => {
   it('maybe wraps multiple concatenated groups (#505)', () => {
     const input = maybe(exactly('a').or('b'), exactly('1').or('2'))
     expect(input.toString()).toMatchInlineSnapshot(`"(?:(?:a|b)(?:1|2))?"`)
+    expectTypeOf(extractRegExp(input)).toEqualTypeOf<'(?:(?:a|b)(?:1|2))?'>()
     const regexp = createRegExp(input)
     // The whole expression is optional, so it matches any string.
     expect(regexp.test('a2')).toBe(true)
