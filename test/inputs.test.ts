@@ -82,6 +82,29 @@ describe('inputs', () => {
     )
     expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'(?:foo(?<groupName>(?:foo)?)bar)?'>()
   })
+  it('maybe wraps multiple concatenated groups (#505)', () => {
+    const input = maybe(exactly('a').or('b'), exactly('1').or('2'))
+    expect(input.toString()).toMatchInlineSnapshot(`"(?:(?:a|b)(?:1|2))?"`)
+    const regexp = createRegExp(input)
+    // The whole expression is optional, so it matches any string.
+    expect(regexp.test('a2')).toBe(true)
+    expect(regexp.test('b1')).toBe(true)
+    expect(regexp.test('foo')).toBe(true)
+    expect(regexp.test('')).toBe(true)
+  })
+  it('maybe wraps concatenated content with named groups (#549)', () => {
+    const pattern = exactly(
+      anyOf('beta', 'dev'),
+      maybe(charIn('-_.').optionally(), oneOrMore(digit).as('number')),
+    )
+    const regexp = createRegExp(pattern, ['g', 'i'])
+    expect(regexp.source).toMatchInlineSnapshot(
+      `"(?:beta|dev)(?:(?:[\\-_.])?(?<number>\\d+))?"`,
+    )
+    // The trailing separator/number group is fully optional, so it must not
+    // greedily consume the separator on its own.
+    expect('-Beta.zip'.match(regexp)?.[0]).toBe('Beta')
+  })
   it('oneOrMore', () => {
     const input = oneOrMore('foo')
     const regexp = new RegExp(input as any)
