@@ -48,6 +48,12 @@ type IsSingleGroup<S extends string> = S extends `(${infer Rest}`
   ? ScanGroup<Rest, [any]>
   : false
 
+/**
+ * Resolves to `No` when `Value` does not need wrapping before a quantifier is
+ * appended — i.e. it is a single character or a single group enclosing the
+ * whole string — and to `Yes` otherwise. This is the type-level counterpart of
+ * the runtime {@link isAtomic} check.
+ */
 export type IfUnwrapped<Value extends string, Yes, No> = IsSingleGroup<Value> extends true
   ? No
   : StripEscapes<Value> extends `${infer A}${infer B}`
@@ -114,6 +120,12 @@ function isAtomic(v: string): boolean {
   return depth === 0
 }
 
+/**
+ * Wraps a pattern in a non-capturing group (`(?:...)`) unless it is already
+ * atomic — a single character or a single group enclosing the whole string —
+ * so that a subsequently appended quantifier applies to the entire pattern.
+ * See {@link isAtomic} for the wrapping criteria.
+ */
 export function wrap(s: string | Input<any>) {
   const v = s.toString()
   return isAtomic(v) ? v : `(?:${v})`
