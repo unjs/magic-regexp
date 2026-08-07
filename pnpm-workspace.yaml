@@ -9,6 +9,10 @@ packages:
   - playground
   - docs
 
+# TODO: fix upstream in nuxt-modules/i18n
+publicHoistPattern: 
+ - '@intlify/*'
+
 overrides:
   magic-regexp: 'link:.'
   nuxt: 4.3.1
