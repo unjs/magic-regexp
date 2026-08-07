@@ -3,21 +3,25 @@ shellEmulator: true
 trustPolicy: no-downgrade
 trustPolicyExclude:
   - chokidar@4.0.3
+  - semver@6.3.1
 
 packages:
   - playground
   - docs
+
 overrides:
   magic-regexp: 'link:.'
   nuxt: 4.3.1
   vite: 7.3.1
   vue: 3.5.29
+
 ignoredBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
   - shadcn-docs-nuxt
   - unrs-resolver
   - vue-demi
+
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - sharp
