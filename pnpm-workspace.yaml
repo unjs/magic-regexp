@@ -1,3 +1,7 @@
+# TODO: fix upstream in nuxt-modules/i18n
+publicHoistPattern:
+  - '@intlify/*'
+
 shellEmulator: true
 
 trustPolicy: no-downgrade
@@ -8,10 +12,6 @@ trustPolicyExclude:
 packages:
   - playground
   - docs
-
-# TODO: fix upstream in nuxt-modules/i18n
-publicHoistPattern: 
- - '@intlify/*'
 
 overrides:
   magic-regexp: 'link:.'
