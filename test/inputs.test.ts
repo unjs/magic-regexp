@@ -81,6 +81,27 @@ describe('inputs', () => {
       '/\\(\\?:foo\\(\\?<groupName>\\(\\?:foo\\)\\?\\)bar\\)\\?/',
     )
     expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'(?:foo(?<groupName>(?:foo)?)bar)?'>()
+
+    // a single enclosing group must not be double-wrapped
+    const singleGroup = maybe(exactly('a').or('b'))
+    expect(new RegExp(singleGroup as any)).toMatchInlineSnapshot('/\\(\\?:a\\|b\\)\\?/')
+    expectTypeOf(extractRegExp(singleGroup)).toEqualTypeOf<'(?:a|b)?'>()
+
+    // adjacent groups must be wrapped as a whole so `?` applies to all of them
+    // https://github.com/unjs/magic-regexp/issues/505
+    const adjacentGroups = maybe(exactly('a').or('b'), exactly('1').or('2'))
+    expect(new RegExp(adjacentGroups as any)).toMatchInlineSnapshot(
+      '/\\(\\?:\\(\\?:a\\|b\\)\\(\\?:1\\|2\\)\\)\\?/',
+    )
+    expectTypeOf(extractRegExp(adjacentGroups)).toEqualTypeOf<'(?:(?:a|b)(?:1|2))?'>()
+
+    // adjacent groups including a named capture group
+    // https://github.com/unjs/magic-regexp/issues/549
+    const withNamedGroup = maybe(charIn('-_.').optionally(), oneOrMore(digit).as('number'))
+    expect(new RegExp(withNamedGroup as any)).toMatchInlineSnapshot(
+      '/\\(\\?:\\(\\?:\\[\\\\-_\\.\\]\\)\\?\\(\\?<number>\\\\d\\+\\)\\)\\?/',
+    )
+    expectTypeOf(extractRegExp(withNamedGroup)).toEqualTypeOf<'(?:(?:[\\-_.])?(?<number>\\d+))?'>()
   })
   it('oneOrMore', () => {
     const input = oneOrMore('foo')
