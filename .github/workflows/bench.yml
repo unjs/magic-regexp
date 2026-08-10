@@ -22,7 +22,7 @@ jobs:
       - name: Build project
         run: pnpm build
       - name: Run benchmarks
-        uses: CodSpeedHQ/action@9c498abf90f466ace8338cd5505d6ab277e1f9a3 # v4
+        uses: CodSpeedHQ/action@4296e51e7041e24dadb86d1d6e8b9320d223dbe8 # v5
         with:
           mode: simulation
           run: pnpm vitest bench
