@@ -46,7 +46,7 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
         return true
 
       // js files
-      if (pathname.match(/\.((c|m)?j|t)sx?$/g))
+      if (/\.(?:(?:c|m)?j|t)sx?$/.test(pathname))
         return true
 
       return false
