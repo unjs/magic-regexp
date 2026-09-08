@@ -1,7 +1,18 @@
 {
   "name": "magic-regexp",
   "version": "0.11.0",
-  "packageManager": "pnpm@11.24.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.0.0",
+      "onFail": "download"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.24.0",
+      "onFail": "download"
+    }
+  },
   "description": "A compiled-away, type-safe, readable RegExp alternative",
   "license": "MIT",
   "homepage": "https://regexp.dev",
