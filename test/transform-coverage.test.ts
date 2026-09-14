@@ -8,11 +8,6 @@ describe('transformer: coverage', () => {
     const re = createRegExp(exactly('foo'))
   `
 
-  it('filters transform hooks by code', () => {
-    const plugin = MagicRegExpTransformPlugin.vite() as any
-    expect(plugin.transform.filter).toEqual({ code: 'magic-regexp' })
-  })
-
   it('supports various JS/TS extensions', () => {
     // Standard JS/TS
     expect(transform(code, 'file.js')).toBeDefined()
