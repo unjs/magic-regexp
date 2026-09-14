@@ -8,6 +8,11 @@ describe('transformer: coverage', () => {
     const re = createRegExp(exactly('foo'))
   `
 
+  it('filters transform hooks by code', () => {
+    const plugin = MagicRegExpTransformPlugin.vite() as any
+    expect(plugin.transform.filter).toEqual({ code: 'magic-regexp' })
+  })
+
   it('supports various JS/TS extensions', () => {
     // Standard JS/TS
     expect(transform(code, 'file.js')).toBeDefined()
@@ -54,7 +59,7 @@ describe('transformer: coverage', () => {
 // Helper function mimicked from transform.test.ts
 function transform(code: string, id = 'file.js') {
   const plugin = MagicRegExpTransformPlugin.vite() as any
-  return plugin.transform.call(
+  return plugin.transform.handler.call(
     { parse: (code: string) => parse(code, { ecmaVersion: 2022, sourceType: 'module' }) },
     code,
     id,
