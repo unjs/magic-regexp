@@ -42,15 +42,27 @@ type IsSingleGroup<Value extends string> = Value extends `(${infer Rest}`
     : false
   : false
 
-export type IfUnwrapped<Value extends string, Yes, No> = IsSingleGroup<Value> extends true
-  ? No
-  : StripEscapes<Value> extends `${infer A}${infer B}`
-    ? A extends ''
-      ? No
-      : B extends ''
+export type IfUnwrapped<Value extends string, Yes, No> = Value extends Value
+  ? IsSingleGroup<Value> extends true
+    ? No
+    : StripEscapes<Value> extends `${infer A}${infer B}`
+      ? A extends ''
         ? No
-        : Yes
-    : never
+        : B extends ''
+          ? No
+          : Yes
+      : never
+  : never
+
+/**
+ * The type counterpart of {@link wrap} followed by `Quantifier`: wrap `Value`
+ * in a non-capturing group unless the quantifier would already apply to all of
+ * it. The conditional distributes, so every member of a `Value` union keeps the
+ * result that matches what `wrap` returns for that member at runtime.
+ */
+export type Quantified<Value extends string, Quantifier extends string> = Value extends Value
+  ? IfUnwrapped<Value, `(?:${Value})${Quantifier}`, `${Value}${Quantifier}`>
+  : never
 
 const SINGLE_CHAR_RE = /^\\?.$/s
 

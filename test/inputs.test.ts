@@ -1,4 +1,5 @@
 import type { MagicRegExp } from '../src'
+import type { Input } from '../src/core/internal'
 
 import { expectTypeOf } from 'expect-type'
 import { describe, expect, it } from 'vitest'
@@ -249,6 +250,25 @@ describe('inputs', () => {
     // A single enclosing group still takes the quantifier directly.
     expect(maybe(anyOf('a', 'b')).toString()).toMatchInlineSnapshot(`"(?:a|b)?"`)
     expectTypeOf(extractRegExp(maybe(anyOf('a', 'b')))).toEqualTypeOf<'(?:a|b)?'>()
+  })
+  it('keeps each member of a union correlated with its own wrapping', () => {
+    // `wrap` decides per value at runtime, so the type has to distribute too:
+    // a union of an enclosed and an unenclosed pattern must not wrap both.
+    const union = exactly('') as unknown as Input<'(a)' | 'bc'>
+    expectTypeOf(extractRegExp(union.times.any())).toEqualTypeOf<'(a)*' | '(?:bc)*'>()
+    expectTypeOf(extractRegExp(union.optionally())).toEqualTypeOf<'(a)?' | '(?:bc)?'>()
+    expectTypeOf(extractRegExp(union.times.between(1, 2))).toEqualTypeOf<
+      '(a){1,2}' | '(?:bc){1,2}'
+    >()
+
+    // The same value reached through a top level helper.
+    const helperInput = exactly('a').grouped() as Input<'(a)'> | Input<'bc'>
+    expectTypeOf(extractRegExp(maybe(helperInput))).toEqualTypeOf<'(a)?' | '(?:bc)?'>()
+    expectTypeOf(extractRegExp(oneOrMore(helperInput))).toEqualTypeOf<'(a)+' | '(?:bc)+'>()
+
+    // And the runtime agrees for each member.
+    expect(maybe(exactly('a').grouped()).toString()).toMatchInlineSnapshot(`"(a)?"`)
+    expect(maybe(exactly('bc')).toString()).toMatchInlineSnapshot(`"(?:bc)?"`)
   })
 })
 

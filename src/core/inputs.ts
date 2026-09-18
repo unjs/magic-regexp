@@ -2,7 +2,7 @@ import type { CharInput, Input } from './internal'
 import type { EscapeChar } from './types/escape'
 import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
-import type { IfUnwrapped } from './wrap'
+import type { Quantified } from './wrap'
 
 import { createInput } from './internal'
 import { wrap } from './wrap'
@@ -81,7 +81,7 @@ export function maybe<
   Inputs extends InputSource[],
   Value extends string = Join<MapToValues<Inputs>, '', ''>,
 >(...inputs: Inputs): Input<
-  IfUnwrapped<Value, `(?:${Value})?`, `${Value}?`>,
+  Quantified<Value, '?'>,
   MapToGroups<Inputs>,
   MapToCapturedGroupsArr<Inputs>
 > {
@@ -112,7 +112,7 @@ export function oneOrMore<
   Inputs extends InputSource[],
   Value extends string = Join<MapToValues<Inputs>, '', ''>,
 >(...inputs: Inputs): Input<
-  IfUnwrapped<Value, `(?:${Value})+`, `${Value}+`>,
+  Quantified<Value, '+'>,
   MapToGroups<Inputs>,
   MapToCapturedGroupsArr<Inputs>
 > {
