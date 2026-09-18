@@ -81,6 +81,16 @@ describe('inputs', () => {
       '/\\(\\?:foo\\(\\?<groupName>\\(\\?:foo\\)\\?\\)bar\\)\\?/',
     )
     expectTypeOf(extractRegExp(multi)).toEqualTypeOf<'(?:foo(?<groupName>(?:foo)?)bar)?'>()
+
+    // Regression for #549: maybe() must wrap the whole concatenation as a
+    // single optional group even when the last child is a named capture —
+    // previously `wrap()` treated `(?:[\-_.])?(?<number>\d+)` as "already
+    // grouped" because it started with `(` and ended with `)`, producing
+    // `(?:[\-_.])?(?<number>\d+)?` (only the final atom optional).
+    const withTrailingNamedCapture = maybe(charIn('-_.').optionally(), oneOrMore(digit).as('number'))
+    expect(new RegExp(withTrailingNamedCapture as any)).toMatchInlineSnapshot(
+      '/\\(\\?:\\(\\?:\\[\\\\-_\\.\\]\\)\\?\\(\\?<number>\\\\d\\+\\)\\)\\?/',
+    )
   })
   it('oneOrMore', () => {
     const input = oneOrMore('foo')
