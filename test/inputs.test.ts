@@ -1,4 +1,5 @@
 import type { MagicRegExp } from '../src'
+import type { Input } from '../src/core/internal'
 
 import { expectTypeOf } from 'expect-type'
 import { describe, expect, it } from 'vitest'
@@ -220,6 +221,54 @@ describe('inputs', () => {
     expectTypeOf(
       extractRegExp(input),
     ).toEqualTypeOf<'((foo|\\?){2}|(?<groupName>bar){3,4}|(baz|boo){5,})+'>()
+  })
+  it('wraps sibling groups before quantifying them', () => {
+    // A quantifier after two adjacent groups binds to the last one only, so
+    // the whole sequence has to be wrapped. https://github.com/unjs/magic-regexp/issues/505
+    const siblings = maybe(exactly('a').or('b'), exactly('1').or('2'))
+    expect(siblings.toString()).toMatchInlineSnapshot(`"(?:(?:a|b)(?:1|2))?"`)
+    expectTypeOf(extractRegExp(siblings)).toEqualTypeOf<'(?:(?:a|b)(?:1|2))?'>()
+    // Everything is optional, so an unrelated string still matches.
+    expect(new RegExp(`^${siblings}$`).test('')).toBe(true)
+
+    // Same defect with a named group as the trailing sibling.
+    // https://github.com/unjs/magic-regexp/issues/549
+    const named = maybe(charIn('-_.').optionally(), oneOrMore(digit).as('number'))
+    expect(named.toString()).toMatchInlineSnapshot(`"(?:(?:[\\-_.])?(?<number>\\d+))?"`)
+    expectTypeOf(extractRegExp(named)).toEqualTypeOf<'(?:(?:[\\-_.])?(?<number>\\d+))?'>()
+
+    // A group closed by an escaped paren does not enclose the pattern either.
+    const escaped = maybe(exactly('(a)'), 'b')
+    expect(escaped.toString()).toMatchInlineSnapshot(`"(?:\\(a\\)b)?"`)
+    expectTypeOf(extractRegExp(escaped)).toEqualTypeOf<'(?:\\(a\\)b)?'>()
+
+    // Parentheses inside a character class are literal and must not be counted.
+    const charClass = maybe(charIn('()'), 'b')
+    expect(charClass.toString()).toMatchInlineSnapshot(`"(?:[()]b)?"`)
+    expectTypeOf(extractRegExp(charClass)).toEqualTypeOf<'(?:[()]b)?'>()
+
+    // A single enclosing group still takes the quantifier directly.
+    expect(maybe(anyOf('a', 'b')).toString()).toMatchInlineSnapshot(`"(?:a|b)?"`)
+    expectTypeOf(extractRegExp(maybe(anyOf('a', 'b')))).toEqualTypeOf<'(?:a|b)?'>()
+  })
+  it('keeps each member of a union correlated with its own wrapping', () => {
+    // `wrap` decides per value at runtime, so the type has to distribute too:
+    // a union of an enclosed and an unenclosed pattern must not wrap both.
+    const union = exactly('') as unknown as Input<'(a)' | 'bc'>
+    expectTypeOf(extractRegExp(union.times.any())).toEqualTypeOf<'(a)*' | '(?:bc)*'>()
+    expectTypeOf(extractRegExp(union.optionally())).toEqualTypeOf<'(a)?' | '(?:bc)?'>()
+    expectTypeOf(extractRegExp(union.times.between(1, 2))).toEqualTypeOf<
+      '(a){1,2}' | '(?:bc){1,2}'
+    >()
+
+    // The same value reached through a top level helper.
+    const helperInput = exactly('a').grouped() as Input<'(a)'> | Input<'bc'>
+    expectTypeOf(extractRegExp(maybe(helperInput))).toEqualTypeOf<'(a)?' | '(?:bc)?'>()
+    expectTypeOf(extractRegExp(oneOrMore(helperInput))).toEqualTypeOf<'(a)+' | '(?:bc)+'>()
+
+    // And the runtime agrees for each member.
+    expect(maybe(exactly('a').grouped()).toString()).toMatchInlineSnapshot(`"(a)?"`)
+    expect(maybe(exactly('bc')).toString()).toMatchInlineSnapshot(`"(?:bc)?"`)
   })
 })
 

@@ -1,7 +1,7 @@
 import type { EscapeChar } from './types/escape'
 import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
-import type { IfUnwrapped } from './wrap'
+import type { Quantified } from './wrap'
 
 import { exactly } from './inputs'
 import { wrap } from './wrap'
@@ -74,22 +74,22 @@ export interface Input<
   ) => Input<`${V}(?!${Join<MapToValues<I>, '', ''>})`, G, [...C, ...CG]>
   /** repeat the previous pattern an exact number of times */
   times: {
-    <N extends number, NV extends string = IfUnwrapped<V, `(?:${V}){${N}}`, `${V}{${N}}`>>(
+    <N extends number, NV extends string = Quantified<V, `{${N}}`>>(
       number: N
     ): Input<NV, G, C>
     /** specify that the expression can repeat any number of times, _including none_ */
-    any: <NV extends string = IfUnwrapped<V, `(?:${V})*`, `${V}*`>>() => Input<NV, G, C>
+    any: <NV extends string = Quantified<V, '*'>>() => Input<NV, G, C>
     /** specify that the expression must occur at least `N` times */
     atLeast: <
       N extends number,
-      NV extends string = IfUnwrapped<V, `(?:${V}){${N},}`, `${V}{${N},}`>,
+      NV extends string = Quantified<V, `{${N},}`>,
     >(
       number: N,
     ) => Input<NV, G, C>
     /** specify that the expression must occur at most `N` times */
     atMost: <
       N extends number,
-      NV extends string = IfUnwrapped<V, `(?:${V}){0,${N}}`, `${V}{0,${N}}`>,
+      NV extends string = Quantified<V, `{0,${N}}`>,
     >(
       number: N,
     ) => Input<NV, G, C>
@@ -97,7 +97,7 @@ export interface Input<
     between: <
       Min extends number,
       Max extends number,
-      NV extends string = IfUnwrapped<V, `(?:${V}){${Min},${Max}}`, `${V}{${Min},${Max}}`>,
+      NV extends string = Quantified<V, `{${Min},${Max}}`>,
     >(
       min: Min,
       max: Max,
@@ -131,7 +131,7 @@ export interface Input<
     lineEnd: () => Input<`${V}$`, G, C>
   }
   /** this allows you to mark the input so far as optional */
-  optionally: <NV extends string = IfUnwrapped<V, `(?:${V})?`, `${V}?`>>() => Input<NV, G, C>
+  optionally: <NV extends string = Quantified<V, '?'>>() => Input<NV, G, C>
 
   toString: () => string
 }
