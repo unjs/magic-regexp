@@ -24,6 +24,6 @@ export type ExactEscapeChar = '.' | '*' | '+' | '?' | '^' | '$' | '{' | '}' | '(
 
 export type GetValue<T extends InputSource> = T extends string
   ? Escape<T, ExactEscapeChar>
-  : T extends Input<infer R>
+  : T extends Input<infer R, any, any, boolean>
     ? R
     : never
