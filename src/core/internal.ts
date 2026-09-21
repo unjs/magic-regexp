@@ -1,7 +1,7 @@
 import type { EscapeChar } from './types/escape'
 import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
-import type { Quantified } from './wrap'
+import type { InputKind, Quantified } from './wrap'
 
 import { exactly } from './inputs'
 import { wrap } from './wrap'
@@ -9,21 +9,35 @@ import { wrap } from './wrap'
 const GROUPED_AS_REPLACE_RE = /^(?:\(\?:(.+)\)|(.+))$/
 const GROUPED_REPLACE_RE = /^(?:\(\?:(.+)\)([?+*]|\{[\d,]+\})?|(.+))$/
 
-export const ATOMIC: unique symbol = Symbol('magic-regexp.atomic')
+export const KIND: unique symbol = Symbol('magic-regexp.kind')
 
-/** Reuses an existing non-capturing group only when it spans the whole input. */
-type NamedGroup<V extends string, A extends boolean, K extends string> = [A] extends [true]
-  ? V extends `(?:${infer S})` ? `(?<${K}>${S})` : `(?<${K}>${V})`
-  : `(?<${K}>${V})`
+/**
+ * A leading `(?:` only encloses the whole value when that value is a lone atom,
+ * so anything else has to be wrapped rather than rewritten.
+ */
+type Rewritable<K extends InputKind> = 'other' extends K ? false : true
+
+type NamedGroup<V extends string, K extends InputKind, Name extends string>
+  = Rewritable<K> extends true
+    ? V extends `(?:${infer S})` ? `(?<${Name}>${S})` : `(?<${Name}>${V})`
+    : `(?<${Name}>${V})`
+
+type Grouped<V extends string, K extends InputKind> = Rewritable<K> extends true
+  ? V extends `(?:${infer S})${infer E}` ? `(${S})${E}` : `(${V})`
+  : `(${V})`
+
+type GroupedCapture<V extends string, K extends InputKind> = Rewritable<K> extends true
+  ? V extends `(?:${infer S})${'' | '?' | '+' | '*' | `{${string}}`}` ? `(${S})` : `(${V})`
+  : `(${V})`
 
 export interface Input<
   V extends string,
   G extends string = never,
   C extends (string | undefined)[] = [],
-  A extends boolean = boolean,
+  Kind extends InputKind = InputKind,
 > {
-  /** Whether a quantifier can be appended without grouping first. @internal */
-  readonly [ATOMIC]: A
+  /** @internal */
+  readonly [KIND]: Kind
   /**
    * this  takes a variable number of inputs and adds them as new pattern to the current input, or you can use `and.referenceTo(groupName)` to adds a new pattern referencing to a named group
    * @example
@@ -45,7 +59,7 @@ export interface Input<
    */
   or: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
     ...inputs: I
-  ) => Input<`(?:${V}|${Join<MapToValues<I>, '', ''>})`, G | MapToGroups<I>, [...C, ...CG], true>
+  ) => Input<`(?:${V}|${Join<MapToValues<I>, '', ''>})`, G | MapToGroups<I>, [...C, ...CG], 'atom'>
   /**
    * this takes a variable number of inputs and activate a positive lookbehind. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari)
    * @example
@@ -84,59 +98,59 @@ export interface Input<
   ) => Input<`${V}(?!${Join<MapToValues<I>, '', ''>})`, G, [...C, ...CG]>
   /** repeat the previous pattern an exact number of times */
   times: {
-    <N extends number, NV extends string = Quantified<V, A, `{${N}}`>>(
+    <N extends number, NV extends string = Quantified<V, Kind, `{${N}}`>>(
       number: N
-    ): Input<NV, G, C>
+    ): Input<NV, G, C, 'quantified'>
     /** specify that the expression can repeat any number of times, _including none_ */
-    any: <NV extends string = Quantified<V, A, '*'>>() => Input<NV, G, C>
+    any: <NV extends string = Quantified<V, Kind, '*'>>() => Input<NV, G, C, 'quantified'>
     /** specify that the expression must occur at least `N` times */
     atLeast: <
       N extends number,
-      NV extends string = Quantified<V, A, `{${N},}`>,
+      NV extends string = Quantified<V, Kind, `{${N},}`>,
     >(
       number: N,
-    ) => Input<NV, G, C>
+    ) => Input<NV, G, C, 'quantified'>
     /** specify that the expression must occur at most `N` times */
     atMost: <
       N extends number,
-      NV extends string = Quantified<V, A, `{0,${N}}`>,
+      NV extends string = Quantified<V, Kind, `{0,${N}}`>,
     >(
       number: N,
-    ) => Input<NV, G, C>
+    ) => Input<NV, G, C, 'quantified'>
     /** specify a range of times to repeat the previous pattern */
     between: <
       Min extends number,
       Max extends number,
-      NV extends string = Quantified<V, A, `{${Min},${Max}}`>,
+      NV extends string = Quantified<V, Kind, `{${Min},${Max}}`>,
     >(
       min: Min,
       max: Max,
-    ) => Input<NV, G, C>
+    ) => Input<NV, G, C, 'quantified'>
   }
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()`. Alias for `groupedAs` */
   as: <K extends string>(
     key: K,
   ) => Input<
-    NamedGroup<V, A, K>,
+    NamedGroup<V, Kind, K>,
     G | K,
-    [NamedGroup<V, A, K>, ...C],
-    true
+    [NamedGroup<V, Kind, K>, ...C],
+    'atom'
   >
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()` */
   groupedAs: <K extends string>(
     key: K,
   ) => Input<
-    NamedGroup<V, A, K>,
+    NamedGroup<V, Kind, K>,
     G | K,
-    [NamedGroup<V, A, K>, ...C],
-    true
+    [NamedGroup<V, Kind, K>, ...C],
+    'atom'
   >
   /** this capture the entire input so far as an anonymous group */
   grouped: () => Input<
-    V extends `(?:${infer S})${infer E}` ? `(${S})${E}` : `(${V})`,
+    Grouped<V, Kind>,
     G,
-    [V extends `(?:${infer S})${'' | '?' | '+' | '*' | `{${string}}`}` ? `(${S})` : `(${V})`, ...C],
-    A
+    [GroupedCapture<V, Kind>, ...C],
+    [Kind] extends ['quantified'] ? 'quantified' : 'atom'
   >
   /** this allows you to match beginning/ends of lines with `at.lineStart()` and `at.lineEnd()` */
   at: {
@@ -144,41 +158,44 @@ export interface Input<
     lineEnd: () => Input<`${V}$`, G, C>
   }
   /** this allows you to mark the input so far as optional */
-  optionally: <NV extends string = Quantified<V, A, '?'>>() => Input<NV, G, C>
+  optionally: <NV extends string = Quantified<V, Kind, '?'>>() => Input<NV, G, C, 'quantified'>
 
   toString: () => string
 }
 
-export interface CharInput<T extends string> extends Input<`[${T}]`, never, [], true> {
+export interface CharInput<T extends string> extends Input<`[${T}]`, never, [], 'atom'> {
   orChar: (<Or extends string>(chars: Or) => CharInput<`${T}${EscapeChar<Or>}`>) & CharInput<T>
   from: <From extends string, To extends string>(charFrom: From, charTo: To) => CharInput<`${T}${EscapeChar<From>}-${EscapeChar<To>}`>
 }
 
-export function isAtomic(input: Input<any, any, any, boolean>): boolean {
-  return input[ATOMIC] === true
+export function kindOf(input: Input<any, any, any, InputKind>): InputKind {
+  return input[KIND]
 }
 
 export function createInput<
   Value extends string,
   Groups extends string = never,
   CaptureGroupsArr extends (string | undefined)[] = [],
-  Atomic extends boolean = false,
+  Kind extends InputKind = 'other',
 >(
-  s: Value | Input<Value, Groups, CaptureGroupsArr, Atomic>,
-  atomic: Atomic = false as Atomic,
-): Input<Value, Groups, CaptureGroupsArr, Atomic> {
-  const groupedAsFn = (key: string) =>
-    createInput(`(?<${key}>${atomic ? `${s}`.replace(GROUPED_AS_REPLACE_RE, '$1$2') : s})`, true)
+  s: Value | Input<Value, Groups, CaptureGroupsArr, Kind>,
+  kind: Kind = 'other' as Kind,
+): Input<Value, Groups, CaptureGroupsArr, Kind> {
+  const rewritable = kind !== 'other'
 
-  const quantified = (quantifier: string) => createInput(`${wrap(`${s}`, atomic)}${quantifier}`)
+  const groupedAsFn = (key: string) =>
+    createInput(`(?<${key}>${rewritable ? `${s}`.replace(GROUPED_AS_REPLACE_RE, '$1$2') : s})`, 'atom')
+
+  const quantified = (quantifier: string) =>
+    createInput(`${wrap(`${s}`, kind)}${quantifier}`, 'quantified')
 
   return {
-    [ATOMIC]: atomic,
+    [KIND]: kind,
     toString: () => s.toString(),
     and: Object.assign((...inputs: InputSource[]) => createInput(`${s}${exactly(...inputs)}`), {
       referenceTo: (groupName: string) => createInput(`${s}\\k<${groupName}>`),
     }),
-    or: (...inputs) => createInput(`(?:${s}|${inputs.map(v => exactly(v)).join('|')})`, true),
+    or: (...inputs) => createInput(`(?:${s}|${inputs.map(v => exactly(v)).join('|')})`, 'atom'),
     after: (...input) => createInput(`(?<=${exactly(...input)})${s}`),
     before: (...input) => createInput(`${s}(?=${exactly(...input)})`),
     notAfter: (...input) => createInput(`(?<!${exactly(...input)})${s}`),
@@ -192,11 +209,9 @@ export function createInput<
     optionally: () => quantified('?'),
     as: groupedAsFn,
     groupedAs: groupedAsFn,
-    // TODO: still rewrites `(?:x)y` to `(x)y` for non-atomic values. Gating on
-    // `atomic` needs a quantified atom to be distinguishable from a concatenation.
     grouped: () => {
-      const value = `${s}`.replace(GROUPED_REPLACE_RE, '($1$3)$2')
-      return createInput(value, atomic) as any
+      const value = rewritable ? `${s}`.replace(GROUPED_REPLACE_RE, '($1$3)$2') : `(${s})`
+      return createInput(value, kind === 'quantified' ? 'quantified' : 'atom') as any
     },
     at: {
       lineStart: () => createInput(`^${s}`),

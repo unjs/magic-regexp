@@ -1,4 +1,5 @@
 import type { Input } from '../inputs'
+import type { InputKind } from '../wrap'
 import type { InputSource } from './sources'
 
 export type Escape<
@@ -24,6 +25,6 @@ export type ExactEscapeChar = '.' | '*' | '+' | '?' | '^' | '$' | '{' | '}' | '(
 
 export type GetValue<T extends InputSource> = T extends string
   ? Escape<T, ExactEscapeChar>
-  : T extends Input<infer R, any, any, boolean>
+  : T extends Input<infer R, any, any, InputKind>
     ? R
     : never

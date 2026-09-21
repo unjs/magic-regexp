@@ -1,7 +1,8 @@
 import type { Input } from '../internal'
+import type { InputKind } from '../wrap'
 import type { GetValue } from './escape'
 
-export type InputSource<S extends string = string, T extends string = never> = S | Input<any, T, any, boolean>
+export type InputSource<S extends string = string, T extends string = never> = S | Input<any, T, any, InputKind>
 
 export type MapToValues<T extends InputSource[]> = T extends [
   infer First,
@@ -16,7 +17,7 @@ export type MapToGroups<T extends InputSource[]> = T extends [
   infer First,
   ...infer Rest extends InputSource[],
 ]
-  ? First extends Input<any, infer K, any, boolean>
+  ? First extends Input<any, infer K, any, InputKind>
     ? K | MapToGroups<Rest>
     : MapToGroups<Rest>
   : never
@@ -28,7 +29,7 @@ export type MapToCapturedGroupsArr<
   Count extends any[] = [],
 > = Count['length'] extends Inputs['length']
   ? CapturedGroupsArr
-  : Inputs[Count['length']] extends Input<any, any, infer CaptureGroups, boolean>
+  : Inputs[Count['length']] extends Input<any, any, infer CaptureGroups, InputKind>
     ? [CaptureGroups] extends [never]
         ? MapToCapturedGroupsArr<Inputs, MapToUndefined, [...CapturedGroupsArr], [...Count, '']>
         : MapToUndefined extends true

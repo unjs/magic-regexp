@@ -272,6 +272,22 @@ describe('inputs', () => {
     expect(anyOf('a', 'b').as('x').toString()).toMatchInlineSnapshot(`"(?<x>a|b)"`)
     expectTypeOf(extractRegExp(anyOf('a', 'b').as('x'))).toEqualTypeOf<'(?<x>a|b)'>()
   })
+  it('captures sibling groups as a whole', () => {
+    const siblings = exactly(anyOf('a', 'b'), anyOf('1', '2')).grouped()
+    expect(siblings.toString()).toMatchInlineSnapshot(`"((?:a|b)(?:1|2))"`)
+    expectTypeOf(extractRegExp(siblings)).toEqualTypeOf<'((?:a|b)(?:1|2))'>()
+    expect(createRegExp(siblings).exec('b2')?.[1]).toBe('b2')
+  })
+  it('keeps a quantifier outside the capture it applies to', () => {
+    const optional = maybe('baz').grouped()
+    expect(optional.toString()).toMatchInlineSnapshot(`"(baz)?"`)
+    expectTypeOf(extractRegExp(optional)).toEqualTypeOf<'(baz)?'>()
+    expect(createRegExp(optional).exec('')?.[1]).toBeUndefined()
+
+    const nested = maybe(anyOf('a', 'b'), anyOf('1', '2')).grouped()
+    expect(nested.toString()).toMatchInlineSnapshot(`"((?:a|b)(?:1|2))?"`)
+    expectTypeOf(extractRegExp(nested)).toEqualTypeOf<'((?:a|b)(?:1|2))?'>()
+  })
 })
 
 describe('chained inputs', () => {
