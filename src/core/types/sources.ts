@@ -20,14 +20,17 @@ export type MapToCapturedGroupsArr<Inputs extends any[]> = Inputs extends string
       : MapToCapturedGroupsArr<Rest>
     : []
 
-/** One `undefined` per input that captures, for lookarounds whose captures never match. */
+/** One `undefined` per capture group, for lookarounds whose captures never match. */
 export type MapToUndefinedCapturedGroupsArr<Inputs extends any[]> = Inputs extends string[]
   ? []
   : Inputs extends [infer First, ...infer Rest]
     ? First extends Input<any, any, infer CaptureGroups, InputKind>
       ? [CaptureGroups] extends [never]
           ? MapToUndefinedCapturedGroupsArr<Rest>
-          : [undefined, ...MapToUndefinedCapturedGroupsArr<Rest>]
+          : [
+              ...{ [K in keyof CaptureGroups]: undefined },
+              ...MapToUndefinedCapturedGroupsArr<Rest>,
+            ]
       : MapToUndefinedCapturedGroupsArr<Rest>
     : []
 

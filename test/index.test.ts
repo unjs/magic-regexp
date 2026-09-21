@@ -189,6 +189,21 @@ describe('inputs', () => {
     expectTypeOf(match[1]).toEqualTypeOf<StringCapturedBy<'(x)'> | undefined>()
     expectTypeOf(match[2]).toEqualTypeOf<never>()
   })
+  it('reserves a slot for every capture group inside a lookaround', () => {
+    const regExp = createRegExp(
+      exactly('z').notBefore(exactly('a').as('x').and(exactly('b').grouped())),
+      maybe('q').grouped(),
+    )
+    const match = 'z'.match(regExp)
+
+    if (!match)
+      return expect(match).toBeTruthy()
+    expect(match.length).toBe(4)
+    expectTypeOf(match.length).toEqualTypeOf<4>()
+    expectTypeOf(match[1]).toEqualTypeOf<undefined>()
+    expectTypeOf(match[2]).toEqualTypeOf<undefined>()
+    expectTypeOf(match[3]).toEqualTypeOf<StringCapturedBy<'(q?)'> | undefined>()
+  })
   it('can type-safe access matched array with hint for corresponding capture group', () => {
     const pattern = anyOf(
       exactly('foo|?').grouped(),
