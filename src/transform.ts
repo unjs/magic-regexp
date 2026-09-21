@@ -30,6 +30,17 @@ function walkAST(node: Node, enter: (node: Node) => void) {
 
 const MAGIC_REGEXP_SPECIFIERS = new Set(['magic-regexp', 'magic-regexp/further-magic'])
 
+function getParserLang(id: string) {
+  const pathname = id.split('?')[0]!
+  if (pathname.endsWith('.tsx'))
+    return 'tsx'
+  if (pathname.endsWith('.jsx'))
+    return 'jsx'
+  if (/\.(?:[cm]?ts|vue)$/.test(pathname))
+    return 'ts'
+  return 'js'
+}
+
 export const MagicRegExpTransformPlugin = createUnplugin(() => {
   return {
     name: 'MagicRegExpTransformPlugin',
@@ -46,7 +57,7 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
         return true
 
       // js files
-      if (/\.(?:(?:c|m)?j|t)sx?$/.test(pathname))
+      if (/\.[cm]?[jt]sx?$/.test(pathname))
         return true
 
       return false
@@ -59,7 +70,13 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
         if (!code.includes('magic-regexp'))
           return
 
-        const ast = this.parse(code) as unknown as Program
+        let ast: Program
+        try {
+          ast = this.parse(code, { lang: getParserLang(id) } as any) as unknown as Program
+        }
+        catch {
+          ast = this.parse(code) as unknown as Program
+        }
 
         const contextMap: Context = { ...magicRegExp }
         const wrapperNames: string[] = []
