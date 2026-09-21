@@ -1,7 +1,7 @@
 import type { Flag } from './core/flags'
 import type { Join, UnionToTuple } from './core/types/join'
 import type { MagicRegExp, MagicRegExpMatchArray } from './core/types/magic-regexp'
-import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './core/types/sources'
+import type { InputSource, JoinValues, MapToCapturedGroupsArr, MapToGroups } from './core/types/sources'
 
 import { exactly } from './core/inputs'
 
@@ -10,7 +10,7 @@ export const createRegExp: {
   <Inputs extends InputSource[]>(
     ...inputs: Inputs
   ): MagicRegExp<
-    `/${Join<MapToValues<Inputs>, '', ''>}/`,
+    `/${JoinValues<Inputs>}/`,
     MapToGroups<Inputs>,
     MapToCapturedGroupsArr<Inputs>,
     never
@@ -18,7 +18,7 @@ export const createRegExp: {
   <Inputs extends InputSource[], Flags extends Flag[] = never[]>(
     ...inputs: [...Inputs, [...Flags]]
   ): MagicRegExp<
-    `/${Join<MapToValues<Inputs>, '', ''>}/${Join<Flags, '', ''>}`,
+    `/${JoinValues<Inputs>}/${Join<Flags>}`,
     MapToGroups<Inputs>,
     MapToCapturedGroupsArr<Inputs>,
     Flags[number]
@@ -30,7 +30,7 @@ export const createRegExp: {
   >(
     ...inputs: [...Inputs, Set<FlagUnion>]
   ): MagicRegExp<
-    `/${Join<MapToValues<Inputs>, '', ''>}/${Join<Flags, '', ''>}`,
+    `/${JoinValues<Inputs>}/${Join<Flags>}`,
     MapToGroups<Inputs>,
     MapToCapturedGroupsArr<Inputs>,
     Flags[number]

@@ -7,7 +7,7 @@ import type {
 } from 'type-level-regexp/regexp'
 import type { Flag } from './core/flags'
 import type { Join, UnionToTuple } from './core/types/join'
-import type { InputSource, MapToGroups, MapToValues } from './core/types/sources'
+import type { InputSource, JoinValues, MapToGroups } from './core/types/sources'
 
 import { exactly } from './core/inputs'
 
@@ -29,7 +29,7 @@ export const createRegExp: {
   /** Create Magic RegExp from Input helpers and string (string will be sanitized) */
   <Inputs extends InputSource[]>(
     ...inputs: Inputs
-  ): MagicRegExp<`/${Join<MapToValues<Inputs>, '', ''>}/`, MapToGroups<Inputs>, []>
+  ): MagicRegExp<`/${JoinValues<Inputs>}/`, MapToGroups<Inputs>, []>
   <
     Inputs extends InputSource[],
     FlagUnion extends Flag | undefined = undefined,
@@ -42,7 +42,7 @@ export const createRegExp: {
   >(
     ...inputs: [...Inputs, [...Flags] | string | Set<FlagUnion>]
   ): MagicRegExp<
-    `/${Join<MapToValues<Inputs>, '', ''>}/${Join<Flags, '', ''>}`,
+    `/${JoinValues<Inputs>}/${Join<Flags>}`,
     MapToGroups<Inputs>,
     Flags
   >
@@ -65,7 +65,7 @@ declare global {
   interface String {
     match<InputString extends string, RegExpPattern extends string, Flags extends Flag[]>(
       this: InputString,
-      regexp: MagicRegExp<`/${RegExpPattern}/${Join<Flags, '', ''>}`, string, Flags>
+      regexp: MagicRegExp<`/${RegExpPattern}/${Join<Flags>}`, string, Flags>
     ): MatchRegExp<
       InputString,
       ParseRegExp<RegExpPattern>,
@@ -77,7 +77,7 @@ declare global {
 
     matchAll<InputString extends string, RegExpPattern extends string, Flags extends Flag[]>(
       this: InputString,
-      regexp: MagicRegExp<`/${RegExpPattern}/${Join<Flags, '', ''>}`, string, Flags>
+      regexp: MagicRegExp<`/${RegExpPattern}/${Join<Flags>}`, string, Flags>
     ): MatchAllRegExp<
       InputString,
       ParseRegExp<RegExpPattern>,
@@ -114,7 +114,7 @@ declare global {
         : never,
     >(
       this: InputString,
-      regexp: MagicRegExp<`/${RegExpPattern}/${Join<Flags, '', ''>}`, string, Flags>,
+      regexp: MagicRegExp<`/${RegExpPattern}/${Join<Flags>}`, string, Flags>,
       replaceValue: ReplaceValue | ((...match: Match) => ReplaceValue)
     ): any[] extends RegExpParsedAST
       ? never

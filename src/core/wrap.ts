@@ -9,11 +9,9 @@ export type InputKind = 'atom' | 'quantified' | 'other'
 
 /** Whether `Value` is one character, optionally escaped. */
 export type IsSingleChar<Value extends string> = StripEscapes<Value> extends `${infer Head}${infer Tail}`
-  ? Head extends ''
-    ? false
-    : Tail extends ''
-      ? true
-      : false
+  ? Tail extends ''
+    ? Head extends '' ? false : true
+    : false
   : false
 
 /** Appends `Quantifier`, grouping `Value` first unless it is a single atom. */

@@ -1,6 +1,5 @@
 import type { EscapeChar } from './types/escape'
-import type { Join } from './types/join'
-import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
+import type { InputSource, JoinValues, MapToCapturedGroupsArr, MapToGroups, MapToUndefinedCapturedGroupsArr } from './types/sources'
 import type { InputKind, Quantified } from './wrap'
 
 import { joinSources } from './escape'
@@ -15,20 +14,113 @@ export const KIND: unique symbol = Symbol('magic-regexp.kind')
  * A leading `(?:` only encloses the whole value when that value is a lone atom,
  * so anything else has to be wrapped rather than rewritten.
  */
-type Rewritable<K extends InputKind> = 'other' extends K ? false : true
-
 type NamedGroup<V extends string, K extends InputKind, Name extends string>
-  = Rewritable<K> extends true
-    ? V extends `(?:${infer S})` ? `(?<${Name}>${S})` : `(?<${Name}>${V})`
-    : `(?<${Name}>${V})`
+  = 'other' extends K
+    ? `(?<${Name}>${V})`
+    : V extends `(?:${infer S})` ? `(?<${Name}>${S})` : `(?<${Name}>${V})`
 
-type Grouped<V extends string, K extends InputKind> = Rewritable<K> extends true
-  ? V extends `(?:${infer S})${infer E}` ? `(${S})${E}` : `(${V})`
-  : `(${V})`
+type Grouped<V extends string, K extends InputKind> = 'other' extends K
+  ? `(${V})`
+  : V extends `(?:${infer S})${infer E}` ? `(${S})${E}` : `(${V})`
 
-type GroupedCapture<V extends string, K extends InputKind> = Rewritable<K> extends true
-  ? V extends `(?:${infer S})${'' | '?' | '+' | '*' | `{${string}}`}` ? `(${S})` : `(${V})`
-  : `(${V})`
+type GroupedCapture<V extends string, K extends InputKind> = 'other' extends K
+  ? `(${V})`
+  : V extends `(?:${infer S})${'' | '?' | '+' | '*' | `{${string}}`}` ? `(${S})` : `(${V})`
+
+type Captures = (string | undefined)[]
+
+interface And<V extends string, G extends string, C extends Captures> {
+  <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
+    ...inputs: I
+  ): Input<`${V}${JoinValues<I>}`, G | MapToGroups<I>, [...C, ...CG]>
+  /** this adds a new pattern to the current input, with the pattern reference to a named group. */
+  referenceTo: <N extends G>(groupName: N) => Input<`${V}\\k<${N}>`, G, C>
+}
+
+interface Or<V extends string, G extends string, C extends Captures> {
+  <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
+    ...inputs: I
+  ): Input<`(?:${V}|${JoinValues<I>})`, G | MapToGroups<I>, [...C, ...CG], 'atom'>
+}
+
+interface After<V extends string, G extends string, C extends Captures> {
+  <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
+    ...inputs: I
+  ): Input<`(?<=${JoinValues<I>})${V}`, G | MapToGroups<I>, [...CG, ...C]>
+}
+
+interface Before<V extends string, G extends string, C extends Captures> {
+  <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
+    ...inputs: I
+  ): Input<`${V}(?=${JoinValues<I>})`, G, [...C, ...CG]>
+}
+
+interface NotAfter<V extends string, G extends string, C extends Captures> {
+  <I extends InputSource[], CG extends any[] = MapToUndefinedCapturedGroupsArr<I>>(
+    ...inputs: I
+  ): Input<`(?<!${JoinValues<I>})${V}`, G, [...CG, ...C]>
+}
+
+interface NotBefore<V extends string, G extends string, C extends Captures> {
+  <I extends InputSource[], CG extends any[] = MapToUndefinedCapturedGroupsArr<I>>(
+    ...inputs: I
+  ): Input<`${V}(?!${JoinValues<I>})`, G, [...C, ...CG]>
+}
+
+interface GroupedFn<V extends string, G extends string, C extends Captures, Kind extends InputKind> {
+  (): Input<
+    Grouped<V, Kind>,
+    G,
+    [GroupedCapture<V, Kind>, ...C],
+    [Kind] extends ['quantified'] ? 'quantified' : 'atom'
+  >
+}
+
+interface Optionally<V extends string, G extends string, C extends Captures, Kind extends InputKind> {
+  <NV extends string = Quantified<V, Kind, '?'>>(): Input<NV, G, C, 'quantified'>
+}
+
+interface Times<
+  V extends string,
+  G extends string,
+  C extends Captures,
+  Kind extends InputKind,
+> {
+  <N extends number, NV extends string = Quantified<V, Kind, `{${N}}`>>(number: N): Input<NV, G, C, 'quantified'>
+  /** specify that the expression can repeat any number of times, _including none_ */
+  any: <NV extends string = Quantified<V, Kind, '*'>>() => Input<NV, G, C, 'quantified'>
+  /** specify that the expression must occur at least `N` times */
+  atLeast: <N extends number, NV extends string = Quantified<V, Kind, `{${N},}`>>(
+    number: N,
+  ) => Input<NV, G, C, 'quantified'>
+  /** specify that the expression must occur at most `N` times */
+  atMost: <N extends number, NV extends string = Quantified<V, Kind, `{0,${N}}`>>(
+    number: N,
+  ) => Input<NV, G, C, 'quantified'>
+  /** specify a range of times to repeat the previous pattern */
+  between: <
+    Min extends number,
+    Max extends number,
+    NV extends string = Quantified<V, Kind, `{${Min},${Max}}`>,
+  >(
+    min: Min,
+    max: Max,
+  ) => Input<NV, G, C, 'quantified'>
+}
+
+interface At<V extends string, G extends string, C extends Captures> {
+  lineStart: () => Input<`^${V}`, G, C>
+  lineEnd: () => Input<`${V}$`, G, C>
+}
+
+interface GroupedAs<
+  V extends string,
+  G extends string,
+  C extends Captures,
+  Kind extends InputKind,
+> {
+  <K extends string>(key: K): Input<NamedGroup<V, Kind, K>, G | K, [NamedGroup<V, Kind, K>, ...C], 'atom'>
+}
 
 export interface Input<
   V extends string,
@@ -44,121 +136,54 @@ export interface Input<
    * exactly('foo').and('bar', maybe('baz')) // => /foobar(?:baz)?/
    * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
    */
-  and: {
-    <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
-      ...inputs: I
-    ): Input<`${V}${Join<MapToValues<I>, '', ''>}`, G | MapToGroups<I>, [...C, ...CG]>
-    /** this adds a new pattern to the current input, with the pattern reference to a named group. */
-    referenceTo: <N extends G>(groupName: N) => Input<`${V}\\k<${N}>`, G, C>
-  }
+  and: And<V, G, C>
   /**
    * this takes a variable number of inputs and provides as an alternative to the current input
    * @example
    * exactly('foo').or('bar', maybe('baz')) // => /foo|bar(?:baz)?/
    * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
    */
-  or: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
-    ...inputs: I
-  ) => Input<`(?:${V}|${Join<MapToValues<I>, '', ''>})`, G | MapToGroups<I>, [...C, ...CG], 'atom'>
+  or: Or<V, G, C>
   /**
    * this takes a variable number of inputs and activate a positive lookbehind. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari)
    * @example
    * exactly('foo').after('bar', maybe('baz')) // => /(?<=bar(?:baz)?)foo/
    * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
    */
-  after: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
-    ...inputs: I
-  ) => Input<`(?<=${Join<MapToValues<I>, '', ''>})${V}`, G | MapToGroups<I>, [...CG, ...C]>
+  after: After<V, G, C>
   /**
    * this takes a variable number of inputs and activate a positive lookahead
    * @example
    * exactly('foo').before('bar', maybe('baz')) // => /foo(?=bar(?:baz)?)/
    * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
    */
-  before: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I>>(
-    ...inputs: I
-  ) => Input<`${V}(?=${Join<MapToValues<I>, '', ''>})`, G, [...C, ...CG]>
+  before: Before<V, G, C>
   /**
    * these takes a variable number of inputs and activate a negative lookbehind. Make sure to check [browser support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#browser_compatibility) as not all browsers support lookbehinds (notably Safari)
    * @example
    * exactly('foo').notAfter('bar', maybe('baz')) // => /(?<!bar(?:baz)?)foo/
    * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
    */
-  notAfter: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I, true>>(
-    ...inputs: I
-  ) => Input<`(?<!${Join<MapToValues<I>, '', ''>})${V}`, G, [...CG, ...C]>
+  notAfter: NotAfter<V, G, C>
   /**
    * this takes a variable number of inputs and activate a negative lookahead
    * @example
    * exactly('foo').notBefore('bar', maybe('baz')) // => /foo(?!bar(?:baz)?)/
    * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
    */
-  notBefore: <I extends InputSource[], CG extends any[] = MapToCapturedGroupsArr<I, true>>(
-    ...inputs: I
-  ) => Input<`${V}(?!${Join<MapToValues<I>, '', ''>})`, G, [...C, ...CG]>
+  notBefore: NotBefore<V, G, C>
   /** repeat the previous pattern an exact number of times */
-  times: {
-    <N extends number, NV extends string = Quantified<V, Kind, `{${N}}`>>(
-      number: N
-    ): Input<NV, G, C, 'quantified'>
-    /** specify that the expression can repeat any number of times, _including none_ */
-    any: <NV extends string = Quantified<V, Kind, '*'>>() => Input<NV, G, C, 'quantified'>
-    /** specify that the expression must occur at least `N` times */
-    atLeast: <
-      N extends number,
-      NV extends string = Quantified<V, Kind, `{${N},}`>,
-    >(
-      number: N,
-    ) => Input<NV, G, C, 'quantified'>
-    /** specify that the expression must occur at most `N` times */
-    atMost: <
-      N extends number,
-      NV extends string = Quantified<V, Kind, `{0,${N}}`>,
-    >(
-      number: N,
-    ) => Input<NV, G, C, 'quantified'>
-    /** specify a range of times to repeat the previous pattern */
-    between: <
-      Min extends number,
-      Max extends number,
-      NV extends string = Quantified<V, Kind, `{${Min},${Max}}`>,
-    >(
-      min: Min,
-      max: Max,
-    ) => Input<NV, G, C, 'quantified'>
-  }
+  times: Times<V, G, C, Kind>
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()`. Alias for `groupedAs` */
-  as: <K extends string>(
-    key: K,
-  ) => Input<
-    NamedGroup<V, Kind, K>,
-    G | K,
-    [NamedGroup<V, Kind, K>, ...C],
-    'atom'
-  >
+  as: GroupedAs<V, G, C, Kind>
   /** this defines the entire input so far as a named capture group. You will get type safety when using the resulting RegExp with `String.match()` */
-  groupedAs: <K extends string>(
-    key: K,
-  ) => Input<
-    NamedGroup<V, Kind, K>,
-    G | K,
-    [NamedGroup<V, Kind, K>, ...C],
-    'atom'
-  >
+  groupedAs: GroupedAs<V, G, C, Kind>
   /** this capture the entire input so far as an anonymous group */
-  grouped: () => Input<
-    Grouped<V, Kind>,
-    G,
-    [GroupedCapture<V, Kind>, ...C],
-    [Kind] extends ['quantified'] ? 'quantified' : 'atom'
-  >
+  grouped: GroupedFn<V, G, C, Kind>
   /** this allows you to match beginning/ends of lines with `at.lineStart()` and `at.lineEnd()` */
-  at: {
-    lineStart: () => Input<`^${V}`, G, C>
-    lineEnd: () => Input<`${V}$`, G, C>
-  }
+  at: At<V, G, C>
   /** this allows you to mark the input so far as optional */
-  optionally: <NV extends string = Quantified<V, Kind, '?'>>() => Input<NV, G, C, 'quantified'>
+  optionally: Optionally<V, G, C, Kind>
 
   toString: () => string
 }
