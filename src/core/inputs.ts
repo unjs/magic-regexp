@@ -54,7 +54,7 @@ export function anyOf<Inputs extends InputSource[]>(...inputs: Inputs): Input<`(
 export const char = createInput('.', true)
 export const word = createInput('\\b\\w+\\b')
 export const wordChar = createInput('\\w', true)
-export const wordBoundary = createInput('\\b', true)
+export const wordBoundary = createInput('\\b')
 export const digit = createInput('\\d', true)
 export const whitespace = createInput('\\s', true)
 export const letter = Object.assign(createInput('[a-zA-Z]', true), {
@@ -68,7 +68,7 @@ export const carriageReturn = createInput('\\r', true)
 export const not = {
   word: createInput('\\W+'),
   wordChar: createInput('\\W', true),
-  wordBoundary: createInput('\\B', true),
+  wordBoundary: createInput('\\B'),
   digit: createInput('\\D', true),
   whitespace: createInput('\\S', true),
   letter: Object.assign(createInput('[^a-zA-Z]', true), {

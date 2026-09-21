@@ -255,6 +255,15 @@ describe('inputs', () => {
     expect(maybe(exactly('bc')).toString()).toMatchInlineSnapshot(`"(?:bc)?"`)
     expectTypeOf(extractRegExp(maybe(exactly('bc')))).toEqualTypeOf<'(?:bc)?'>()
   })
+  it('groups boundary assertions before quantifying them', () => {
+    expect(maybe(wordBoundary).toString()).toMatchInlineSnapshot(`"(?:\\b)?"`)
+    expectTypeOf(extractRegExp(maybe(wordBoundary))).toEqualTypeOf<'(?:\\b)?'>()
+    expect(() => new RegExp(maybe(wordBoundary).toString())).not.toThrow()
+
+    expect(not.wordBoundary.times.any().toString()).toMatchInlineSnapshot(`"(?:\\B)*"`)
+    expectTypeOf(extractRegExp(not.wordBoundary.times.any())).toEqualTypeOf<'(?:\\B)*'>()
+    expect(() => new RegExp(not.wordBoundary.times.any().toString())).not.toThrow()
+  })
   it('groups sibling groups before naming them', () => {
     const siblings = exactly(anyOf('a', 'b'), anyOf('1', '2'))
     expect(siblings.as('x').toString()).toMatchInlineSnapshot(`"(?<x>(?:a|b)(?:1|2))"`)
