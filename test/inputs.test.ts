@@ -221,6 +221,57 @@ describe('inputs', () => {
       extractRegExp(input),
     ).toEqualTypeOf<'((foo|\\?){2}|(?<groupName>bar){3,4}|(baz|boo){5,})+'>()
   })
+  it('wraps sibling groups before quantifying them', () => {
+    const siblings = maybe(exactly('a').or('b'), exactly('1').or('2'))
+    expect(siblings.toString()).toMatchInlineSnapshot(`"(?:(?:a|b)(?:1|2))?"`)
+    expectTypeOf(extractRegExp(siblings)).toEqualTypeOf<'(?:(?:a|b)(?:1|2))?'>()
+    expect(new RegExp(`^${siblings}$`).test('')).toBe(true)
+
+    const named = maybe(charIn('-_.').optionally(), oneOrMore(digit).as('number'))
+    expect(named.toString()).toMatchInlineSnapshot(`"(?:[\\-_.]?(?<number>\\d+))?"`)
+    expectTypeOf(extractRegExp(named)).toEqualTypeOf<'(?:[\\-_.]?(?<number>\\d+))?'>()
+
+    const escaped = maybe(exactly('(a)'), 'b')
+    expect(escaped.toString()).toMatchInlineSnapshot(`"(?:\\(a\\)b)?"`)
+    expectTypeOf(extractRegExp(escaped)).toEqualTypeOf<'(?:\\(a\\)b)?'>()
+
+    const charClass = maybe(charIn('()'), 'b')
+    expect(charClass.toString()).toMatchInlineSnapshot(`"(?:[()]b)?"`)
+    expectTypeOf(extractRegExp(charClass)).toEqualTypeOf<'(?:[()]b)?'>()
+
+    expect(maybe(anyOf('a', 'b')).toString()).toMatchInlineSnapshot(`"(?:a|b)?"`)
+    expectTypeOf(extractRegExp(maybe(anyOf('a', 'b')))).toEqualTypeOf<'(?:a|b)?'>()
+  })
+  it('applies a quantifier directly to a single atom', () => {
+    expect(charIn('ab').times.any().toString()).toMatchInlineSnapshot(`"[ab]*"`)
+    expectTypeOf(extractRegExp(charIn('ab').times.any())).toEqualTypeOf<'[ab]*'>()
+
+    expect(maybe(digit).toString()).toMatchInlineSnapshot(`"\\d?"`)
+    expectTypeOf(extractRegExp(maybe(digit))).toEqualTypeOf<'\\d?'>()
+
+    expect(maybe(exactly('a').grouped()).toString()).toMatchInlineSnapshot(`"(a)?"`)
+    expectTypeOf(extractRegExp(maybe(exactly('a').grouped()))).toEqualTypeOf<'(a)?'>()
+
+    expect(maybe(exactly('bc')).toString()).toMatchInlineSnapshot(`"(?:bc)?"`)
+    expectTypeOf(extractRegExp(maybe(exactly('bc')))).toEqualTypeOf<'(?:bc)?'>()
+  })
+  it('groups boundary assertions before quantifying them', () => {
+    expect(maybe(wordBoundary).toString()).toMatchInlineSnapshot(`"(?:\\b)?"`)
+    expectTypeOf(extractRegExp(maybe(wordBoundary))).toEqualTypeOf<'(?:\\b)?'>()
+    expect(() => new RegExp(maybe(wordBoundary).toString())).not.toThrow()
+
+    expect(not.wordBoundary.times.any().toString()).toMatchInlineSnapshot(`"(?:\\B)*"`)
+    expectTypeOf(extractRegExp(not.wordBoundary.times.any())).toEqualTypeOf<'(?:\\B)*'>()
+    expect(() => new RegExp(not.wordBoundary.times.any().toString())).not.toThrow()
+  })
+  it('groups sibling groups before naming them', () => {
+    const siblings = exactly(anyOf('a', 'b'), anyOf('1', '2'))
+    expect(siblings.as('x').toString()).toMatchInlineSnapshot(`"(?<x>(?:a|b)(?:1|2))"`)
+    expectTypeOf(extractRegExp(siblings.as('x'))).toEqualTypeOf<'(?<x>(?:a|b)(?:1|2))'>()
+
+    expect(anyOf('a', 'b').as('x').toString()).toMatchInlineSnapshot(`"(?<x>a|b)"`)
+    expectTypeOf(extractRegExp(anyOf('a', 'b').as('x'))).toEqualTypeOf<'(?<x>a|b)'>()
+  })
 })
 
 describe('chained inputs', () => {

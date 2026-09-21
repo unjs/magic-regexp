@@ -2,17 +2,26 @@ import type { CharInput, Input } from './internal'
 import type { EscapeChar } from './types/escape'
 import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
-import type { IfUnwrapped } from './wrap'
+import type { IsSingleChar, Quantified } from './wrap'
 
-import { createInput } from './internal'
-import { wrap } from './wrap'
+import { createInput, isAtomic } from './internal'
+import { isSingleChar, wrap } from './wrap'
 
 export type { Input }
 
 const ESCAPE_REPLACE_RE = /[.*+?^${}()|[\]\\/]/g
 
+/** Atomic when the lone input already is, or the joined value is one character. */
+type JoinedAtomic<Inputs extends InputSource[], Value extends string>
+  = Inputs extends [Input<any, any, any, infer A extends boolean>] ? A : IsSingleChar<Value>
+
+function quantify(inputs: InputSource[], quantifier: string) {
+  const joined = exactly(...inputs)
+  return `${wrap(`${joined}`, isAtomic(joined))}${quantifier}`
+}
+
 function createCharInput<T extends string>(raw: T) {
-  const input = createInput(`[${raw}]`)
+  const input = createInput(`[${raw}]`, true)
   const from = <From extends string, To extends string>(charFrom: From, charTo: To) => createCharInput(`${raw}${escapeCharInput(charFrom)}-${escapeCharInput(charTo)}`)
   const orChar = Object.assign(<T extends string>(chars: T) => createCharInput(`${raw}${escapeCharInput(chars)}`), { from })
   return Object.assign(input, { orChar, from }) as CharInput<T>
@@ -38,37 +47,37 @@ export const charNotIn = Object.assign(<T extends string>(chars: T) => {
  * anyOf('foo', maybe('bar'), 'baz') // => /(?:foo|(?:bar)?|baz)/
  * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
  */
-export function anyOf<Inputs extends InputSource[]>(...inputs: Inputs): Input<`(?:${Join<MapToValues<Inputs>>})`, MapToGroups<Inputs>, MapToCapturedGroupsArr<Inputs>> {
-  return createInput(`(?:${inputs.map(a => exactly(a)).join('|')})`)
+export function anyOf<Inputs extends InputSource[]>(...inputs: Inputs): Input<`(?:${Join<MapToValues<Inputs>>})`, MapToGroups<Inputs>, MapToCapturedGroupsArr<Inputs>, true> {
+  return createInput(`(?:${inputs.map(a => exactly(a)).join('|')})`, true)
 }
 
-export const char = createInput('.')
+export const char = createInput('.', true)
 export const word = createInput('\\b\\w+\\b')
-export const wordChar = createInput('\\w')
+export const wordChar = createInput('\\w', true)
 export const wordBoundary = createInput('\\b')
-export const digit = createInput('\\d')
-export const whitespace = createInput('\\s')
-export const letter = Object.assign(createInput('[a-zA-Z]'), {
-  lowercase: createInput('[a-z]'),
-  uppercase: createInput('[A-Z]'),
+export const digit = createInput('\\d', true)
+export const whitespace = createInput('\\s', true)
+export const letter = Object.assign(createInput('[a-zA-Z]', true), {
+  lowercase: createInput('[a-z]', true),
+  uppercase: createInput('[A-Z]', true),
 })
-export const tab = createInput('\\t')
-export const linefeed = createInput('\\n')
-export const carriageReturn = createInput('\\r')
+export const tab = createInput('\\t', true)
+export const linefeed = createInput('\\n', true)
+export const carriageReturn = createInput('\\r', true)
 
 export const not = {
   word: createInput('\\W+'),
-  wordChar: createInput('\\W'),
+  wordChar: createInput('\\W', true),
   wordBoundary: createInput('\\B'),
-  digit: createInput('\\D'),
-  whitespace: createInput('\\S'),
-  letter: Object.assign(createInput('[^a-zA-Z]'), {
-    lowercase: createInput('[^a-z]'),
-    uppercase: createInput('[^A-Z]'),
+  digit: createInput('\\D', true),
+  whitespace: createInput('\\S', true),
+  letter: Object.assign(createInput('[^a-zA-Z]', true), {
+    lowercase: createInput('[^a-z]', true),
+    uppercase: createInput('[^A-Z]', true),
   }),
-  tab: createInput('[^\\t]'),
-  linefeed: createInput('[^\\n]'),
-  carriageReturn: createInput('[^\\r]'),
+  tab: createInput('[^\\t]', true),
+  linefeed: createInput('[^\\n]', true),
+  carriageReturn: createInput('[^\\r]', true),
 }
 
 /**
@@ -81,11 +90,11 @@ export function maybe<
   Inputs extends InputSource[],
   Value extends string = Join<MapToValues<Inputs>, '', ''>,
 >(...inputs: Inputs): Input<
-  IfUnwrapped<Value, `(?:${Value})?`, `${Value}?`>,
+  Quantified<Value, JoinedAtomic<Inputs, Value>, '?'>,
   MapToGroups<Inputs>,
   MapToCapturedGroupsArr<Inputs>
 > {
-  return createInput(`${wrap(exactly(...inputs))}?`)
+  return createInput(quantify(inputs, '?'))
 }
 
 /**
@@ -94,12 +103,21 @@ export function maybe<
  * exactly('fo?o', maybe('bar')) // => /fo\?o(?:bar)?/
  * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
  */
-export function exactly<Inputs extends InputSource[]>(...inputs: Inputs): Input<Join<MapToValues<Inputs>, '', ''>, MapToGroups<Inputs>, MapToCapturedGroupsArr<Inputs>> {
-  return createInput(
-    inputs
-      .map(input => (typeof input === 'string' ? input.replace(ESCAPE_REPLACE_RE, '\\$&') : input))
-      .join(''),
-  )
+export function exactly<
+  Inputs extends InputSource[],
+  Value extends string = Join<MapToValues<Inputs>, '', ''>,
+>(...inputs: Inputs): Input<
+  Value,
+  MapToGroups<Inputs>,
+  MapToCapturedGroupsArr<Inputs>,
+  JoinedAtomic<Inputs, Value>
+> {
+  const value = inputs
+    .map(input => (typeof input === 'string' ? input.replace(ESCAPE_REPLACE_RE, '\\$&') : input))
+    .join('')
+  const [only] = inputs
+  const atomic = inputs.length === 1 && typeof only !== 'string' ? isAtomic(only) : isSingleChar(value)
+  return createInput(value as Value, atomic as JoinedAtomic<Inputs, Value>)
 }
 
 /**
@@ -112,9 +130,9 @@ export function oneOrMore<
   Inputs extends InputSource[],
   Value extends string = Join<MapToValues<Inputs>, '', ''>,
 >(...inputs: Inputs): Input<
-  IfUnwrapped<Value, `(?:${Value})+`, `${Value}+`>,
+  Quantified<Value, JoinedAtomic<Inputs, Value>, '+'>,
   MapToGroups<Inputs>,
   MapToCapturedGroupsArr<Inputs>
 > {
-  return createInput(`${wrap(exactly(...inputs))}+`)
+  return createInput(quantify(inputs, '+'))
 }
