@@ -1,7 +1,6 @@
-import type { CharInput, Input } from './internal'
+import type { CharInput, Input, KIND } from './internal'
 import type { EscapeChar } from './types/escape'
-import type { Join } from './types/join'
-import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
+import type { InputSource, JoinValues, JoinValuesWith, MapToCapturedGroupsArr, MapToGroups } from './types/sources'
 import type { InputKind, IsSingleChar, Quantified } from './wrap'
 
 import { joinSources } from './escape'
@@ -12,7 +11,7 @@ export type { Input }
 
 /** The lone input's kind, or an atom when the joined value is one character. */
 type JoinedKind<Inputs extends InputSource[], Value extends string>
-  = Inputs extends [Input<any, any, any, infer K extends InputKind>]
+  = Inputs extends [{ readonly [KIND]: infer K extends InputKind }]
     ? K
     : IsSingleChar<Value> extends true ? 'atom' : 'other'
 
@@ -48,7 +47,7 @@ export const charNotIn = Object.assign(<T extends string>(chars: T) => {
  * anyOf('foo', maybe('bar'), 'baz') // => /(?:foo|(?:bar)?|baz)/
  * @argument inputs - arbitrary number of `string` or `Input`, where `string` will be escaped
  */
-export function anyOf<Inputs extends InputSource[]>(...inputs: Inputs): Input<`(?:${Join<MapToValues<Inputs>>})`, MapToGroups<Inputs>, MapToCapturedGroupsArr<Inputs>, 'atom'> {
+export function anyOf<Inputs extends InputSource[]>(...inputs: Inputs): Input<`(?:${JoinValuesWith<Inputs, '|'>})`, MapToGroups<Inputs>, MapToCapturedGroupsArr<Inputs>, 'atom'> {
   return createInput(`(?:${inputs.map(a => exactly(a)).join('|')})`, 'atom')
 }
 
@@ -89,7 +88,7 @@ export const not = {
  */
 export function maybe<
   Inputs extends InputSource[],
-  Value extends string = Join<MapToValues<Inputs>, '', ''>,
+  Value extends string = JoinValues<Inputs>,
 >(...inputs: Inputs): Input<
   Quantified<Value, JoinedKind<Inputs, Value>, '?'>,
   MapToGroups<Inputs>,
@@ -107,7 +106,7 @@ export function maybe<
  */
 export function exactly<
   Inputs extends InputSource[],
-  Value extends string = Join<MapToValues<Inputs>, '', ''>,
+  Value extends string = JoinValues<Inputs>,
 >(...inputs: Inputs): Input<
   Value,
   MapToGroups<Inputs>,
@@ -130,7 +129,7 @@ export function exactly<
  */
 export function oneOrMore<
   Inputs extends InputSource[],
-  Value extends string = Join<MapToValues<Inputs>, '', ''>,
+  Value extends string = JoinValues<Inputs>,
 >(...inputs: Inputs): Input<
   Quantified<Value, JoinedKind<Inputs, Value>, '+'>,
   MapToGroups<Inputs>,

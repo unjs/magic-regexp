@@ -4,45 +4,41 @@ import type { GetValue } from './escape'
 
 export type InputSource<S extends string = string, T extends string = never> = S | Input<any, T, any, InputKind>
 
-export type MapToValues<T extends InputSource[]> = T extends [
-  infer First,
-  ...infer Rest extends InputSource[],
-]
-  ? First extends InputSource
-    ? [GetValue<First>, ...MapToValues<Rest>]
+type GroupsOf<Source> = Source extends Input<any, infer K, any, InputKind> ? K : never
+
+export type MapToGroups<T extends InputSource[]> = T extends string[]
+  ? never
+  : GroupsOf<T[number]>
+
+export type MapToCapturedGroupsArr<Inputs extends any[]> = Inputs extends string[]
+  ? []
+  : Inputs extends [infer First, ...infer Rest]
+    ? First extends Input<any, any, infer CaptureGroups, InputKind>
+      ? [CaptureGroups] extends [never]
+          ? MapToCapturedGroupsArr<Rest>
+          : [...CaptureGroups, ...MapToCapturedGroupsArr<Rest>]
+      : MapToCapturedGroupsArr<Rest>
     : []
-  : []
 
-export type MapToGroups<T extends InputSource[]> = T extends [
-  infer First,
-  ...infer Rest extends InputSource[],
-]
-  ? First extends Input<any, infer K, any, InputKind>
-    ? K | MapToGroups<Rest>
-    : MapToGroups<Rest>
-  : never
+/** One `undefined` per input that captures, for lookarounds whose captures never match. */
+export type MapToUndefinedCapturedGroupsArr<Inputs extends any[]> = Inputs extends string[]
+  ? []
+  : Inputs extends [infer First, ...infer Rest]
+    ? First extends Input<any, any, infer CaptureGroups, InputKind>
+      ? [CaptureGroups] extends [never]
+          ? MapToUndefinedCapturedGroupsArr<Rest>
+          : [undefined, ...MapToUndefinedCapturedGroupsArr<Rest>]
+      : MapToUndefinedCapturedGroupsArr<Rest>
+    : []
 
-export type MapToCapturedGroupsArr<
-  Inputs extends any[],
-  MapToUndefined extends boolean = false,
-  CapturedGroupsArr extends any[] = [],
-  Count extends any[] = [],
-> = Count['length'] extends Inputs['length']
-  ? CapturedGroupsArr
-  : Inputs[Count['length']] extends Input<any, any, infer CaptureGroups, InputKind>
-    ? [CaptureGroups] extends [never]
-        ? MapToCapturedGroupsArr<Inputs, MapToUndefined, [...CapturedGroupsArr], [...Count, '']>
-        : MapToUndefined extends true
-          ? MapToCapturedGroupsArr<
-            Inputs,
-            MapToUndefined,
-            [...CapturedGroupsArr, undefined],
-            [...Count, '']
-          >
-          : MapToCapturedGroupsArr<
-            Inputs,
-            MapToUndefined,
-            [...CapturedGroupsArr, ...CaptureGroups],
-            [...Count, '']
-          >
-    : MapToCapturedGroupsArr<Inputs, MapToUndefined, [...CapturedGroupsArr], [...Count, '']>
+export type JoinValues<T extends any[]> = T extends [infer First, ...infer Rest]
+  ? `${GetValue<First>}${JoinValues<Rest>}`
+  : ''
+
+export type JoinValuesWith<
+  T extends any[],
+  Joiner extends string,
+  Prefix extends string = '',
+> = T extends [infer First, ...infer Rest]
+  ? `${Prefix}${GetValue<First>}${JoinValuesWith<Rest, Joiner, Joiner>}`
+  : ''

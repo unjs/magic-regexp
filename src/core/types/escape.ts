@@ -1,6 +1,5 @@
 import type { Input } from '../inputs'
 import type { InputKind } from '../wrap'
-import type { InputSource } from './sources'
 
 export type Escape<
   T extends string,
@@ -8,11 +7,9 @@ export type Escape<
 > = T extends `${infer Start}${EscapeChar}${string}`
   ? Start extends `${string}${EscapeChar}${string}`
     ? never
-    : T extends `${Start}${infer Char}${string}`
+    : T extends `${Start}${infer Char}${infer Rest}`
       ? Char extends EscapeChar
-        ? T extends `${Start}${Char}${infer Rest}`
-          ? `${Start}\\${Char}${Escape<Rest, EscapeChar>}`
-          : never
+        ? `${Start}\\${Char}${Escape<Rest, EscapeChar>}`
         : never
       : never
   : T
@@ -23,7 +20,7 @@ export type StripEscapes<T extends string> = T extends `${infer A}\\${infer B}` 
 // prettier-ignore
 export type ExactEscapeChar = '.' | '*' | '+' | '?' | '^' | '$' | '{' | '}' | '(' | ')' | '|' | '[' | ']' | '/'
 
-export type GetValue<T extends InputSource> = T extends string
+export type GetValue<T> = T extends string
   ? Escape<T, ExactEscapeChar>
   : T extends Input<infer R, any, any, InputKind>
     ? R

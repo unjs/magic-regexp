@@ -1,11 +1,8 @@
-export type Join<
-  T extends string[],
-  Prefix extends string = '',
-  Joiner extends string = '|',
-> = T extends [infer F, ...infer R]
-  ? F extends string
-    ? `${Prefix}${F}${R extends string[] ? Join<R, Joiner, Joiner> : ''}`
-    : ''
+export type Join<T extends string[]> = T extends [
+  infer F extends string,
+  ...infer R extends string[],
+]
+  ? `${F}${Join<R>}`
   : ''
 
 type UnionToIntersection<Union> = (Union extends Union ? (a: Union) => any : never) extends (
