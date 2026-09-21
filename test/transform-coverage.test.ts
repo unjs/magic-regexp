@@ -54,7 +54,7 @@ describe('transformer: coverage', () => {
 // Helper function mimicked from transform.test.ts
 function transform(code: string, id = 'file.js') {
   const plugin = MagicRegExpTransformPlugin.vite() as any
-  return plugin.transform.call(
+  return plugin.transform.handler.call(
     { parse: (code: string) => parse(code, { ecmaVersion: 2022, sourceType: 'module' }) },
     code,
     id,

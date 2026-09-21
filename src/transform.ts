@@ -30,6 +30,17 @@ function walkAST(node: Node, enter: (node: Node) => void) {
 
 const MAGIC_REGEXP_SPECIFIERS = new Set(['magic-regexp', 'magic-regexp/further-magic'])
 
+function getParserLang(id: string) {
+  const pathname = id.split('?')[0]!
+  if (pathname.endsWith('.tsx'))
+    return 'tsx'
+  if (pathname.endsWith('.jsx'))
+    return 'jsx'
+  if (/\.(?:[cm]?ts|vue)$/.test(pathname))
+    return 'ts'
+  return 'js'
+}
+
 export const MagicRegExpTransformPlugin = createUnplugin(() => {
   return {
     name: 'MagicRegExpTransformPlugin',
@@ -46,91 +57,102 @@ export const MagicRegExpTransformPlugin = createUnplugin(() => {
         return true
 
       // js files
-      if (pathname.match(/\.((c|m)?j|t)sx?$/g))
+      if (/\.[cm]?[jt]sx?$/.test(pathname))
         return true
 
       return false
     },
-    transform(code, id) {
-      if (!code.includes('magic-regexp'))
-        return
-
-      const ast = this.parse(code) as unknown as Program
-
-      const contextMap: Context = { ...magicRegExp }
-      const wrapperNames: string[] = []
-      let namespace: string
-      let hasRelevantImport = false
-
-      walkAST(ast, (node) => {
-        if (node.type !== 'ImportDeclaration')
+    transform: {
+      filter: {
+        code: 'magic-regexp',
+      },
+      handler(code, id) {
+        if (!code.includes('magic-regexp'))
           return
 
-        if (typeof node.source.value !== 'string' || !MAGIC_REGEXP_SPECIFIERS.has(node.source.value))
-          return
-
-        hasRelevantImport = true
-
-        for (const spec of node.specifiers) {
-          if (spec.type === 'ImportNamespaceSpecifier') {
-            namespace = spec.local.name
-            contextMap[spec.local.name] = magicRegExp
-          }
-          else if (spec.type === 'ImportSpecifier') {
-            const importedName = spec.imported.type === 'Identifier' ? spec.imported.name : String(spec.imported.value)
-            if (importedName in magicRegExp)
-              contextMap[spec.local.name] = magicRegExp[importedName as keyof typeof magicRegExp]
-            if (importedName === 'createRegExp')
-              wrapperNames.push(spec.local.name)
-          }
-        }
-      })
-
-      if (!hasRelevantImport)
-        return
-
-      const context = createContext(contextMap)
-
-      const s = new MagicString(code)
-
-      walkAST(ast, (node) => {
-        if (node.type !== 'CallExpression')
-          return
-
-        const { callee } = node
-        const isDirectCall = callee.type === 'Identifier'
-          && wrapperNames.includes(callee.name)
-
-        let isNamespacedCall = false
-        if (callee.type === 'MemberExpression') {
-          const { object, property } = callee
-          isNamespacedCall = object.type === 'Identifier'
-            && object.name === namespace
-            && property.type === 'Identifier'
-            && property.name === 'createRegExp'
-        }
-
-        if (!isDirectCall && !isNamespacedCall)
-          return
-
-        const { start, end } = node as NodeWithPosition
-
+        let ast: Program
         try {
-          const value = runInContext(code.slice(start, end), context)
-          s.overwrite(start, end, value.toString())
+          ast = this.parse(code, { lang: getParserLang(id) } as any) as unknown as Program
         }
         catch {
-          // We silently ignore any code that relies on external context
-          // as it can use runtime `magic-regexp` support
+          ast = this.parse(code) as unknown as Program
         }
-      })
 
-      if (s.hasChanged()) {
-        return {
-          code: s.toString(),
-          map: s.generateMap({ includeContent: true, source: id }),
+        const contextMap: Context = { ...magicRegExp }
+        const wrapperNames: string[] = []
+        let namespace: string
+        let hasRelevantImport = false
+
+        walkAST(ast, (node) => {
+          if (node.type !== 'ImportDeclaration')
+            return
+
+          if (typeof node.source.value !== 'string' || !MAGIC_REGEXP_SPECIFIERS.has(node.source.value))
+            return
+
+          hasRelevantImport = true
+
+          for (const spec of node.specifiers) {
+            if (spec.type === 'ImportNamespaceSpecifier') {
+              namespace = spec.local.name
+              contextMap[spec.local.name] = magicRegExp
+            }
+            else if (spec.type === 'ImportSpecifier') {
+              const importedName = spec.imported.type === 'Identifier' ? spec.imported.name : String(spec.imported.value)
+              if (importedName in magicRegExp)
+                contextMap[spec.local.name] = magicRegExp[importedName as keyof typeof magicRegExp]
+              if (importedName === 'createRegExp')
+                wrapperNames.push(spec.local.name)
+            }
+          }
+        })
+
+        if (!hasRelevantImport)
+          return
+
+        const context = createContext(contextMap)
+
+        const s = new MagicString(code)
+
+        walkAST(ast, (node) => {
+          if (node.type !== 'CallExpression')
+            return
+
+          const { callee } = node
+          const isDirectCall = callee.type === 'Identifier'
+            && wrapperNames.includes(callee.name)
+
+          let isNamespacedCall = false
+          if (callee.type === 'MemberExpression') {
+            const { object, property } = callee
+            isNamespacedCall = object.type === 'Identifier'
+              && object.name === namespace
+              && property.type === 'Identifier'
+              && property.name === 'createRegExp'
+          }
+
+          if (!isDirectCall && !isNamespacedCall)
+            return
+
+          const { start, end } = node as NodeWithPosition
+
+          try {
+            const value = runInContext(code.slice(start, end), context)
+            s.overwrite(start, end, value.toString())
+          }
+          catch {
+            // We silently ignore any code that relies on external context
+            // as it can use runtime `magic-regexp` support
+          }
+        })
+
+        if (s.hasChanged()) {
+          return {
+            code: s.toString(),
+            map: s.generateMap({ includeContent: true, source: id }),
+          }
         }
-      }
+      },
     },
   }
 })

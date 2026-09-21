@@ -82,7 +82,7 @@ const re3 = /test\\/value/`,
 
 function transform(code: string | string[], id = 'some-id.js') {
   const plugin = MagicRegExpTransformPlugin.vite() as any
-  return plugin.transform.call(
+  return plugin.transform.handler.call(
     { parse: (code: string) => parse(code, { ecmaVersion: 2022, sourceType: 'module' }) },
     Array.isArray(code) ? code.join('\n') : code,
     id,
