@@ -4,12 +4,11 @@ import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
 import type { InputKind, IsSingleChar, Quantified } from './wrap'
 
+import { joinSources } from './escape'
 import { createInput, kindOf } from './internal'
 import { isSingleChar, wrap } from './wrap'
 
 export type { Input }
-
-const ESCAPE_REPLACE_RE = /[.*+?^${}()|[\]\\/]/g
 
 /** The lone input's kind, or an atom when the joined value is one character. */
 type JoinedKind<Inputs extends InputSource[], Value extends string>
@@ -115,9 +114,7 @@ export function exactly<
   MapToCapturedGroupsArr<Inputs>,
   JoinedKind<Inputs, Value>
 > {
-  const value = inputs
-    .map(input => (typeof input === 'string' ? input.replace(ESCAPE_REPLACE_RE, '\\$&') : input))
-    .join('')
+  const value = joinSources(inputs)
   const [only] = inputs
   const kind = inputs.length === 1 && typeof only !== 'string'
     ? kindOf(only)

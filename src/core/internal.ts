@@ -3,7 +3,7 @@ import type { Join } from './types/join'
 import type { InputSource, MapToCapturedGroupsArr, MapToGroups, MapToValues } from './types/sources'
 import type { InputKind, Quantified } from './wrap'
 
-import { exactly } from './inputs'
+import { joinSources } from './escape'
 import { wrap } from './wrap'
 
 const GROUPED_AS_REPLACE_RE = /^(?:\(\?:(.+)\)|(.+))$/
@@ -192,14 +192,14 @@ export function createInput<
   return {
     [KIND]: kind,
     toString: () => s.toString(),
-    and: Object.assign((...inputs: InputSource[]) => createInput(`${s}${exactly(...inputs)}`), {
+    and: Object.assign((...inputs: InputSource[]) => createInput(`${s}${joinSources(inputs)}`), {
       referenceTo: (groupName: string) => createInput(`${s}\\k<${groupName}>`),
     }),
-    or: (...inputs) => createInput(`(?:${s}|${inputs.map(v => exactly(v)).join('|')})`, 'atom'),
-    after: (...input) => createInput(`(?<=${exactly(...input)})${s}`),
-    before: (...input) => createInput(`${s}(?=${exactly(...input)})`),
-    notAfter: (...input) => createInput(`(?<!${exactly(...input)})${s}`),
-    notBefore: (...input) => createInput(`${s}(?!${exactly(...input)})`),
+    or: (...inputs) => createInput(`(?:${s}|${inputs.map(v => joinSources([v])).join('|')})`, 'atom'),
+    after: (...input) => createInput(`(?<=${joinSources(input)})${s}`),
+    before: (...input) => createInput(`${s}(?=${joinSources(input)})`),
+    notAfter: (...input) => createInput(`(?<!${joinSources(input)})${s}`),
+    notBefore: (...input) => createInput(`${s}(?!${joinSources(input)})`),
     times: Object.assign((number: number) => quantified(`{${number}}`), {
       any: () => quantified('*'),
       atLeast: (min: number) => quantified(`{${min},}`),
