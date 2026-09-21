@@ -42,6 +42,14 @@ type IsSingleGroup<Value extends string> = Value extends `(${infer Rest}`
     : false
   : false
 
+/**
+ * Resolves to `Yes` when `Value` needs wrapping in a non-capturing group
+ * before a quantifier is appended, and to `No` when it does not.
+ *
+ * @deprecated Use {@link Quantified}, which appends the quantifier too.
+ *
+ * TODO: remove in the next major release.
+ */
 export type IfUnwrapped<Value extends string, Yes, No> = Value extends Value
   ? IsSingleGroup<Value> extends true
     ? No
