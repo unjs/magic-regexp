@@ -4,7 +4,7 @@ import type { MagicRegExp, MagicRegExpMatchArray, StringCapturedBy } from '../sr
 import { expectTypeOf } from 'expect-type'
 import { describe, expect, it } from 'vitest'
 
-import { anyOf, caseInsensitive, char, createRegExp, digit, exactly, global, maybe, multiline, oneOrMore } from '../src'
+import { anyOf, caseInsensitive, char, charIn, createRegExp, digit, exactly, global, maybe, multiline, oneOrMore } from '../src'
 import { createInput } from '../src/core/internal'
 
 describe('magic-regexp', () => {
@@ -177,6 +177,17 @@ describe('inputs', () => {
     expectTypeOf(pattern.and.referenceTo).toBeCallableWith('barGroup')
     // @ts-expect-error there is no 'bazgroup' capture group
     pattern.and.referenceTo('bazgroup')
+  })
+  it('does not count character classes as capture groups', () => {
+    const regExp = createRegExp(exactly('x').grouped(), charIn('ab'))
+    const match = 'xab'.match(regExp)
+
+    if (!match)
+      return expect(match).toBeTruthy()
+    expect(match.length).toBe(2)
+    expectTypeOf(match.length).toEqualTypeOf<2>()
+    expectTypeOf(match[1]).toEqualTypeOf<StringCapturedBy<'(x)'> | undefined>()
+    expectTypeOf(match[2]).toEqualTypeOf<never>()
   })
   it('can type-safe access matched array with hint for corresponding capture group', () => {
     const pattern = anyOf(
