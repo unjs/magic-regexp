@@ -34,7 +34,7 @@ describe('basic', () => {
     )
     expect(convert(/(?:a[b]c|d)/)).toMatchInlineSnapshot(`"exactly('a', charIn('b'), 'c').or('d')"`)
     expect(convert(/(?:a[b]c|d[d])/)).toMatchInlineSnapshot(
-      `"exactly('a', charIn('b'), 'c').or('d', charIn('d'))"`,
+      `"exactly('a', charIn('b'), 'c').or(exactly('d', charIn('d')))"`,
     )
   })
 
@@ -124,7 +124,7 @@ describe('basic', () => {
       `"'aa', oneOrMore('a'), 'bb', oneOrMore('b'), 'cc', oneOrMore('c')"`,
     )
     expect(convert(/a|bcd|a+bbb+ccc+/)).toMatchInlineSnapshot(
-      `"exactly('a').or('bcd').or(oneOrMore('a'), 'bb', oneOrMore('b'), 'cc', oneOrMore('c'))"`,
+      `"exactly('a').or('bcd').or(exactly(oneOrMore('a'), 'bb', oneOrMore('b'), 'cc', oneOrMore('c')))"`,
     )
     expect(convert(/a(?:b[cd]ef)ghi/)).toMatchInlineSnapshot(
       `"'a', exactly('b', charIn('cd'), 'ef'), 'ghi'"`,

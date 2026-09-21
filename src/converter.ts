@@ -43,8 +43,12 @@ function build(node: Expression | null): string {
       throw new Error('Unsupported for Complex charactor class')
     }
 
-    case 'Disjunction':
-      return chain(build(node.left), `or(${build(node.right)})`)
+    case 'Disjunction': {
+      // each argument of `or` is its own alternative, so a sequence has to be joined first
+      const right = build(node.right)
+      const alternative = isArgumentList(right) ? `exactly(${right})` : right || '\'\''
+      return chain(build(node.left), `or(${alternative})`)
+    }
 
     case 'Assertion':
       switch (node.kind) {
@@ -279,16 +283,45 @@ function getChar(char: Char): string | null {
   return null
 }
 
+/** Whether `expr` is a list of arguments rather than a single chainable expression. */
+function isArgumentList(expr: string) {
+  let depth = 0
+  let quoted = false
+  for (let i = 0; i < expr.length; i++) {
+    const char = expr[i]
+    if (quoted) {
+      if (char === '\\')
+        i++
+      else if (char === '\'')
+        quoted = false
+    }
+    else if (char === '\'') {
+      quoted = true
+    }
+    else if (char === '(' || char === '[' || char === '{') {
+      depth++
+    }
+    else if (char === ')' || char === ']' || char === '}') {
+      depth--
+    }
+    else if (char === ',' && depth === 0) {
+      return true
+    }
+  }
+  return false
+}
+
 function chain(expr: Expression | string, helper?: string): string {
-  let _expr = ''
-  if (typeof expr === 'string') {
-    if (expr === '')
-      _expr = 'exactly(\'\')'
-    else _expr = expr.startsWith('\'') && expr.endsWith('\'') ? `exactly(${expr})` : expr
-  }
-  else {
-    _expr = build(expr)
-  }
+  const value = typeof expr === 'string' ? expr : build(expr)
+
+  let _expr = value
+  if (value === '')
+    _expr = 'exactly(\'\')'
+  else if (helper && isArgumentList(value))
+    _expr = `exactly(${value})`
+  else if (value.startsWith('\'') && value.endsWith('\''))
+    _expr = `exactly(${value})`
+
   return helper ? `${_expr}.${helper}` : _expr
 }
 
