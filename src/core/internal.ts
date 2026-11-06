@@ -6,7 +6,7 @@ import { joinSources } from './escape'
 import { wrap } from './wrap'
 
 const GROUPED_AS_REPLACE_RE = /^(?:\(\?:(.+)\)|(.+))$/
-const GROUPED_REPLACE_RE = /^(?:\(\?:(.+)\)([?+*]|\{[\d,]+\})?|(.+))$/
+const GROUPED_REPLACE_RE = /^(?:\(\?:(.+)\)([?+*]|\{[\d,]+\})?|(.+))$/s
 
 export const KIND: unique symbol = Symbol('magic-regexp.kind')
 
