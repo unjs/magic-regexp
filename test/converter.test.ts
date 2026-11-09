@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import * as helpers from '../src'
 import { convert as _convert } from '../src/converter'
 
 const convert = (regex: RegExp) => _convert(regex, { argsOnly: true })
@@ -136,6 +137,13 @@ describe('basic', () => {
     expect(convert(/1.23/)).toMatchInlineSnapshot(`"'1', char, '23'"`)
   })
 
+  it('exactly (string literal escapes)', () => {
+    expect(convert(/a\\b/)).toMatchInlineSnapshot(`"'a\\\\b'"`)
+    // eslint-disable-next-line no-control-regex, regexp/control-character-escape
+    expect(convert(/a\x0A/)).toMatchInlineSnapshot(`"'a\\n'"`)
+    expect(convert(/a\u2028/)).toMatchInlineSnapshot(`"'a\\u2028'"`)
+  })
+
   // chaining inputs
   it('at', () => {
     expect(convert(/^abc$/)).toMatchInlineSnapshot(`"exactly('abc').at.lineStart().at.lineEnd()"`)
@@ -209,5 +217,38 @@ describe('basic', () => {
     expect(convert(/(?<foo>abc)/)).toMatchInlineSnapshot(`"exactly('abc').as('foo')"`)
     // @ts-expect-error needs a capturing group name
     expect(convert(/(?<\u{03C0}>x)/u)).toMatchInlineSnapshot(`"exactly('x').as('π'), [unicode]"`)
+  })
+})
+
+describe('generated code', () => {
+  const helperNames = Object.keys(helpers).filter(key => key !== 'default')
+  function evaluate(source: string): RegExp {
+    // eslint-disable-next-line no-new-func
+    return new Function(...helperNames, `return ${source}`)(
+      ...helperNames.map(name => (helpers as Record<string, unknown>)[name]),
+    )
+  }
+
+  /* eslint-disable no-control-regex, regexp/control-character-escape -- the escaped form is what is under test */
+  const cases: Array<[RegExp, string[]]> = [
+    [/a\\b/, ['a\\b']],
+    [/a\\/, ['a\\']],
+    [/a\x5C/, ['a\\']],
+    [/a\u005C/, ['a\\']],
+    [/a\x0A/, ['a\n']],
+    [/a\x0D/, ['a\r']],
+    [/a\u2028/, ['a\u2028']],
+    [/a\u2029/, ['a\u2029']],
+    [/x|a\x5C/, ['x', 'a\\']],
+    [/it's/, ['it\'s']],
+  ]
+  /* eslint-enable no-control-regex, regexp/control-character-escape */
+
+  it.each(cases)('%s evaluates to an equivalent regexp', (regex, inputs) => {
+    const result = evaluate(_convert(regex))
+    for (const input of inputs) {
+      expect(regex.test(input)).toBe(true)
+      expect(result.test(input)).toBe(true)
+    }
   })
 })
