@@ -265,7 +265,15 @@ function combineContinuousSimpleChars<T extends (Char | ClassRange) | Expression
 function getChar(char: Char): string | null {
   function escapeSimpleChar(char: string): string {
     // for generator only because we will output createRegExp('...')
-    return char === '\'' ? '\\\'' : char
+    switch (char) {
+      case '\'': return '\\\''
+      case '\\': return '\\\\'
+      case '\n': return '\\n'
+      case '\r': return '\\r'
+      case '\u2028': return '\\u2028'
+      case '\u2029': return '\\u2029'
+      default: return char
+    }
   }
 
   switch (char.kind) {
